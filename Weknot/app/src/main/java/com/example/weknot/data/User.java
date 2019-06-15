@@ -1,28 +1,40 @@
 package com.example.weknot.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class User {
 
-    String id;
+    @SerializedName("id")
+    private String id;
 
-    String name;
+    @SerializedName("name")
+    private String name;
 
-    String password;
+    @SerializedName("password")
+    private String password;
 
-    Date birth;
+    @SerializedName("birth")
+    private Date birth;
 
-    String gender;
+    @SerializedName("gender")
+    private String gender;
 
-    String phoneNumber;
+    @SerializedName("phoneNumber")
+    private String phoneNumber;
 
-    String picture;
+    @SerializedName("picture")
+    private String picture;
 
-    String intro;
+    @SerializedName("intro")
+    private String intro;
 
-    String scope;
+    @SerializedName("scope")
+    private String scope;
 
-    int point;
+    @SerializedName("point")
+    private int point;
 
     public String getId() {
         return id;
