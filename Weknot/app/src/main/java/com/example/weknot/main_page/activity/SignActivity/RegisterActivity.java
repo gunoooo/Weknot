@@ -45,9 +45,24 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(userNameInput == null || userIdInput == null || userPasswordInput == null || userPasswordInputCheck == null) {
+                if(!(userNameInput.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "모두 입력해주세요", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(!(userIdInput.getText().toString().length() > 0)) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(!(userPasswordInput.getText().toString().length() > 0)) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if(!(userPasswordInputCheck.getText().toString().length() > 0)) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력해주세요", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {

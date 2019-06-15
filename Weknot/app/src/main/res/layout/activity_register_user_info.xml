@@ -45,7 +45,7 @@
         tools:ignore="HardcodedText,SpUsage" />
 
     <EditText
-        android:id="@+id/userBirth"
+        android:id="@+id/userBirthInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -64,7 +64,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="64dp"
         android:text="생년월일"
-        app:layout_constraintStart_toEndOf="@+id/userBirth"
+        app:layout_constraintStart_toEndOf="@+id/userBirthInput"
         app:layout_constraintTop_toBottomOf="@+id/view"
         tools:ignore="HardcodedText" />
 
@@ -78,7 +78,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userBirth">
+        app:layout_constraintTop_toBottomOf="@+id/userBirthInput">
 
         <RadioButton
             android:id="@+id/manButton"
@@ -100,7 +100,7 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/userPhoneNumber"
+        android:id="@+id/userPhoneNumberInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -119,12 +119,12 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="44dp"
         android:text="인증번호"
-        app:layout_constraintStart_toEndOf="@+id/userPhoneNumber"
+        app:layout_constraintStart_toEndOf="@+id/userPhoneNumberInput"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/certificationNumber"
+        android:id="@+id/certificationNumberInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -133,7 +133,7 @@
         android:hint="인증번호"
         android:inputType="phone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userPhoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/userPhoneNumberInput"
         tools:ignore="Autofill,HardcodedText" />
 
     <Button
@@ -143,8 +143,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="44dp"
         android:text="확인"
-        app:layout_constraintStart_toEndOf="@+id/certificationNumber"
-        app:layout_constraintTop_toBottomOf="@+id/userPhoneNumber"
+        app:layout_constraintStart_toEndOf="@+id/certificationNumberInput"
+        app:layout_constraintTop_toBottomOf="@+id/userPhoneNumberInput"
         tools:ignore="HardcodedText" />
 
     <Button
@@ -155,7 +155,7 @@
         android:text="가입"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/certificationNumber"
+        app:layout_constraintTop_toBottomOf="@+id/certificationNumberInput"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
