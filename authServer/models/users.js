@@ -121,7 +121,7 @@ exports.registerUser = (user) => {
   });
 }*/
 
-exports.showUserProfile = async (cid) => {
+/*exports.showUserProfile = async (cid) => {
   let conn;
   const sql = "SELECT id,name,birth,gender,picture,intro,scope,point FROM user WHERE id = ? "
   let result;
@@ -135,7 +135,7 @@ exports.showUserProfile = async (cid) => {
     if(conn) await conn.end();
     return result
   }
-};
+};*/
 
 exports.showUserProfile = (cid) => {
   const query = (conn)=>{
@@ -163,7 +163,7 @@ exports.showUserProfile = (cid) => {
   return p;
 };
 
-exports.addFriend = async (idList) => {//requester랑receiver가 db값과 둘다 같다면?  
+/*exports.addFriend = async (idList) => {//requester랑receiver가 db값과 둘다 같다면?  
   let conn;
   const sql = "INSERT INTO friends(requester,receiver,state) VALUES (?,?,?) "
   let isSuccess = true;
@@ -177,7 +177,34 @@ exports.addFriend = async (idList) => {//requester랑receiver가 db값과 둘다
     if(conn) await conn.end();
     return isSuccess;
   }
-}
+}*/
+
+exports.addFriend = (idList) => {
+  const sql = 'INSERT INTO friends(requester,receiver,state) VALUES (?,?,?)';
+  const query = (conn)=>{
+    const p = new Promise((resolve, reject)=> {
+      conn
+        .query(sql,idList)
+        .then((result)=> {
+          conn.end()
+          console.log(result)
+          resolve(result)
+        })
+        .catch((err) =>{reject(err)})
+    })
+    return p;
+  }
+
+  const p = new Promise((resolve, reject) => {
+    dbcp.getConnection()
+      .then(query)
+      .then((result=> {
+        resolve(result)
+      }))
+      .catch((err) => {reject(err)})
+  })
+  return p;
+};
 
 exports.acceptFriend = async (knotArr) => {//update 영향 받은 행이 없다면?
   let conn;

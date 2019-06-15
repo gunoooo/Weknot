@@ -56,8 +56,7 @@ router.post('/register',(req, res, next) => {
 
   users.registerUser(user)
   .then((result) => {
-    console.log(result);
-    if(result)
+    if(result.affectedRows === 1)
     {
       res.json({result:"success"});
     }
@@ -78,6 +77,7 @@ router.get('/checkUserId/:userId',(req, res, next) => {//userName,userPhoneNumbe
   .then((result) => {
     let user;
     if(result != null) user = result[0];
+    
     if(user == undefined){
       res.json({result:"fail"});
     }
