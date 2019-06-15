@@ -5,6 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="gray">#D3D3D3</color>
     <color name="black">#3A3A3A</color>
-    <color name="loginButton">#s3498db</color>
+    <color name="loginButton">#3498DB</color>
     <color name="white">#FFFFFF</color>
 </resources>
