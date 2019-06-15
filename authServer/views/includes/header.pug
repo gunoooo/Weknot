@@ -1,0 +1,8 @@
+div#header
+    a(href='/') Home
+    a(href='/users') Users
+    -var isLogin = true;
+    if isLogin 
+        a(href='/users/login') Login
+    unless isLogin 
+        a(href='/users/login') Logout
