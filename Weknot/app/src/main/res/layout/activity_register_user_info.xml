@@ -51,7 +51,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="70dp"
         android:ems="10"
-        android:hint="ID"
+        android:hint="생년월일"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
