@@ -1,6 +1,6 @@
 var mariadb = require('mariadb');
 
-module.exports = (() =>{
+module.exports = function () {
   var pool = mariadb.createPool({
     host: 'localhost',
     port: 3307,
@@ -11,7 +11,7 @@ module.exports = (() =>{
   });
 
   return {
-    getConnection = async function () {
+    getConnection: async function (){
       conn = await pool.getConnection();
       return conn;
     },
@@ -19,4 +19,4 @@ module.exports = (() =>{
       if(conn) conn.end();
     }
   }
-})();
+}();

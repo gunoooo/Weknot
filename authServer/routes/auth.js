@@ -20,19 +20,28 @@ router.post('/login',(req, res, next) => {//userId,userPassword
   const userId = req.body.id;
   const password = req.body.password;
 
-  const pool = mariadb.createPool(dbcp);
-
-  users.getQueryUser(pool, userId)
+  users.getQueryUser(userId)
   .then((result) => {
-    if(result.password === password){
+    let user;
+    if(result != null) user = result[0];
+    if(user == undefined){
+      res.json({error: 'do not use id'})
+      return;
+    }
+    if(user.password == password){
       res.json({result:"success"});
     }
     else
       res.json({result:"fail"});
   })
   .catch((err) => {
+    console.log(err);
     res.render('error', {error:err});
   });
+});
+
+router.get('/register', (req, res, next) => {
+  res.render('registerForm');
 });
 
 router.post('/register',(req, res, next) => {
@@ -44,11 +53,10 @@ router.post('/register',(req, res, next) => {
     gender = req.body.userGender,
     phoneNumber = req.body.userPhoneNumber
   ];
-  
-  const pool = mariadb.createPool(dbcp);
 
-  users.registerUser(pool, user)
+  users.registerUser(user)
   .then((result) => {
+    console.log(result);
     if(result)
     {
       res.json({result:"success"});
@@ -59,38 +67,40 @@ router.post('/register',(req, res, next) => {
     }
   })
   .catch((err) => {
-    res.json({result:"fall"});
+    res.json({error:"error"});
   });
 });
 
 router.get('/checkUserId/:userId',(req, res, next) => {//userName,userPhoneNumber
   const userId = req.params.userId;
 
-  const pool = mariadb.createPool(dbcp);
-
-  users.getQueryUser(pool,userId)
+  users.getQueryUser(userId)
   .then((result) => {
-    if(result === undefined){
+    let user;
+    if(result != null) user = result[0];
+    if(user == undefined){
+      res.json({result:"fail"});
+    }
+    else if(user.id !== undefined){
       res.json({result:"success"});
     }
     else
-      res.json({result:"fail"});
+      res.json({error:"error"});
   })
   .catch((err) => {
     res.render('error', {error:err});
   });
 });
 
-router.get('/allUser',(req,res,next) => {
-  const pool = mariadb.createPool(dbcp);
-  users.allUsers(pool)
+/*router.get('/allUser',(req,res,next) => {
+  users.allUsers()
   .then((result) => {
     res.json(result);
   })
   .catch((err) => {
     res.render('error',{error:err});
   })
-});
+});*/
 
 router.post('/getMyId',(req, res, next) => {//userName,userPhoneNumber,userCertNumber
   const userName = req.body.name;
@@ -109,7 +119,6 @@ router.post('/getMyPassword',(req, res, next) => {//userId,userPhoneNumber,userC
 //router.post('/addLike',(req, res, next) => {//friendId
  // const friendId = req.body.friendId;
 
-  //const pool = mariadb.createPool(dbcp);
 
 
 //});
@@ -121,9 +130,8 @@ router.post('/addFriend',(req, res, next) => {//userId,friendId
     friendId = req.body.friendId,
     state = 0
   ];
-  const pool = mariadb.createPool(dbcp);
 
-  users.addFriend(idList,pool)
+  users.addFriend(idList)
   .then((result) => {
     if(result)
     {
@@ -141,12 +149,12 @@ router.post('/addFriend',(req, res, next) => {//userId,friendId
 
 router.get('/profile/:userId',(req, res, next) => {
   const userId = req.params.userId;
-  const pool = mariadb.createPool(dbcp);
 
-  users.showUserProfile(userId,pool)
+  users.showUserProfile(userId)
   .then((result) =>{
     if(result)
     {
+      console.log(result);
       res.json(result);
     }
     else
@@ -168,12 +176,10 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
     decision = req.body.decision
   ];
 
-  const pool = mariadb.createPool(dbcp);
-
   if(decision == "yes")
   {
 
-    users.acceptFriend(knotArr,pool)
+    users.acceptFriend(knotArr)
       .then((result) => {
       if(result)
       {
@@ -190,7 +196,7 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
   }else if(decision == "no")
   {
 
-    users.refuseFriend(knotArr,pool)
+    users.refuseFriend(knotArr)
     .then((result) => {
       if(result)
       {
@@ -209,9 +215,8 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
 
 router.get('/chattingRooms',(req, res, next) => {//userId
   const userId = req.body.userId;
-  const pool = mariadb.createPool(dbcp);
 
-  users.getChattingRooms(pool)
+  users.getChattingRooms()
   .then((result) => {
     if(result !== undefined)
       res.json(result);
@@ -226,13 +231,12 @@ router.get('/chattingRooms',(req, res, next) => {//userId
 router.get('/dm',(req, res, next) => {//userId
 //  const userId = req.body.userId;
   const userId = "w";
-  const pool = mariadb.createPool(dbcp);
   let dm;
 
-  users.getDms(userId,pool)
+  users.getDms(userId)
   .then((dmResult) => {
     let sender = dmResult.sender;
-    users.getPicture(sender,pool)
+    users.getPicture(sender)
     .then((result) => {
       console.log(result);
       dm = Object.assign(dmResult,result);
@@ -248,7 +252,6 @@ router.get('/dm',(req, res, next) => {//userId
 
 router.get('/dm/:dmId',(req, res, next) => {
   const dmId = req.params.dmId;
-  const pool = mariadb.createPool(dbcp);
 });//friendId,friendPicture,message,date,dmId,files
 
 module.exports = router;
