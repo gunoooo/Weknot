@@ -10,5 +10,5 @@ public class User {
 
     String birth;
 
-    String 
+    String gender;
 }
