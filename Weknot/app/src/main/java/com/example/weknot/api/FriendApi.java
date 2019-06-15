@@ -8,16 +8,17 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface FriendApi {
 
     @FormUrlEncoded
-    @POST("")
+    @GET("")
     Call<List<Friend>> getFriends(@Field("id") String id);
 
     @FormUrlEncoded
-    @POST("")
+    @GET("")
     Call<List<Friend>> getRequesters(@Field("id") String id);
 
     @FormUrlEncoded
