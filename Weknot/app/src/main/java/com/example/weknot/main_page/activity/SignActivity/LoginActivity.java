@@ -17,12 +17,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private SignApi signApi;
 
+    private Button registerButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+        
     }
 
     private void initData() {
@@ -52,5 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private class Button {
     }
 }
