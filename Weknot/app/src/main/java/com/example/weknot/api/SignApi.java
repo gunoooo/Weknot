@@ -16,10 +16,6 @@ public interface SignApi {
 
     @FormUrlEncoded
     @POST("")
-    Call<User> getUser(@Field("id") String id);
-
-    @FormUrlEncoded
-    @POST("")
     Call<Result> register(@Field("user") User user);
 
 //    @Field("id") String id, @Field("password") String password, @Field("name") String name,
