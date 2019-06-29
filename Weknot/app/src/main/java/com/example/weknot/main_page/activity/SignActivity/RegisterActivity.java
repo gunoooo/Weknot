@@ -14,7 +14,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weknot.R;
+import com.example.weknot.api.SignApi;
+import com.example.weknot.data.SuccessResult;
 import com.example.weknot.data.User;
+import com.example.weknot.retrofit.MyRetrofit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -22,8 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String userPassword;
     private String userName;
 
+    private Button validateButton;
     private Button nextButton;
-
     private TextView backButton;
 
     private EditText userNameInput;
@@ -31,7 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText userPasswordInput;
     private EditText userPasswordInputCheck;
 
-    User user = new User();
+    private boolean validate = false;
+
+    private SignApi signApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,9 @@ public class RegisterActivity extends AppCompatActivity {
         userPasswordInputCheck = findViewById(R.id.userPasswordInputCheck);
         nextButton = findViewById(R.id.nextButton);
         backButton = findViewById(R.id.backButton);
+        validateButton = findViewById(R.id.overlapCheckButton);
+
+        signApi = MyRetrofit.getRetrofit().create(SignApi.class);
     }
 
     private void setting() {
@@ -95,8 +107,35 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void clickEvent() {
 
+        clickValidate();
         back();
         next();
+    }
+
+    private void clickValidate() {
+
+        validateButton.setOnClickListener(v -> {
+
+            userId = userIdInput.getText().toString();
+
+            signApi.validate(userId).enqueue(new Callback<SuccessResult>() {
+                @Override
+                public void onResponse(Call<SuccessResult> call, Response<SuccessResult> response) {
+
+                    validate = true;
+
+                    userIdInput.setBackgroundColor(Color.GREEN);
+                    validateButton.setBackgroundColor(Color.GREEN);
+
+                    userIdInput.setClickable(false);
+                }
+
+                @Override
+                public void onFailure(Call<SuccessResult> call, Throwable t) {
+
+                }
+            });
+        });
     }
 
     private void back() {
@@ -116,9 +155,9 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            else if(!(userIdInput.getText().toString().length() > 0)) {
+            else if(!validate) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "아이디 중복확인을 해주세요", Toast.LENGTH_SHORT);
                 toast.show();
             }
             else if(!(userPasswordInput.getText().toString().length() > 0)) {
@@ -134,12 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
             else {
 
                 userName = userNameInput.getText().toString();
-                userId = userIdInput.getText().toString();
                 userPassword = userPasswordInput.getText().toString();
-
-                user.setId(userId);
-                user.setPassword(userPassword);
-                user.setName(userName);
 
                 Intent intent = new Intent(getApplicationContext(), RegisterUserInfoActivity.class);
 
@@ -147,7 +181,7 @@ public class RegisterActivity extends AppCompatActivity {
                 intent.putExtra("password", userPassword);
                 intent.putExtra("name", userName);
 
-                startActivity(intent);
+                startActivityForResult(intent,RESULT_OK);
             }
         });
     }

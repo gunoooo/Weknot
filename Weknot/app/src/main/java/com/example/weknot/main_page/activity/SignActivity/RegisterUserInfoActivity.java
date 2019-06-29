@@ -39,20 +39,15 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
     private String userPhoneNumber;
     private String userGender;
 
-    private String certificationNumber;
-
     private Button createButton;
     private Button userBirthButton;
 
     private EditText userBirthInput;
     private EditText userPhoneNumberInput;
-    private EditText certificationNumberInput;
 
     private RadioGroup userGenderItem;
 
     private SignApi signApi;
-
-    private Intent intent = getIntent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +66,13 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         userGenderItem = findViewById(R.id.radioGroup);
         userBirthInput = findViewById(R.id.userBirthInput);
         userPhoneNumberInput = findViewById(R.id.userPhoneNumberInput);
-        certificationNumberInput = findViewById(R.id.certificationNumberInput);
 
         userBirthInput.setFocusable(false);
         userBirthInput.setClickable(false);
 
         signApi = MyRetrofit.getRetrofit().create(SignApi.class);
+
+        Intent intent = getIntent();
 
         userId = intent.getExtras().getString("id");
         userPassword = intent.getExtras().getString("password");
@@ -96,9 +92,6 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
     private void clickEvent() {
 
-        requestPhoneNumber();
-        checkCertification();
-
         clickCreate();
     }
 
@@ -106,20 +99,18 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
         createButton.setOnClickListener(v -> {
 
+            userPhoneNumber = userPhoneNumberInput.getText().toString();
+
             if(!(userBirthInput.getText().toString().length() > 0)) {
 
                 Toast toast = Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT);
                 toast.show();
             }
-//            else if(!(certificationNumberInput.getText().toString().length() > 0)) {
-//
-//                Toast toast = Toast.makeText(getApplicationContext(), "인증을 해주세요", Toast.LENGTH_SHORT);
-//                toast.show();
-//            }
-            else {
+            else if(!(userPhoneNumber.length() > 0)) {
 
-                userPhoneNumber = userPhoneNumberInput.getText().toString();
-                certificationNumber = certificationNumberInput.getText().toString();
+                Toast.makeText(getApplicationContext(), "전화번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+            }
+            else {
 
                 signApi.register(userId,userPassword,userName,userBirth,userGender,userPhoneNumber).enqueue(new Callback<SuccessResult>() {
                     @Override
@@ -151,32 +142,6 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         });
 
         showBirthDialog();
-    }
-
-    private void requestPhoneNumber() {
-
-        if(!(userPhoneNumberInput.getText().toString().length() > 0)) {
-
-            Toast toast = Toast.makeText(getApplicationContext(), "휴대폰 번호를 입력해주세요", Toast.LENGTH_LONG);
-            toast.show();
-        }
-        else {
-
-            //TODO
-        }
-    }
-
-    private void checkCertification() {
-
-        if(!(certificationNumberInput.getText().toString().length() > 0)) {
-
-            Toast toast = Toast.makeText(getApplicationContext(), "인증번호를 입력 해주세요", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-        else {
-
-            //TODO
-        }
     }
 
     private void checkGender() {
