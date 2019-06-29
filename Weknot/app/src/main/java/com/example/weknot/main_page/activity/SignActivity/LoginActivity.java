@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         event();
     }
 
+
     private void initData() {
 
         idText = findViewById(R.id.idInput);
