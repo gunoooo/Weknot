@@ -47,6 +47,13 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user_info);
 
+        initData();
+
+        event();
+    }
+
+    private void initData() {
+
         userBirthButton = findViewById(R.id.userBirthButton);
         createButton = findViewById(R.id.createButton);
         userBirthInput = findViewById(R.id.userBirthInput);
@@ -59,6 +66,21 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
         userBirthInput.setFocusable(false);
         userBirthInput.setClickable(false);
+    }
+
+    private void event() {
+
+        clickEvent();
+    }
+
+    private void clickEvent() {
+
+        create();
+        requestPhoneNumber();
+        checkCertification();
+    }
+
+    private void create() {
 
         createButton.setOnClickListener(v -> {
 
@@ -67,21 +89,11 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            else if(!(userPhoneNumberInput.getText().toString().length() > 0)) {
+            else if(!(certificationNumberInput.getText().toString().length() > 0)) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "휴대폰 번호를 입력해주세요", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "인증을 해주세요", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            /*else if(!(certificationNumberInput.getText().toString().length() > 0)) {
-
-                Toast toast = Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-            else if(!(userGender.getCheckedRadioButtonId().toString().length() > 0)) {
-
-                Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력해주세요", Toast.LENGTH_SHORT);
-                toast.show();
-            }*/
             else {
 
                 userBirth = userBirthInput.getText().toString();
@@ -92,10 +104,41 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                 user.setPhoneNumber(userPhoneNumber);
 //                    user.setcertificationNumber(certificationNumber);
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
+
+        showBirthDialog();
+    }
+
+    private void requestPhoneNumber() {
+
+        if(!(userPhoneNumberInput.getText().toString().length() > 0)) {
+
+            Toast toast = Toast.makeText(getApplicationContext(), "휴대폰 번호를 입력해주세요", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else {
+
+            //TODO
+        }
+    }
+
+    private void checkCertification() {
+
+        if(!(certificationNumberInput.getText().toString().length() > 0)) {
+
+            Toast toast = Toast.makeText(getApplicationContext(), "인증번호를 입력 해주세요", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else {
+
+            //TODO
+        }
+    }
+
+    private void showBirthDialog() {
 
         GregorianCalendar calendar = new GregorianCalendar();
 

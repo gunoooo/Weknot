@@ -38,17 +38,76 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        initData();
+
+        setting();
+
+        event();
+    }
+
+    private void initData() {
+
         userNameInput = findViewById(R.id.userNameInput);
         userIdInput = findViewById(R.id.userIdInput);
         userPasswordInput = findViewById(R.id.userPasswordInput);
         userPasswordInputCheck = findViewById(R.id.userPasswordInputCheck);
         nextButton = findViewById(R.id.nextButton);
         backButton = findViewById(R.id.backButton);
+    }
+
+    private void setting() {
+
+        userPasswordInputCheck.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String password = userPasswordInput.getText().toString();
+                String passwordCompare = userPasswordInputCheck.getText().toString();
+
+                if(password.equals(passwordCompare)) {
+
+                    userPasswordInput.setBackgroundColor(Color.GREEN);
+                    userPasswordInputCheck.setBackgroundColor(Color.GREEN);
+                }
+                else {
+
+                    userPasswordInput.setBackgroundColor(Color.RED);
+                    userPasswordInputCheck.setBackgroundColor(Color.RED);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void event() {
+
+        clickEvent();
+    }
+
+    private void clickEvent() {
+
+        back();
+        next();
+    }
+
+    private void back() {
 
         backButton.setOnClickListener(v -> {
 
             finish();
         });
+    }
+
+    private void next() {
 
         nextButton.setOnClickListener(v -> {
 
@@ -84,36 +143,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), RegisterUserInfoActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        userPasswordInputCheck.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                String password = userPasswordInput.getText().toString();
-                String passwordCompare = userPasswordInputCheck.getText().toString();
-
-                if(password.equals(passwordCompare)) {
-
-                    userPasswordInput.setBackgroundColor(Color.GREEN);
-                    userPasswordInputCheck.setBackgroundColor(Color.GREEN);
-                }
-                else {
-
-                    userPasswordInput.setBackgroundColor(Color.RED);
-                    userPasswordInputCheck.setBackgroundColor(Color.RED);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
     }
