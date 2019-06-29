@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 LoginResult loginResult = response.body();
 
+                LoginResult successResult = response.body();
+
                 if(loginResult.getResult().equals("success")) {
 
                     System.out.println(loginResult + "Asdfadfasdfsfsdfafd");
