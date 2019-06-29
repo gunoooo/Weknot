@@ -16,16 +16,29 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weknot.R;
+import com.example.weknot.api.SignApi;
+import com.example.weknot.data.SuccessResult;
 import com.example.weknot.data.User;
 import com.example.weknot.main_page.activity.MainActivity;
+import com.example.weknot.retrofit.MyRetrofit;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterUserInfoActivity extends AppCompatActivity {
 
-    private String userBirth;
+    private String userId;
+    private String userPassword;
+    private String userName;
+    private long userBirth;
     private String userPhoneNumber;
+    private String userGender;
+
     private String certificationNumber;
 
     private Button createButton;
@@ -35,12 +48,11 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
     private EditText userPhoneNumberInput;
     private EditText certificationNumberInput;
 
-    private RadioGroup userGender;
+    private RadioGroup userGenderItem;
 
-    private RadioButton manButton;
-    private RadioButton womanButton;
+    private SignApi signApi;
 
-    User user = new User();
+    private Intent intent = getIntent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,31 +68,41 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
         userBirthButton = findViewById(R.id.userBirthButton);
         createButton = findViewById(R.id.createButton);
+        userGenderItem = findViewById(R.id.radioGroup);
         userBirthInput = findViewById(R.id.userBirthInput);
         userPhoneNumberInput = findViewById(R.id.userPhoneNumberInput);
         certificationNumberInput = findViewById(R.id.certificationNumberInput);
 
-        userBirth = userBirthInput.getText().toString();
-        userPhoneNumber = userPhoneNumberInput.getText().toString();
-        certificationNumber = certificationNumberInput.getText().toString();
-
         userBirthInput.setFocusable(false);
         userBirthInput.setClickable(false);
+
+        signApi = MyRetrofit.getRetrofit().create(SignApi.class);
+
+        userId = intent.getExtras().getString("id");
+        userPassword = intent.getExtras().getString("password");
+        userName = intent.getExtras().getString("name");
     }
 
     private void event() {
 
+        checkEvent();
         clickEvent();
+    }
+
+    private void checkEvent() {
+
+        checkGender();
     }
 
     private void clickEvent() {
 
-        create();
         requestPhoneNumber();
         checkCertification();
+
+        clickCreate();
     }
 
-    private void create() {
+    private void clickCreate() {
 
         createButton.setOnClickListener(v -> {
 
@@ -89,20 +111,39 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            else if(!(certificationNumberInput.getText().toString().length() > 0)) {
-
-                Toast toast = Toast.makeText(getApplicationContext(), "인증을 해주세요", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+//            else if(!(certificationNumberInput.getText().toString().length() > 0)) {
+//
+//                Toast toast = Toast.makeText(getApplicationContext(), "인증을 해주세요", Toast.LENGTH_SHORT);
+//                toast.show();
+//            }
             else {
 
-                userBirth = userBirthInput.getText().toString();
                 userPhoneNumber = userPhoneNumberInput.getText().toString();
                 certificationNumber = certificationNumberInput.getText().toString();
 
-//                    user.setBirth(userBirth); #userBirth <= String / #setBirth(Date()); //error
-                user.setPhoneNumber(userPhoneNumber);
-//                    user.setcertificationNumber(certificationNumber);
+                signApi.register(userId,userPassword,userName,userBirth,userGender,userPhoneNumber).enqueue(new Callback<SuccessResult>() {
+                    @Override
+                    public void onResponse(Call<SuccessResult> call, Response<SuccessResult> response) {
+
+                        SuccessResult result = response.body();
+
+                        if (result.getResult().equals("success")) {
+
+                            Toast.makeText(getApplicationContext(),"회원가입 성공!",Toast.LENGTH_LONG);
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+
+                            System.out.println("문제 발생");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuccessResult> call, Throwable t) {
+
+                    }
+                });
 
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
@@ -138,6 +179,16 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         }
     }
 
+    private void checkGender() {
+        int genderGroupID = userGenderItem.getCheckedRadioButtonId();
+        userGender = ((RadioButton)findViewById(genderGroupID)).getText().toString();
+
+        userGenderItem.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton genderButton = (RadioButton)findViewById(checkedId);
+            userGender = genderButton.getText().toString();
+        });
+    }
+
     private void showBirthDialog() {
 
         GregorianCalendar calendar = new GregorianCalendar();
@@ -146,7 +197,7 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day= calendar.get(Calendar.DAY_OF_MONTH);
 
-        findViewById(R.id.userBirthButton).setOnClickListener(v -> {
+        userBirthButton.setOnClickListener(v -> {
 
             new DatePickerDialog(RegisterUserInfoActivity.this, dateSetListener, year, month, day).show();
         });
@@ -156,7 +207,8 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-            // TODO Auto-generated method stub
+            Date date = new Date(year-1900, monthOfYear,dayOfMonth);
+            userBirth = date.getTime();
 
             String msg = String.format("%d / %d / %d", year, monthOfYear + 1, dayOfMonth);
 

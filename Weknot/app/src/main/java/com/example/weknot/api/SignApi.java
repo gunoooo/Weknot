@@ -17,9 +17,7 @@ public interface SignApi {
     @POST("")
     Call<SuccessResult> register(@Field("id") String id, @Field("password") String password,
                                  @Field("name") String name, @Field("birth") long birth,
-                                 @Field("gender") String gender, @Field("phoneNumber") String phoneNumber,
-                                 @Field("picture") String picture, @Field("intro") String intro,
-                                 @Field("scope") String scope, @Field("point") int point);
+                                 @Field("gender") String gender, @Field("phoneNumber") String phoneNumber);
 
     @FormUrlEncoded
     @POST("")

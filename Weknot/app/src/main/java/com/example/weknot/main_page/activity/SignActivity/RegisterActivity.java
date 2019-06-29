@@ -142,6 +142,11 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setName(userName);
 
                 Intent intent = new Intent(getApplicationContext(), RegisterUserInfoActivity.class);
+
+                intent.putExtra("id", userId);
+                intent.putExtra("password", userPassword);
+                intent.putExtra("name", userName);
+
                 startActivity(intent);
             }
         });
