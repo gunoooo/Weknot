@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const dbcp = require('../models/dbcp');
 const users = require('../models/users');
+const authMiddle = require("../middlewares/auth");
 
 /* GET user authentication. */
 router.get('/', (req, res, next) => {
@@ -20,6 +21,12 @@ router.post('/login',(req, res, next) => {//userId,userPassword
   const userId = req.body.id;
   const password = req.body.password;
 
+  if(!userId || !password){
+    let result = {result:"fail", token: "babo"}
+    res.json(result);
+    return;
+  }
+
   users.getQueryUser(userId)
   .then((result) => {
     let user;
@@ -29,7 +36,13 @@ router.post('/login',(req, res, next) => {//userId,userPassword
       return;
     }
     if(user.password == password){
-      res.json({result:"success"});
+      users.loginUser(req,res,user)
+      .then((token) => {
+        res.json({
+          result: "success",
+          token});
+      })
+      
     }
     else
       res.json({result:"fail"});
@@ -53,6 +66,8 @@ router.post('/register',(req, res, next) => {
     gender = req.body.userGender,
     phoneNumber = req.body.userPhoneNumber
   ];
+
+
 
   users.registerUser(user)
   .then((result) => {
@@ -124,6 +139,7 @@ router.post('/getMyPassword',(req, res, next) => {//userId,userPhoneNumber,userC
 //});
 
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
+router.use('/addFriend',authMiddle);
 router.post('/addFriend',(req, res, next) => {//userId,friendId
   const idList = [
     userId = req.body.userId,

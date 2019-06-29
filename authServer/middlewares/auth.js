@@ -1,0 +1,49 @@
+const jwt = require('jsonwebtoken')
+
+const authMiddleware = (req, res, next) => {
+
+  // read the token from header or url
+  const token = req.headers['x-access-token']// || req.query.token
+  if(!token) {
+      return res.status(403).json({
+          error : 'No Token'
+      })
+  }
+
+  // create a promise that decodes the token
+  const checkToken = new Promise(
+      (resolve, reject) => {
+          jwt.verify(token, req.app.get('jwt-secret'), (err, decodedToken) => {
+              if(err) reject(err)
+              resolve(decodedToken)
+          })
+      }
+  )
+
+  const checkSubjectAndPurpose = (decodedToken)=>{
+    const userid = decodedToken.sub;
+    const userName = decodedToken.userName;
+
+    console.log(userid, userName);
+    return decodedToken;
+  }
+
+  // if it has failed to verify, it will return an error message
+  const onError = (error) => {
+      res.status(403).json({
+          error: error.message
+      })
+  }
+
+  // process the promise
+  checkToken
+    .then(checkSubjectAndPurpose)
+    .then((decodedToken)=>{
+      req.decodedToken = decodedToken
+      //console.log(req.decodedToken)
+      next()
+    })
+    .catch(onError)
+}
+
+module.exports = authMiddleware
