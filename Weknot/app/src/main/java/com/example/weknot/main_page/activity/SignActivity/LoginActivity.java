@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weknot.R;
 import com.example.weknot.api.SignApi;
-import com.example.weknot.data.Result;
+import com.example.weknot.data.SuccessResult;
 import com.example.weknot.retrofit.MyRetrofit;
 
 import retrofit2.Call;
@@ -45,15 +45,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void test() {
 
-        signApi.login("a", "a").enqueue(new Callback<Result>() {
+        signApi.login("a", "a").enqueue(new Callback<SuccessResult>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(Call<SuccessResult> call, Response<SuccessResult> response) {
 
-                Result result = response.body();
+                SuccessResult successResult = response.body();
 
-                if(result.getResult().equals("success")) {
+                if(successResult.getResult().equals("success")) {
 
-                    System.out.println(result + "Asdfadfasdfsfsdfafd");
+                    System.out.println(successResult + "Asdfadfasdfsfsdfafd");
                 }
                 else {
 
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(Call<SuccessResult> call, Throwable t) {
 
             }
         });

@@ -1,7 +1,7 @@
 package com.example.weknot.api;
 
 import com.example.weknot.data.Friend;
-import com.example.weknot.data.Result;
+import com.example.weknot.data.SuccessResult;
 
 import java.util.List;
 
@@ -23,10 +23,10 @@ public interface FriendApi {
 
     @FormUrlEncoded
     @POST("")
-    Call<Result> addFriend(@Field("userId") String userId, @Field("friendId") String friendId);
+    Call<SuccessResult> addFriend(@Field("userId") String userId, @Field("friendId") String friendId);
 
     @FormUrlEncoded
     @POST("")
-    Call<Result> checkFriend(@Field("userId") String userId, @Field("friendId") String friendId);
+    Call<SuccessResult> checkFriend(@Field("userId") String userId, @Field("friendId") String friendId);
 
 }
