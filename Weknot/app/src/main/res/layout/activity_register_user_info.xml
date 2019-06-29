@@ -53,7 +53,6 @@
         android:ems="12"
         android:hint="생년월일"
         android:inputType="textPersonName"
-        android:editable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
         tools:ignore="Autofill,HardcodedText" />

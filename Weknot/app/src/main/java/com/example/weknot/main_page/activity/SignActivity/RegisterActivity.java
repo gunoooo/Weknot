@@ -45,51 +45,45 @@ public class RegisterActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.nextButton);
         backButton = findViewById(R.id.backButton);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backButton.setOnClickListener(v -> {
 
-                finish();
-            }
+            finish();
         });
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        nextButton.setOnClickListener(v -> {
 
-                if(!(userNameInput.getText().toString().length() > 0)) {
+            if(!(userNameInput.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else if(!(userIdInput.getText().toString().length() > 0)) {
+                Toast toast = Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else if(!(userIdInput.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else if(!(userPasswordInput.getText().toString().length() > 0)) {
+                Toast toast = Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else if(!(userPasswordInput.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else if(!(userPasswordInputCheck.getText().toString().length() > 0)) {
+                Toast toast = Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else if(!(userPasswordInputCheck.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력해주세요", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else {
+                Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력해주세요", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else {
 
-                    userName = userNameInput.getText().toString();
-                    userId = userIdInput.getText().toString();
-                    userPassword = userPasswordInput.getText().toString();
+                userName = userNameInput.getText().toString();
+                userId = userIdInput.getText().toString();
+                userPassword = userPasswordInput.getText().toString();
 
-                    user.setId(userId);
-                    user.setPassword(userPassword);
-                    user.setName(userName);
+                user.setId(userId);
+                user.setPassword(userPassword);
+                user.setName(userName);
 
-                    Intent intent = new Intent(getApplicationContext(), RegisterUserInfoActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), RegisterUserInfoActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         event();
     }
 
-
     private void initData() {
 
         idText = findViewById(R.id.idInput);
@@ -61,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void clickEvent() {
+
         clickLoginButton();
         clickRegisterButton();
         clickForgetButton();
@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
+
                     Toast.makeText(getApplicationContext(),"아이디 또는 비밀번호가 틀렸습니다.",Toast.LENGTH_LONG);
                 }
             }
@@ -97,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         }));
-
     }
 
     private void clickRegisterButton() {
@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(intent);
         });
-
     }
 
     private void clickForgetButton() {

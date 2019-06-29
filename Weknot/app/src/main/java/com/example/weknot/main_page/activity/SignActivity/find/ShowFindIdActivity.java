@@ -19,12 +19,9 @@ public class ShowFindIdActivity extends AppCompatActivity {
 
         backButton = findViewById(R.id.backButton);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        backButton.setOnClickListener(v -> {
 
-                finish();
-            }
+            finish();
         });
     }
 }
