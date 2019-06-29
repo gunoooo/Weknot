@@ -1,8 +1,6 @@
 package com.example.weknot.api;
 
 import com.example.weknot.data.Result;
-import com.example.weknot.data.User;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -16,7 +14,11 @@ public interface SignApi {
 
     @FormUrlEncoded
     @POST("")
-    Call<Result> register(@Field("user") User user);
+    Call<Result> register(@Field("id") String id, @Field("password") String password,
+                          @Field("name") String name, @Field("birth") long birth,
+                          @Field("gender") String gender, @Field("phoneNumber") String phoneNumber,
+                          @Field("picture") String picture, @Field("intro") String intro,
+                          @Field("scope") String scope, @Field("point") int point);
 
 //    @Field("id") String id, @Field("password") String password, @Field("name") String name,
 //    @Field("birth")Date birth, @Field("gender") String gender, @Field("phoneNumber") String phoneNumber,
