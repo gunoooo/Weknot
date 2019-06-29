@@ -1,4 +1,5 @@
 const dbcp = require ('./dbcp');
+const jwt = require('jsonwebtoken');
 
 /*exports.getQueryUser = async (cid) => {
   let conn;
@@ -16,6 +17,32 @@ const dbcp = require ('./dbcp');
 };//일단 전체적으로 리턴하고 전체적으로 할 수 없다 한다면 auth.js에서 queryUser을 두번 쓴 것을 
 //나누어서 사용할것.
 */
+exports.loginUser = (req,res,user) => {
+  const secret = req.app.get('jwt-secret');
+
+  const sign = (user) => {
+    const p = new Promise((resolve, reject) => {
+      let exptime = Math.floor(Date.now() / 1000) + (60*60*24); // 24 hour
+      jwt.sign(
+        {
+          userName: user.name,
+          exp: exptime,
+          iss: 'weknot',
+          sub: user.userId,
+          aud: 'weknot',
+          iat: Math.floor(Date.now() / 1000),
+        },
+        secret,
+        (err, token) => {
+          if (err) reject(err)
+          resolve(token)
+        })
+      })
+      return p;
+  }
+
+   return sign(user);
+  }
 exports.getQueryUser = (cid) => {
   const query = (conn)=>{
     const p = new Promise((resolve, reject)=> {
