@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String userName;
 
     private Button nextButton;
+
+    private TextView backButton;
 
     private EditText userNameInput;
     private EditText userIdInput;
@@ -40,6 +43,15 @@ public class RegisterActivity extends AppCompatActivity {
         userPasswordInput = findViewById(R.id.userPasswordInput);
         userPasswordInputCheck = findViewById(R.id.userPasswordInputCheck);
         nextButton = findViewById(R.id.nextButton);
+        backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
