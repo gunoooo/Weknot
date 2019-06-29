@@ -4,6 +4,7 @@ const authMiddleware = (req, res, next) => {
 
   // read the token from header or url
   const token = req.headers['authorization'];// || req.query.token
+  console.log(token);
   if(!token) {
       return res.status(403).json({
         result: "fail",

@@ -154,6 +154,7 @@ router.post('/getMyPassword',(req, res, next) => {//userId,userPhoneNumber,userC
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
 router.use('/test',authMiddle);
 router.get('/test',(req, res, next) => {
+  console.log("성공");
   res.json({result:"success"});
 })
 
