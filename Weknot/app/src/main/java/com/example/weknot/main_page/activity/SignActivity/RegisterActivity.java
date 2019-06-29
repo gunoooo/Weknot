@@ -122,17 +122,27 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<SuccessResult> call, Response<SuccessResult> response) {
 
-                    validate = true;
+                    SuccessResult result = response.body();
 
-                    userIdInput.setBackgroundColor(Color.GREEN);
-                    validateButton.setBackgroundColor(Color.GREEN);
+                    if (result.getResult().equals("success")) {
 
-                    userIdInput.setClickable(false);
+                        validate = true;
+
+                        userIdInput.setBackgroundColor(Color.GREEN);
+                        validateButton.setBackgroundColor(Color.GREEN);
+
+                        userIdInput.setClickable(false);
+
+                    }
+                    else {
+
+                        Toast.makeText(getApplicationContext(),"이미 있는 아이디에요...",Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<SuccessResult> call, Throwable t) {
-
+                    Toast.makeText(getApplicationContext(),"이게 머람",Toast.LENGTH_LONG).show();
                 }
             });
         });

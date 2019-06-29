@@ -22,6 +22,8 @@ import com.example.weknot.data.User;
 import com.example.weknot.main_page.activity.MainActivity;
 import com.example.weknot.retrofit.MyRetrofit;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -172,10 +174,10 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-            Date date = new Date(year-1900, monthOfYear,dayOfMonth);
-            userBirth = date.getTime();
-
             String msg = String.format("%d / %d / %d", year, monthOfYear + 1, dayOfMonth);
+
+            Date date = new SimpleDateFormat("yyyy / MM / dd").parse(msg,new ParsePosition(0));
+            userBirth = date.getTime();
 
             Toast.makeText(RegisterUserInfoActivity.this, msg, Toast.LENGTH_SHORT).show();
 
