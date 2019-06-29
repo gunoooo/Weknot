@@ -3,6 +3,7 @@ package com.example.weknot.main_page.activity.SignActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.weknot.R;
 import com.example.weknot.api.SignApi;
 import com.example.weknot.data.LoginResult;
+import com.example.weknot.data.SuccessResult;
 import com.example.weknot.main_page.activity.MainActivity;
 import com.example.weknot.main_page.activity.SignActivity.find.ShowFindIdActivity;
 import com.example.weknot.retrofit.MyRetrofit;
@@ -68,36 +70,39 @@ public class LoginActivity extends AppCompatActivity {
 
     private void clickLoginButton() {
 
-        String id = idText.getText().toString();
-        String password = passwordText.getText().toString();
+        loginButton.setOnClickListener(v -> {
 
-        loginButton.setOnClickListener(v -> signApi.login(id, password).enqueue(new Callback<LoginResult>() {
-            @Override
-            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+            String id = idText.getText().toString();
+            String password = passwordText.getText().toString();
 
-                LoginResult loginResult = response.body();
+            signApi.login(id, password).enqueue(new Callback<LoginResult>() {
+                @Override
+                public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
 
-                if(loginResult.getResult().equals("success")) {
+                    LoginResult loginResult = response.body();
 
-                    String token  = loginResult.getToken();
-                    saveToken(token);
+                    if(loginResult.getResult().equals("success")) {
 
-                    Toast.makeText(getApplicationContext(),"로그인 성공!",Toast.LENGTH_LONG);
+                        String token  = loginResult.getToken();
+                        saveToken(token);
 
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+                        Toast.makeText(getApplicationContext(),"로그인 성공!",Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+
+                        Toast.makeText(getApplicationContext(),"아이디 또는 비밀번호가 틀렸습니다.",Toast.LENGTH_LONG).show();
+                    }
                 }
-                else {
 
-                    Toast.makeText(getApplicationContext(),"아이디 또는 비밀번호가 틀렸습니다.",Toast.LENGTH_LONG);
+                @Override
+                public void onFailure(Call<LoginResult> call, Throwable t) {
+
                 }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResult> call, Throwable t) {
-
-            }
-        }));
+            });
+        });
     }
 
     private void clickRegisterButton() {

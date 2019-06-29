@@ -152,23 +152,19 @@ public class RegisterActivity extends AppCompatActivity {
 
             if(!(userNameInput.getText().toString().length() > 0)) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
             }
             else if(!validate) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "아이디 중복확인을 해주세요", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "아이디 중복확인을 해주세요", Toast.LENGTH_SHORT).show();
             }
             else if(!(userPasswordInput.getText().toString().length() > 0)) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
             }
             else if(!(userPasswordInputCheck.getText().toString().length() > 0)) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력해주세요", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "비밀번호 확인을 입력해주세요", Toast.LENGTH_SHORT).show();
             }
             else {
 

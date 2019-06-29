@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyRetrofit {
 
-    public static final String URL = "http://rjsdnqkr1.cafe24.com/";
+    public static final String URL = "http:10.80.162.77:3000";
 
     static Retrofit retrofit;
 
@@ -21,5 +21,4 @@ public class MyRetrofit {
 
         return retrofit;
     }
-
 }
