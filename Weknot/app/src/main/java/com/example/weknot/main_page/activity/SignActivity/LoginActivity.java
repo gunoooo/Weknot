@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<LoginResult> call, Throwable t) {
-
+                    
                 }
             });
         });
