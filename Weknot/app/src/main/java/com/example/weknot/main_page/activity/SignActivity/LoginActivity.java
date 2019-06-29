@@ -58,14 +58,29 @@ public class LoginActivity extends AppCompatActivity {
 
     private void event() {
 
+        checkAutoLogin();
+
         clickEvent();
     }
 
+    private void checkAutoLogin() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("userToken",MODE_PRIVATE);
+
+        String token = sharedPreferences.getString("token","");
+
+        if (token != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
+    }
     private void clickEvent() {
 
         clickLoginButton();
         clickRegisterButton();
         clickForgetButton();
+
     }
 
     private void clickLoginButton() {

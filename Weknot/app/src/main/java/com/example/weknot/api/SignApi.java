@@ -5,6 +5,8 @@ import com.example.weknot.data.SuccessResult;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface SignApi {
@@ -22,4 +24,7 @@ public interface SignApi {
     @FormUrlEncoded
     @POST("/auth/checkUserId")
     Call<SuccessResult> validate(@Field("userId") String id);
+
+//    @GET("/auth/test")
+//    Call<SuccessResult> test(@Header("Authorization") String token);
 }
