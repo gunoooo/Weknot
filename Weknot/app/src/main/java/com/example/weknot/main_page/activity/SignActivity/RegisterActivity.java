@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.weknot.R;
 import com.example.weknot.api.SignApi;
 import com.example.weknot.data.SuccessResult;
-import com.example.weknot.data.User;
 import com.example.weknot.retrofit.MyRetrofit;
 
 import retrofit2.Call;
@@ -136,13 +134,14 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     else {
 
-                        Toast.makeText(getApplicationContext(),"이미 있는 아이디에요...",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"이미 사용중인 아이디 입니다",Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<SuccessResult> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),"이게 머람",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getApplicationContext(),"서버 접속 오류",Toast.LENGTH_LONG).show();
                 }
             });
         });

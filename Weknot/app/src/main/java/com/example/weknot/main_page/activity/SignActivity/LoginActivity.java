@@ -70,17 +70,18 @@ public class LoginActivity extends AppCompatActivity {
         String token = sharedPreferences.getString("token","");
 
         if (token != null) {
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
 
     }
+
     private void clickEvent() {
 
         clickLoginButton();
         clickRegisterButton();
         clickForgetButton();
-
     }
 
     private void clickLoginButton() {
@@ -101,12 +102,13 @@ public class LoginActivity extends AppCompatActivity {
                         String token  = loginResult.getToken();
                         saveToken(token);
 
-                        Toast.makeText(getApplicationContext(),"로그인 성공!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"로그인 성공",Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                     else {
+
                         Toast.makeText(getApplicationContext(),"아이디 또는 비밀번호가 틀렸습니다.",Toast.LENGTH_LONG).show();
                     }
                 }
@@ -139,10 +141,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveToken(String token) {
-        SharedPreferences sharedPreferences = getSharedPreferences("userToken",MODE_PRIVATE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("userToken", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("token",token);
+        editor.putString("token", token);
 
         editor.commit();
     }

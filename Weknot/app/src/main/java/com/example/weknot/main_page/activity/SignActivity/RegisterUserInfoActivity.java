@@ -105,8 +105,7 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
             if(!(userBirthInput.getText().toString().length() > 0)) {
 
-                Toast toast = Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
             }
             else if(!(userPhoneNumber.length() > 0)) {
 
@@ -122,7 +121,8 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
                         if (result.getResult().equals("success")) {
 
-                            Toast.makeText(getApplicationContext(),"회원가입 성공!",Toast.LENGTH_LONG);
+                            Toast.makeText(getApplicationContext(),"회원가입 성공",Toast.LENGTH_LONG).show();
+
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(intent);
                         }
@@ -147,10 +147,13 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
     }
 
     private void checkGender() {
+
         int genderGroupID = userGenderItem.getCheckedRadioButtonId();
+
         userGender = ((RadioButton)findViewById(genderGroupID)).getText().toString();
 
         userGenderItem.setOnCheckedChangeListener((group, checkedId) -> {
+
             RadioButton genderButton = (RadioButton)findViewById(checkedId);
             userGender = genderButton.getText().toString();
         });
