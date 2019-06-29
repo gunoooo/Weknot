@@ -54,12 +54,12 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
 
                 if(!(userBirthInput.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else if(!(userPhoneNumberInput.getText().toString().length() > 0)) {
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "휴대폰 번호를 입력해주세요", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 /*else if(!(certificationNumberInput.getText().toString().length() > 0)) {
@@ -78,7 +78,7 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                     userPhoneNumber = userPhoneNumberInput.getText().toString();
                     certificationNumber = certificationNumberInput.getText().toString();
 
-                    //user.setBirth(userBirth); #userBirth <= String / #setBirth(Date()); //error
+//                    user.setBirth(userBirth); #userBirth <= String / #setBirth(Date()); //error
                     user.setPhoneNumber(userPhoneNumber);
 //                    user.setcertificationNumber(certificationNumber);
 
