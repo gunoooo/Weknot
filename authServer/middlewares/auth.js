@@ -3,10 +3,11 @@ const jwt = require('jsonwebtoken')
 const authMiddleware = (req, res, next) => {
 
   // read the token from header or url
-  const token = req.headers['x-access-token']// || req.query.token
+  const token = req.headers['authorization'];// || req.query.token
   if(!token) {
       return res.status(403).json({
-          error : 'No Token'
+        result: "fail",
+        error : 'No Token'
       })
   }
 
@@ -31,6 +32,7 @@ const authMiddleware = (req, res, next) => {
   // if it has failed to verify, it will return an error message
   const onError = (error) => {
       res.status(403).json({
+          result: "fail",
           error: error.message
       })
   }
@@ -40,7 +42,7 @@ const authMiddleware = (req, res, next) => {
     .then(checkSubjectAndPurpose)
     .then((decodedToken)=>{
       req.decodedToken = decodedToken
-      //console.log(req.decodedToken)
+      console.log(req.decodedToken)
       next()
     })
     .catch(onError)
