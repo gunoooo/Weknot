@@ -279,7 +279,7 @@ exports.refuseFriend = async (knotArr) => {
 
 exports.getChattingRooms = async () => {
   let conn;
-  const sql = "SELECT roomNumber,roomName,master,password,type FROM chatroom "
+  const sql = "SELECT id,roomName,master,password,type FROM chatroom "
   let result;
   try{
     conn = await dbcp.getConnection();
