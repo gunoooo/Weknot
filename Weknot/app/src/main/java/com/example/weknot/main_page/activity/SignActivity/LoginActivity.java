@@ -3,7 +3,6 @@ package com.example.weknot.main_page.activity.SignActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.weknot.R;
 import com.example.weknot.api.SignApi;
 import com.example.weknot.data.LoginResult;
-import com.example.weknot.data.SuccessResult;
 import com.example.weknot.main_page.activity.MainActivity;
 import com.example.weknot.main_page.activity.SignActivity.find.ShowFindIdActivity;
 import com.example.weknot.retrofit.MyRetrofit;
@@ -37,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_activity);
 
         initData();
 
