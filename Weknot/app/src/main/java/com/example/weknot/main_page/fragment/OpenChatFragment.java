@@ -65,7 +65,7 @@ public class OpenChatFragment extends BaseFragment<OpenChatFragmentBinding> {
 
     private void connectRecyclerView(RecyclerView chatRoomRecyclerView, List<OpenChat> openChatList) {
 
-        chatRoomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        chatRoomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         OpenChatRecyclerViewAdapter openChatRecyclerViewAdapter = new OpenChatRecyclerViewAdapter();
         chatRoomRecyclerView.setAdapter(openChatRecyclerViewAdapter);
