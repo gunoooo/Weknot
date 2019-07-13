@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public static ProfileFragment newInstance() {
+    public ProfileFragment newInstance() {
         Bundle args = new Bundle();
 
         ProfileFragment profileFragment = new ProfileFragment();

@@ -2,12 +2,11 @@ package com.example.weknot.main_page.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
 import com.example.weknot.R;
+import com.example.weknot.adapter.PagerAdapter;
 import com.example.weknot.databinding.MainActivityBinding;
 
 public class MainActivity extends AppCompatActivity {

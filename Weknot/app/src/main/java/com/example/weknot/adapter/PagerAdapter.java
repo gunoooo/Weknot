@@ -1,4 +1,4 @@
-package com.example.weknot.main_page.activity;
+package com.example.weknot.adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,9 +30,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 case 2:
                     return VideoCallFragment.newInstance();
                 case 3:
-                    return SocialFragment.newInstance();
+                    return new SocialFragment().newInstance();
                 case 4:
-                    return ProfileFragment.newInstance();
+                    return new ProfileFragment().newInstance();
                 default:
                     return null;
             }

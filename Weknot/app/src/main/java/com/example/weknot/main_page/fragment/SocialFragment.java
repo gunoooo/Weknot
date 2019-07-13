@@ -2,8 +2,6 @@ package com.example.weknot.main_page.fragment;
 
 import android.os.Bundle;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,34 +18,11 @@ import com.example.weknot.retrofit.MyRetrofit;
 
 import java.util.List;
 
-public class SocialFragment extends Fragment {
+public class SocialFragment extends BaseFragment<SocialFragmentBinding,SocialFragment> {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public SocialFragment() {
+        super(R.layout.social_fragment,new SocialFragment());
     }
-
-    public static SocialFragment newInstance() {
-        Bundle args = new Bundle();
-
-        SocialFragment socialFragment = new SocialFragment();
-        socialFragment.setArguments(args);
-        return socialFragment;
-    }
-
-    private SocialFragmentBinding binding;
-
-    private View view;
 
     private FriendApi friendApi;
 
@@ -57,10 +32,6 @@ public class SocialFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.social_fragment, container, false);
-        view = binding.getRoot();
 
         init();
 
@@ -109,10 +80,5 @@ public class SocialFragment extends Fragment {
         SocialRecyclerViewAdapter socialRecyclerViewAdapter = new SocialRecyclerViewAdapter(type);
         recyclerView.setAdapter(socialRecyclerViewAdapter);
 
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 }
