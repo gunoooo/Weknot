@@ -5,18 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weknot.R;
 import com.example.weknot.adapter.OpenChatRecyclerViewAdapter;
-import com.example.weknot.adapter.SocialRecyclerViewAdapter;
 import com.example.weknot.api.OpenChatApi;
-import com.example.weknot.data.Friend;
 import com.example.weknot.data.OpenChat;
 import com.example.weknot.databinding.OpenChatFragmentBinding;
 import com.example.weknot.retrofit.MyRetrofit;

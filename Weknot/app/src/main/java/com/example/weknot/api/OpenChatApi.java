@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface OpenChatApi {
@@ -17,7 +18,13 @@ public interface OpenChatApi {
 
     @FormUrlEncoded
     @GET("")
-    Call<List<OpenChat>> chattingRooms(@Field("id") String id);
+    Call<List<OpenChat>> getChatRoomsList(@Field("roomNumber") String roomNumber, @Field("roomName") String roomName,
+                                          @Field("masterName") String masterName, @Field("roomPassword") String roomPassword,
+                                          @Field("roomType") String roomType);
+
+    @FormUrlEncoded
+    @POST("/auth/test")
+    Call<SuccessResult> test(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @GET("")
