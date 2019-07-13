@@ -24,11 +24,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
             switch (i) {
                 case 0:
-                    return SocialFragment.newInstance();
+                    return NewsFeedFragment.newInstance();
                 case 1:
                     return OpenChatFragment.newInstance();
                 case 2:
-                    return NewsFeedFragment.newInstance();
+                    return SocialFragment.newInstance();
                 case 3:
                     return VideoCallFragment.newInstance();
                 case 4:
