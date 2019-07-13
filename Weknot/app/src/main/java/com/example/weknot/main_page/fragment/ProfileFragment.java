@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -12,33 +13,14 @@ import com.example.weknot.R;
 import com.example.weknot.databinding.OpenChatFragmentBinding;
 import com.example.weknot.databinding.ProfileFragmentBinding;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment<ProfileFragmentBinding> {
 
-    public static ProfileFragment newInstance() {
-        Bundle args = new Bundle();
-
-        ProfileFragment profileFragment = new ProfileFragment();
-        profileFragment.setArguments(args);
-        return profileFragment;
-    }
-
-    private ProfileFragmentBinding binding;
-
-    private View view;
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.profile_fragment, container, false);
-        view = binding.getRoot();
-
-        return view;
+    public ProfileFragment() {
+        super(R.layout.profile_fragment);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }
