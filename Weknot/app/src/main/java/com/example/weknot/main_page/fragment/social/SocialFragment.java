@@ -1,6 +1,5 @@
 package com.example.weknot.main_page.fragment.social;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -51,7 +50,7 @@ public class SocialFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_social, container, false);
+                inflater, R.layout.social_fragment, container, false);
         view = binding.getRoot();
 
         init();

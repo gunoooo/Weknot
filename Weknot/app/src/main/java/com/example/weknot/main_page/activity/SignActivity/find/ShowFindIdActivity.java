@@ -14,7 +14,7 @@ public class ShowFindIdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_find_id);
+        setContentView(R.layout.show_find_id_activity);
 
         initData();
 
