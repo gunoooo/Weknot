@@ -2,12 +2,9 @@ package com.example.weknot.main_page.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.weknot.R;
 import com.example.weknot.adapter.SocialRecyclerViewAdapter;
@@ -18,10 +15,19 @@ import com.example.weknot.retrofit.MyRetrofit;
 
 import java.util.List;
 
-public class SocialFragment extends BaseFragment<SocialFragmentBinding,SocialFragment> {
+public class SocialFragment extends BaseFragment<SocialFragmentBinding> {
+
+    public static SocialFragment newInstance() {
+        Bundle args = new Bundle();
+
+        SocialFragment socialFragment = new SocialFragment();
+        socialFragment.setArguments(args);
+
+        return socialFragment;
+    }
 
     public SocialFragment() {
-        super(R.layout.social_fragment,new SocialFragment());
+        super(R.layout.social_fragment);
     }
 
     private FriendApi friendApi;
@@ -30,12 +36,10 @@ public class SocialFragment extends BaseFragment<SocialFragmentBinding,SocialFra
     private List<Friend> friendList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         init();
-
-        return view;
     }
 
     private void init() {

@@ -12,7 +12,7 @@ import com.example.weknot.main_page.fragment.VideoCallFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    private static int PAGE_NUMBER = 5;
+    private static int PAGE_NUMBER = 4;
 
     public PagerAdapter(FragmentManager fm) {
         super(fm);
@@ -30,9 +30,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 case 2:
                     return VideoCallFragment.newInstance();
                 case 3:
-                    return new SocialFragment().newInstance();
+                    return SocialFragment.newInstance();
                 case 4:
-                    return new ProfileFragment().newInstance();
+                    return ProfileFragment.newInstance();
                 default:
                     return null;
             }

@@ -23,6 +23,6 @@ public class MainActivity extends AppCompatActivity {
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         binding.viewPager.setAdapter(pagerAdapter);
-        binding.viewPager.setOffscreenPageLimit(4);
+        binding.viewPager.setOffscreenPageLimit(2);
     }
 }
