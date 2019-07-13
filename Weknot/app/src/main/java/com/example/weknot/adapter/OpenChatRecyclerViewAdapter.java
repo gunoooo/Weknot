@@ -3,7 +3,6 @@ package com.example.weknot.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +12,7 @@ import com.example.weknot.data.OpenChat;
 
 import java.util.ArrayList;
 
-public class OpenChatRecyclerViewAdapter extends RecyclerView.Adapter<RawCell> {
+public class OpenChatRecyclerViewAdapter extends RecyclerView.Adapter<OpenChatRawCell> {
 
     private View view;
     private ArrayList<OpenChat> data;
@@ -30,15 +29,15 @@ public class OpenChatRecyclerViewAdapter extends RecyclerView.Adapter<RawCell> {
 
     @NonNull
     @Override
-    public RawCell onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OpenChatRawCell onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_list_item,parent,false);
 
-        return new RawCell(view);
+        return new OpenChatRawCell(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RawCell holder, int position) {
+    public void onBindViewHolder(@NonNull OpenChatRawCell holder, int position) {
 
         OpenChat chat = data.get(position);
 

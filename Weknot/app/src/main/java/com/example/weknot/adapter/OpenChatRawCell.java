@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weknot.R;
 
-public class RawCell extends RecyclerView.ViewHolder {
+public class OpenChatRawCell extends RecyclerView.ViewHolder {
 
     public TextView roomNumber;
     public TextView masterName;
     public TextView roomName;
 
-    public RawCell(View view) {
+    public OpenChatRawCell(View view) {
         super(view);
 
         initData(view);
