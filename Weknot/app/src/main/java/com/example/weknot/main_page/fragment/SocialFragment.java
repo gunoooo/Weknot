@@ -1,4 +1,4 @@
-package com.example.weknot.main_page.fragment.social;
+package com.example.weknot.main_page.fragment;
 
 import android.os.Bundle;
 
@@ -12,9 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.weknot.R;
+import com.example.weknot.adapter.SocialRecyclerViewAdapter;
 import com.example.weknot.api.FriendApi;
 import com.example.weknot.data.Friend;
-import com.example.weknot.databinding.FragmentSocialBinding;
+import com.example.weknot.databinding.SocialFragmentBinding;
 import com.example.weknot.retrofit.MyRetrofit;
 
 import java.util.List;
@@ -36,7 +37,15 @@ public class SocialFragment extends Fragment {
         }
     }
 
-    private FragmentSocialBinding binding;
+    public static SocialFragment newInstance() {
+        Bundle args = new Bundle();
+
+        SocialFragment socialFragment = new SocialFragment();
+        socialFragment.setArguments(args);
+        return socialFragment;
+    }
+
+    private SocialFragmentBinding binding;
 
     private View view;
 

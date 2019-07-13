@@ -1,4 +1,4 @@
-package com.example.weknot.main_page.fragment.social;
+package com.example.weknot.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
