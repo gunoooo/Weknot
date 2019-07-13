@@ -18,12 +18,10 @@ public interface OpenChatApi {
 
     @FormUrlEncoded
     @GET("")
-    Call<List<OpenChat>> getChatRoomsList(@Field("roomNumber") String roomNumber, @Field("roomName") String roomName,
-                                          @Field("masterName") String masterName, @Field("roomPassword") String roomPassword,
-                                          @Field("roomType") String roomType);
+    Call<List<OpenChat>> getChatRoomsList(@Header("Authorization") String token);
 
     @FormUrlEncoded
-    @POST("/auth/test")
+    @POST("")
     Call<SuccessResult> test(@Header("Authorization") String token);
 
     @FormUrlEncoded

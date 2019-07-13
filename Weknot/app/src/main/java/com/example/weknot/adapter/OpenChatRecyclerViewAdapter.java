@@ -41,7 +41,7 @@ public class OpenChatRecyclerViewAdapter extends RecyclerView.Adapter<OpenChatRa
 
         OpenChat chat = data.get(position);
 
-        holder.roomNumber.setText(chat.getRoomNumber());
+        holder.roomNumber.setText(chat.getRoomId());
         holder.masterName.setText(chat.getMasterName());
         holder.roomName.setText(chat.getRoomName());
     }

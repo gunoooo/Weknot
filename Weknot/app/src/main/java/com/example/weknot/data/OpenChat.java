@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class OpenChat {
 
-    @SerializedName("roomNumber")
-    private String roomNumber;
+    @SerializedName("id")
+    private String roomId;
 
     @SerializedName("masterName")
     private String masterName;
@@ -13,20 +13,20 @@ public class OpenChat {
     @SerializedName("roomName")
     private String roomName;
 
-    @SerializedName("roomPassword")
+    @SerializedName("roomPassword") // null 이 올 수도 있음.
     private String roomPassword;
 
     @SerializedName("roomType")
     private String roomType;
 
-    public String getRoomNumber() {
+    public String getRoomId() {
 
-        return roomNumber;
+        return roomId;
     }
 
-    public void setRoomNumber(String roomNumber) {
+    public void setRoomId(String roomId) {
 
-        this.roomNumber = roomNumber;
+        this.roomId = roomId;
     }
 
     public String getMasterName() {
