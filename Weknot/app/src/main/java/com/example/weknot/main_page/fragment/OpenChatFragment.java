@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,22 +20,7 @@ import com.example.weknot.retrofit.MyRetrofit;
 
 import java.util.List;
 
-public class OpenChatFragment extends Fragment {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+public class OpenChatFragment extends BaseFragment<OpenChatFragmentBinding> {
 
     public static OpenChatFragment newInstance() {
         Bundle args = new Bundle();
@@ -45,25 +31,19 @@ public class OpenChatFragment extends Fragment {
         return openChatFragment;
     }
 
-    private OpenChatFragmentBinding binding;
-
-    private View view;
+    public OpenChatFragment() {
+        super(R.layout.open_chat_fragment);
+    }
 
     private OpenChatApi openChatApi;
 
     private List<OpenChat> openChatList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.open_chat_fragment, container, false);
-
-        view = binding.getRoot();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         init();
-
-        return view;
     }
 
     private void init() {
@@ -80,10 +60,10 @@ public class OpenChatFragment extends Fragment {
 
     private void setRecyclerView() {
 
-        connetRecyclerView(binding.chatRoomRecyclerView, openChatList);
+        connectRecyclerView(binding.chatRoomRecyclerView, openChatList);
     }
 
-    private void connetRecyclerView(RecyclerView chatRoomRecyclerView, List<OpenChat> openChatList) {
+    private void connectRecyclerView(RecyclerView chatRoomRecyclerView, List<OpenChat> openChatList) {
 
         chatRoomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
