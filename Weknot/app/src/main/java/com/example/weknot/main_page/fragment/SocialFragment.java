@@ -12,6 +12,7 @@ import com.example.weknot.api.FriendApi;
 import com.example.weknot.data.Friend;
 import com.example.weknot.databinding.SocialFragmentBinding;
 import com.example.weknot.retrofit.MyRetrofit;
+import com.example.weknot.viewmodel.SocialViewModel;
 
 import java.util.List;
 
@@ -21,15 +22,16 @@ public class SocialFragment extends BaseFragment<SocialFragmentBinding> {
         super(R.layout.social_fragment);
     }
 
-    private FriendApi friendApi;
-
     private List<Friend> requestList;
     private List<Friend> friendList;
+
+    private SocialViewModel socialViewModel;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        socialViewModel = new SocialViewModel(getContext(), SocialViewModel.class);
         init();
     }
 
@@ -42,8 +44,6 @@ public class SocialFragment extends BaseFragment<SocialFragmentBinding> {
     }
 
     private void initData() {
-
-        friendApi = MyRetrofit.getRetrofit().create(FriendApi.class);
 
     }
 
