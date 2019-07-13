@@ -43,9 +43,6 @@ public class SocialFragment extends Fragment {
 
     private FriendApi friendApi;
 
-    private RecyclerView requestView;
-    private RecyclerView friendView;
-
     private List<Friend> requestList;
     private List<Friend> friendList;
 
@@ -74,9 +71,6 @@ public class SocialFragment extends Fragment {
 
         friendApi = MyRetrofit.getRetrofit().create(FriendApi.class);
 
-        requestView = binding.recyclerViewRequestFriend;
-        friendView = binding.recyclerViewFriend;
-
     }
 
     private void setSocialList() {
@@ -94,8 +88,8 @@ public class SocialFragment extends Fragment {
 
     private void setRecyclerView() {
 
-        connetRecyclerView(requestView, requestList, false);
-        connetRecyclerView(friendView, friendList, true);
+        connetRecyclerView(binding.recyclerViewRequestFriend, requestList, false);
+        connetRecyclerView(binding.recyclerViewFriend, friendList, true);
 
     }
 
