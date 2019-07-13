@@ -28,9 +28,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
                 case 1:
                     return OpenChatFragment.newInstance();
                 case 2:
-                    return SocialFragment.newInstance();
-                case 3:
                     return VideoCallFragment.newInstance();
+                case 3:
+                    return SocialFragment.newInstance();
                 case 4:
                     return ProfileFragment.newInstance();
                 default:
