@@ -1,10 +1,8 @@
 package com.example.weknot.main_page.activity.SignActivity;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -12,14 +10,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.weknot.R;
 import com.example.weknot.api.SignApi;
 import com.example.weknot.data.SuccessResult;
-import com.example.weknot.data.User;
-import com.example.weknot.main_page.activity.MainActivity;
 import com.example.weknot.retrofit.MyRetrofit;
 
 import java.text.ParsePosition;
@@ -54,7 +49,7 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_user_info);
+        setContentView(R.layout.register_user_info_activity);
 
         initData();
 

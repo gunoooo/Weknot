@@ -4,10 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResult {
 
-    @SerializedName("result")
     private String result;
 
-    @SerializedName("token")
     private String token;
 
     public String getResult() {

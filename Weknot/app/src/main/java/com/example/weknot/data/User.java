@@ -34,7 +34,7 @@ public class User {
     private String scope;
 
     @SerializedName("point")
-    private int point;
+    private Integer point;
 
     public String getId() {
         return id;
