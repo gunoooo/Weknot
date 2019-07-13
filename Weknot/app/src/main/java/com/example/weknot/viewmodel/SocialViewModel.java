@@ -1,7 +1,9 @@
 package com.example.weknot.viewmodel;
 
 
-public class SocialViewModel{
+import androidx.lifecycle.ViewModel;
+
+public class SocialViewModel extends ViewModel {
 
 
 }

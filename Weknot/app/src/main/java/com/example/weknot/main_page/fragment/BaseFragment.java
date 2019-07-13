@@ -20,6 +20,13 @@ public class BaseFragment<VB extends ViewDataBinding> extends Fragment {
         this.layout = layout;
     }
 
+    public static<T extends Fragment> T newInstance(T fragment) {
+        Bundle args = new Bundle();
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

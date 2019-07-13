@@ -29,7 +29,7 @@ public class SocialRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
 
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_list_item,parent,false);
 
-        return new RawCell(view, type);
+        return new SocialRawCell(view, type);
 
     }
 
@@ -41,47 +41,5 @@ public class SocialRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemCount() {
         return 10;
-    }
-
-    private static class RawCell extends RecyclerView.ViewHolder {
-
-        private final boolean REQUEST = false;
-        private final boolean FRIEND = true;
-
-        private ImageView userPhoto;
-        private TextView userName;
-        private TextView userScore;
-
-        private TextView acceptBtn;
-        private TextView cutBtn;
-
-        public RawCell(View view, boolean type) {
-            super(view);
-
-            initData(view);
-            checkType(type);
-        }
-
-        private void initData(View view) {
-
-            userPhoto = view.findViewById(R.id.userPhotoImageView);
-            userName = view.findViewById(R.id.userNameTextView);
-            userScore = view.findViewById(R.id.userScoreTextView);
-
-            acceptBtn = view.findViewById(R.id.acceptFriendBtn);
-            cutBtn = view.findViewById(R.id.cutFriendBtn);
-
-        }
-
-        private void checkType(boolean type) {
-
-            if (type == REQUEST) {
-                acceptBtn.setVisibility(View.VISIBLE);
-            }
-            else if (type == FRIEND) {
-                acceptBtn.setVisibility(View.INVISIBLE);
-            }
-
-        }
     }
 }

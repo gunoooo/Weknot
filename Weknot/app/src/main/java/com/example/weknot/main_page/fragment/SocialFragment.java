@@ -17,15 +17,6 @@ import java.util.List;
 
 public class SocialFragment extends BaseFragment<SocialFragmentBinding> {
 
-    public static SocialFragment newInstance() {
-        Bundle args = new Bundle();
-
-        SocialFragment socialFragment = new SocialFragment();
-        socialFragment.setArguments(args);
-
-        return socialFragment;
-    }
-
     public SocialFragment() {
         super(R.layout.social_fragment);
     }
