@@ -287,7 +287,7 @@ router.get('/dm/:dmId',(req, res, next) => {
   const dmId = req.params.dmId;
 });//friendId,friendPicture,message,date,dmId,files
 
-router.get('/friends', (req,res,next) => {
+router.get('/friends', (req,res,next) => {//friend에서 state가 2인 사람들을 불러와야함.
   const friends = [
     {
       friendId: "wowjd",
@@ -309,6 +309,22 @@ router.get('/friends', (req,res,next) => {
     result: friends,
     message: "ok"
   });
+})
+
+router.post('/requestFriend', (req,res,next) => {
+  const userId = "wowjddl";
+  const friendId = "Ryu";
+
+  res.json({
+    result: "success",
+    message: "ok"
+  });
+  /*
+  res.json({
+    result: "fail",
+    message: "error"
+  })
+  */
 })
 
 module.exports = router;
