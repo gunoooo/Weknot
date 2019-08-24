@@ -33,6 +33,8 @@ public class LoginActivity extends BaseActivity<LoginActivityBinding> {
 
     private void loginObserve() {
         loginViewModel.getData().observe(this, loginData -> {
+            loginViewModel.insertUser(loginData.getUser());
+            loginViewModel.setToken(loginData.getToken());
             startActivity(new Intent(this, MainActivity.class));
         });
 
@@ -41,15 +43,12 @@ public class LoginActivity extends BaseActivity<LoginActivityBinding> {
 
     private void clickEvent() {
         binding.loginBtn.setOnClickListener(v -> {
-
             setRequest();
-
             loginViewModel.login();
         });
     }
 
     private void setRequest() {
-
         loginViewModel.request.setValue(new LoginRequest(binding.idText.getText().toString(), binding.pwText.getText().toString()));
     }
 

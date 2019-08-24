@@ -17,7 +17,7 @@ public class SignUpViewModel extends BaseViewModel<NoneData, SignUpRequest> {
         signComm = new SignComm();
     }
 
-    public void SignUp() {
+    public void signUp() {
 
         addDisposable(signComm.signUp(request.getValue()), getBaseObserver());
     }

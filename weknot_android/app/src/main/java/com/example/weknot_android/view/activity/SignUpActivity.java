@@ -22,7 +22,7 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
 
         initViewModel();
 
-        SignUpObserve();
+        signUpObserve();
 
         clickEvent();
     }
@@ -31,7 +31,7 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
         signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
     }
 
-    private void SignUpObserve() {
+    private void signUpObserve() {
 
         signUpViewModel.getErrorMessage().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
 
@@ -43,7 +43,7 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
 
             setRequest();
 
-            signUpViewModel.SignUp();
+            signUpViewModel.signUp();
         });
     }
 
@@ -56,7 +56,6 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
 
     @Override
     protected int layoutId() {
-
         return R.layout.sign_up_activity;
     }
 }

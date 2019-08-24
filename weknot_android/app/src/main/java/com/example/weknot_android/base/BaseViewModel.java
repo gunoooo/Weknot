@@ -1,14 +1,12 @@
 package com.example.weknot_android.base;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.weknot_android.room.entity.Token;
+import com.example.weknot_android.room.sharedpreference.Token;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,7 +44,7 @@ public abstract class BaseViewModel<DT, RT> extends AndroidViewModel {
     protected BaseViewModel(Application application) {
         super(application);
         disposable = new CompositeDisposable();
-//        token = new Token(context);
+        token = new Token(application);
     }
 
     public void addDisposable(Single single, DisposableSingleObserver observer) {
