@@ -20,8 +20,8 @@ public abstract class BaseViewModel<DT, RT> extends AndroidViewModel {
     private CompositeDisposable disposable;
     private Token token;
 
-    final MutableLiveData<String> successMessage = new MutableLiveData<>();
-    final MutableLiveData<String> errorMessage = new MutableLiveData<>();
+    public final MutableLiveData<String> successMessage = new MutableLiveData<>();
+    public final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     final MutableLiveData<DT> data = new MutableLiveData<>();
     public final MutableLiveData<RT> request = new MutableLiveData<>();
 
