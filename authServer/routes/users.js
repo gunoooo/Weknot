@@ -98,7 +98,6 @@ router.post('/feeds', (req,res,next) => {
     {
       writePicture: "Wpic3",
       writeName: "cccc",
-      date: "2006-07-24",
       feedId: "windy",
       feedPicture: "Fpic3",
       feedComment: "Cry",
@@ -108,7 +107,6 @@ router.post('/feeds', (req,res,next) => {
     {
       writePicture: "Wpic4",
       writeName: "dddd",
-      date: "1992-03-23",
       feedId: "snow",
       feedPicture: "Fpic4",
       feedComment: "Im lonely",
@@ -130,8 +128,19 @@ router.post('/like', (req, res, next) => {
   res.json({
     result: "success",
     message: "ok"
-  })
+  });
 });
+
+router.post('/createFeed', (req, res, next) => {
+  const feedPicture = "Fpic1";
+  const feedComment = "Hello";
+
+  res.json({
+    result: "success",
+    message: "ok"
+  });
+});
+
 
 
 /*router.get('/:id/log/:category', function(req, res, next) {
