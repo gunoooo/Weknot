@@ -133,20 +133,6 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
   })
 });*/
 
-router.post('/getMyId',(req, res, next) => {//userName,userPhoneNumber,userCertNumber
-  const userName = req.body.userName;
-  const userPhoneNumber = req.body.userPhoneNumber;
-  const userCertNumber = req.body.userCertNumber;
-
-});//userId
-
-router.post('/getMyPassword',(req, res, next) => {//userId,userPhoneNumber,userCertNumber
-  const userName = req.body.userName;
-  const userPhoneNumber = req.body.userPhoneNumber;
-  const userCertNumber = req.body.userCertNumber;
-
-});//userPassword
-
 //router.post('/addLike',(req, res, next) => {//friendId
  // const friendId = req.body.friendId;
 
@@ -273,7 +259,7 @@ router.get('/chattingRooms',(req, res, next) => {//userId
   });
 });//roomNumber,roomName,masterName,roomPassword,roomType
 
-router.get('/dm',(req, res, next) => {//userId
+router.post('/dm',(req, res, next) => {//userId
 //  const userId = req.body.userId;
   const userId = "w";
   let dm;
@@ -300,5 +286,29 @@ router.get('/dm',(req, res, next) => {//userId
 router.get('/dm/:dmId',(req, res, next) => {
   const dmId = req.params.dmId;
 });//friendId,friendPicture,message,date,dmId,files
+
+router.get('/friends', (req,res,next) => {
+  const friends = [
+    {
+      friendId: "wowjd",
+      friendPicture: "google",
+      friendPoint: 3
+    },
+    {
+      friendId: "wowjdd",
+      friendPicture: "googlde",
+      friendPoint: 4
+    },
+    {
+      friendId: "wowjdz",
+      friendPicture: "googlee",
+      friendPoint: 5
+    }
+  ]
+  res.json({
+    result: friends,
+    message: "ok"
+  });
+})
 
 module.exports = router;
