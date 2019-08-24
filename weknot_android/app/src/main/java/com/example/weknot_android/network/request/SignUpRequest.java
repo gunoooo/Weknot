@@ -10,6 +10,7 @@ public class SignUpRequest {
     private String phoneNumber;
 
     public SignUpRequest(String id, String pw, String name, String birth, String gender, String phoneNumber) {
+
         this.id = id;
         this.pw = pw;
         this.name = name;
