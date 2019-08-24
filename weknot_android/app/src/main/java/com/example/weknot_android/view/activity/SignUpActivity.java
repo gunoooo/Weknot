@@ -22,7 +22,7 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
 
         initViewModel();
 
-        signUpObserve();
+        observeSignUpViewModel();
 
         clickEvent();
     }
@@ -31,8 +31,7 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
         signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
     }
 
-    private void signUpObserve() {
-
+    private void observeSignUpViewModel() {
         signUpViewModel.getErrorMessage().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
 
         signUpViewModel.getSuccessMessage().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
@@ -40,15 +39,12 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
 
     private void clickEvent() {
         binding.signUpButton.setOnClickListener(v -> {
-
             setRequest();
-
             signUpViewModel.signUp();
         });
     }
 
     private void setRequest() {
-
         signUpViewModel.request.setValue(new SignUpRequest(binding.idText.getText().toString(), binding.pwText.getText().toString(),
                 binding.nameText.getText().toString(), binding.birthText.getText().toString(), binding.genderText.getText().toString(),
                 binding.phoneNumber.getText().toString()));

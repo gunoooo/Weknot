@@ -22,7 +22,7 @@ public class LoginActivity extends BaseActivity<LoginActivityBinding> {
 
         initViewModel();
 
-        loginObserve();
+        observeLoginViewModel();
 
         clickEvent();
     }
@@ -31,7 +31,7 @@ public class LoginActivity extends BaseActivity<LoginActivityBinding> {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
     }
 
-    private void loginObserve() {
+    private void observeLoginViewModel() {
         loginViewModel.getData().observe(this, loginData -> {
             loginViewModel.insertUser(loginData.getUser());
             loginViewModel.setToken(loginData.getToken());

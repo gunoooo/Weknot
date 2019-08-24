@@ -13,14 +13,14 @@ import com.example.weknot_android.room.repository.UserRepository;
 public class LoginViewModel extends BaseViewModel<LoginData, LoginRequest> {
 
     private UserRepository repository;
-    private SignComm signComm;
     private TokenManager tokenManager;
+    private SignComm signComm;
 
     protected LoginViewModel(Application application) {
         super(application);
         repository = new UserRepository(application);
-        signComm = new SignComm();
         tokenManager = new TokenManager(application);
+        signComm = new SignComm();
     }
 
     public void login() {

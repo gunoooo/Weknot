@@ -1,16 +1,20 @@
 package com.example.weknot_android.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.example.weknot_android.R;
+import com.example.weknot_android.base.BaseActivity;
+import com.example.weknot_android.databinding.MainActivityBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity<MainActivityBinding> {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected int layoutId() {
+        return R.layout.main_activity;
     }
 }
