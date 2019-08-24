@@ -21,9 +21,6 @@ public abstract class BaseFragment<VB extends ViewDataBinding> extends Fragment 
     protected LayoutInflater inflater;
     protected ViewGroup container;
 
-    @LayoutRes
-    protected abstract int layoutId();
-
     public static<T extends Fragment> T newInstance(T fragment) {
         Bundle args = new Bundle();
 
@@ -44,4 +41,7 @@ public abstract class BaseFragment<VB extends ViewDataBinding> extends Fragment 
 
         return view;
     }
+
+    @LayoutRes
+    protected abstract int layoutId();
 }

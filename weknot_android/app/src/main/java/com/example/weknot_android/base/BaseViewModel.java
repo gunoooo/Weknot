@@ -17,20 +17,21 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public abstract class BaseViewModel<T> extends AndroidViewModel {
+public abstract class BaseViewModel<DT, RT> extends AndroidViewModel {
 
     private CompositeDisposable disposable;
     private Token token;
 
     final MutableLiveData<String> successMessage = new MutableLiveData<>();
     final MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    final MutableLiveData<T> data = new MutableLiveData<>();
+    final MutableLiveData<DT> data = new MutableLiveData<>();
+    public final MutableLiveData<RT> request = new MutableLiveData<>();
 
     public LiveData<String> getSuccessMessage() {
         return successMessage;
     }
 
-    public LiveData<T> getData() {
+    public LiveData<DT> getData() {
         return data;
     }
 
@@ -67,10 +68,10 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
         };
     }
 
-    public DisposableSingleObserver<T> getDataObserver() {
-        return new DisposableSingleObserver<T>() {
+    public DisposableSingleObserver<DT> getDataObserver() {
+        return new DisposableSingleObserver<DT>() {
             @Override
-            public void onSuccess(T t) {
+            public void onSuccess(DT t) {
                 data.setValue(t);
             }
 
