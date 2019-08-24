@@ -22,7 +22,7 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
 
         initViewModel();
 
-        loginObserve();
+        SignUpObserve();
 
         clickEvent();
     }
@@ -31,12 +31,11 @@ public class SignUpActivity extends BaseActivity<SignUpActivityBinding> {
         signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel.class);
     }
 
-    private void loginObserve() {
-        signUpViewModel.getData().observe(this, loginData -> {
-            startActivity(new Intent(this, LoginActivity.class));
-        });
+    private void SignUpObserve() {
 
         signUpViewModel.getErrorMessage().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+
+        signUpViewModel.getSuccessMessage().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
     }
 
     private void clickEvent() {
