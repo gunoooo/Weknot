@@ -56,7 +56,7 @@ router.post('/login',(req, res, next) => {//userId,userPassword
   .catch((err) => {
     console.log(err);
     //res.render('error', {error:err});
-    res.json({result:"fail",
+    res.json({result:"error",
               error: err.message});
   });
 });
@@ -88,7 +88,7 @@ router.post('/register',(req, res, next) => {
   })
   .catch((err) => {
     res.json({
-      result:"fail",
+      result:"error",
       error: err.message});
   });
 });
@@ -118,7 +118,7 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
   })
   .catch((err) => {
     res.json({
-      result:"fail",
+      result:"error",
       error: err.message});
   });
 });
@@ -179,7 +179,7 @@ router.post('/addFriend',(req, res, next) => {//userId,friendId
   })
   .catch((err) => {
     res.json({
-      result:"fail",
+      result:"error",
       error:err.message});
   });
 });
@@ -201,7 +201,7 @@ router.get('/profile/:userId',(req, res, next) => {
   })
   .catch((err) => {
     res.json({
-      result:"fail",
+      result:"error",
       error:err.message});
   });
 });//userId,userName,userBirth,userScope,userIntro,userPicture,userPoint,userGender
@@ -231,7 +231,7 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
       })
       .catch((err) => {
         res.json({
-          result:"fail",
+          result:"error",
           error:err.message});
       });
   }else if(decision == "no")
@@ -250,7 +250,7 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
       })
       .catch((err) => {
         res.json({
-          result:"fail",
+          result:"error",
           error:err.message});
       });
  }
@@ -268,7 +268,7 @@ router.get('/chattingRooms',(req, res, next) => {//userId
   })
   .catch((err) => {
     res.json({
-      result:"fail",
+      result:"error",
       error:err.message});
   });
 });//roomNumber,roomName,masterName,roomPassword,roomType
@@ -292,7 +292,7 @@ router.get('/dm',(req, res, next) => {//userId
   })
   .catch((err) => {
     res.json({
-      result:"fail",
+      result:"error",
       error:err.message});
   });
 });//friendId,friendPicture,message,date,isRead,dmId
