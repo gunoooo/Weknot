@@ -13,9 +13,6 @@ router.get('/', (req, res, next) => {
   res.send('auth main');
 });
 
-router.get('/login', (req, res, next) => {
-  res.render('loginForm');
-});
 
 router.post('/login',(req, res, next) => {//userId,userPassword
   const userId = req.body.userId;
@@ -60,6 +57,11 @@ router.post('/login',(req, res, next) => {//userId,userPassword
               error: err.message});
   });
 });
+
+router.use('./autoLogin', authMiddle);
+router.post('./autoLogin',(req,res,next) => {
+
+})
 
 router.post('/register',(req, res, next) => {
   const user = [
@@ -325,6 +327,64 @@ router.post('/requestFriend', (req,res,next) => {
     message: "error"
   })
   */
+});
+
+router.get('/myResponseList', (req,res,next) => {// 내가 리시버이고 state가 1인 애들을 가져옴
+  const userId = "wowjddl";
+
+  const requesters = [
+    {
+      friendId: "asdf1",
+      friendPicture: "google1"
+    },
+    {
+      friendId: "asdf2",
+      friendPicture: "google2"
+    },
+    {
+      friendId: "asdf3",
+      friendPicture: "google3"
+    },
+    {
+      friendId: "asdf4",
+      friendPicture: "google4"
+    }
+  ]
+
+  res.json({
+    result: requesters,
+    message: "ok"
+  })
+
+  /*
+  res.json({
+    result: "fail",
+    message: "error"
+  })
+  */
+})
+
+router.post('./createChattingRoom',(req,res,next) => {
+  const userId= "wowjddl1";
+  const roomName="15세 남 친구 구해요";
+  const roomPassword="";
+  const roomType="free";
+
+  res.json({
+    result: "success",
+    message: "ok"
+  })
+
+  /*
+  res.json({
+    result: "fail",
+    message: "error"
+  })
+  */
+});
+
+router.post('./removeChattingRoom', (req,res,next) => {
+
 })
 
 module.exports = router;
