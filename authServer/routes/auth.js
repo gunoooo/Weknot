@@ -44,22 +44,21 @@ router.post('/login',(req, res, next) => {//userId,userPassword
       .then((token) => {
         res.json({
           result: "success",
-          token});
+          token,
+          message: "토큰 보내기 성공"});
       })
       
     }
     else
-      res.json({result:"fail"});
+      res.json({result:"fail",
+                message:"토큰 보내는데 실패함."});
   })
   .catch((err) => {
     console.log(err);
     //res.render('error', {error:err});
-    res.json({result:"fail"});
+    res.json({result:"error",
+              error: err.message});
   });
-});
-
-router.get('/register', (req, res, next) => {
-  res.render('registerForm');
 });
 
 router.post('/register',(req, res, next) => {
@@ -78,17 +77,19 @@ router.post('/register',(req, res, next) => {
   .then((result) => {
     if(result.affectedRows === 1)
     {
-      res.json({result:"success"});
+      res.json({result:"success",
+                message:"회원가입 성공"});
     }
     else
     {
-      res.json({result:"fail"});
+      res.json({result:"fail",
+                message:"회원가입 실패"});
     }
   })
   .catch((err) => {
     res.json({
-      result:"fail",
-      error:"error"});
+      result:"error",
+      error: err.message});
   });
 });
 
@@ -103,10 +104,12 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
     if(result != null) user = result[0];
     
     if(user == undefined){
-      res.json({result:"success"});
+      res.json({result:"success",
+                message:"존재하지 않는 아이디입니다."});
     }
     else if(user.id !== undefined){
-      res.json({result:"fail"});
+      res.json({result:"fail",
+                message:"이미 존재하는 아이디입니다."});
     }
     else
       res.json({
@@ -115,8 +118,8 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
   })
   .catch((err) => {
     res.json({
-      result:"fail",
-      error:"error"});
+      result:"error",
+      error: err.message});
   });
 });
 
@@ -165,17 +168,19 @@ router.post('/addFriend',(req, res, next) => {//userId,friendId
   .then((result) => {
     if(result)
     {
-      res.json({result:"success"});
+      res.json({result:"success",
+                message:"친구 요청 성공했습니다."});
     }
     else
     {
-      res.json({result:"fail"});
+      res.json({result:"fail",
+                message:"친구 요청 실패했습니다."});
     }
   })
   .catch((err) => {
     res.json({
-      result:"fail",
-      error:"error"});
+      result:"error",
+      error:err.message});
   });
 });
 
@@ -196,8 +201,8 @@ router.get('/profile/:userId',(req, res, next) => {
   })
   .catch((err) => {
     res.json({
-      result:"fail",
-      error:"error"});
+      result:"error",
+      error:err.message});
   });
 });//userId,userName,userBirth,userScope,userIntro,userPicture,userPoint,userGender
 //userFeeds:feddId,feddPicture
@@ -226,8 +231,8 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
       })
       .catch((err) => {
         res.json({
-          result:"fail",
-          error:"error"});
+          result:"error",
+          error:err.message});
       });
   }else if(decision == "no")
   {
@@ -245,8 +250,8 @@ router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
       })
       .catch((err) => {
         res.json({
-          result:"fail",
-          error:"error"});
+          result:"error",
+          error:err.message});
       });
  }
 });
@@ -263,8 +268,8 @@ router.get('/chattingRooms',(req, res, next) => {//userId
   })
   .catch((err) => {
     res.json({
-      result:"fail",
-      error:"error"});
+      result:"error",
+      error:err.message});
   });
 });//roomNumber,roomName,masterName,roomPassword,roomType
 
@@ -287,8 +292,8 @@ router.get('/dm',(req, res, next) => {//userId
   })
   .catch((err) => {
     res.json({
-      result:"fail",
-      error:"error"});
+      result:"error",
+      error:err.message});
   });
 });//friendId,friendPicture,message,date,isRead,dmId
 
