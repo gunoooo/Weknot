@@ -3,6 +3,7 @@ package com.example.weknot_android.network.api;
 import androidx.annotation.NonNull;
 
 import com.example.weknot_android.network.request.LoginRequest;
+import com.example.weknot_android.network.request.SignUpRequest;
 import com.example.weknot_android.network.response.Response;
 import com.example.weknot_android.network.response.data.LoginData;
 
@@ -16,4 +17,7 @@ public interface SignApi {
     @POST("/auth/login")
     Single<retrofit2.Response<Response<LoginData>>> login(@Body LoginRequest loginRequest);
 
+    @NonNull
+    @POST("/auth/signUp")
+    Single<retrofit2.Response<Response>> signUp(@Body SignUpRequest signUpRequest);
 }

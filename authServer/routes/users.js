@@ -62,6 +62,78 @@ router.post('/register',function(req,res,next) {
     res.render('error');
   })
 });
+
+router.post('/changePassword', (req,res,next) => {
+  const userId = "wowjddl";
+  const newPassword = "abcd";
+
+  res.json({
+    result:"success",
+    message: "ok"
+  });
+});
+
+router.post('/feeds', (req,res,next) => {
+  const feeds = [
+    {
+      writePicture: "Wpic1",
+      writeName: "aaaa",
+      date: "2002-12-12",
+      feedId: "sunny",
+      feedPicture: "Fpic1",
+      feedComment: "Apple",
+      likeCount: 3,
+      isLiked: true
+    },
+    {
+      writePicture: "Wpic2",
+      writeName: "bbbb",
+      date: "2000-01-05",
+      feedId: "cloudy",
+      feedPicture: "Fpic2",
+      feedComment: "Bench",
+      likeCount: 10,
+      isLiked: false
+    },
+    {
+      writePicture: "Wpic3",
+      writeName: "cccc",
+      date: "2006-07-24",
+      feedId: "windy",
+      feedPicture: "Fpic3",
+      feedComment: "Cry",
+      likeCount: 109,
+      isLiked: true
+    },
+    {
+      writePicture: "Wpic4",
+      writeName: "dddd",
+      date: "1992-03-23",
+      feedId: "snow",
+      feedPicture: "Fpic4",
+      feedComment: "Im lonely",
+      likeCount: 42151,
+      isLiked: true
+    },
+  ];
+
+  res.json({
+    result: feeds,
+    message: "ok"
+  });
+});
+
+router.post('/like', (req, res, next) => {
+  const userId = "tjrwns";
+  const feedId = "sunday";
+
+  res.json({
+    result: "success",
+    message: "ok"
+  })
+});
+
+
 /*router.get('/:id/log/:category', function(req, res, next) {
   const pool = mariadb.createPool(dbcp);
   users.queryUser(pool, userId)
