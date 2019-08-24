@@ -12,9 +12,6 @@ public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompat
 
     protected VB binding;
 
-    @LayoutRes
-    protected abstract int layoutId();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,4 +32,7 @@ public abstract class BaseActivity<VB extends ViewDataBinding> extends AppCompat
             super.setRequestedOrientation(requestedOrientation);
         }
     }
+
+    @LayoutRes
+    protected abstract int layoutId();
 }
