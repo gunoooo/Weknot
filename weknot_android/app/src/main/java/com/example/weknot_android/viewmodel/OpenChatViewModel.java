@@ -15,7 +15,7 @@ import java.util.List;
 
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class OpenChatViewModel extends BaseViewModel<List<OpenChatRoom>, OpenChatRequest> {
+public class OpenChatViewModel extends BaseViewModel<List<OpenChatRoom>, OpenChatRequest, Void> {
 
     private OpenChatComm openChatComm;
     public MutableLiveData<List<User>> chatRoomUsers = new MutableLiveData<>();
@@ -24,7 +24,7 @@ public class OpenChatViewModel extends BaseViewModel<List<OpenChatRoom>, OpenCha
         return chatRoomUsers;
     }
 
-    protected OpenChatViewModel(Application application) {
+    public OpenChatViewModel(Application application) {
         super(application);
         openChatComm = new OpenChatComm();
     }

@@ -1,5 +1,9 @@
 package com.example.weknot_android.network.request;
 
+import com.example.weknot_android.util.Utils;
+
+import java.security.NoSuchAlgorithmException;
+
 public class LoginRequest {
 
     private String id;
@@ -7,8 +11,12 @@ public class LoginRequest {
     private String pw;
 
     public LoginRequest(String id, String pw) {
-        this.id = id;
-        this.pw = pw;
+        try {
+            this.id = id;
+            this.pw = Utils.encryptSHA512(pw);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getId() {

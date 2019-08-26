@@ -6,13 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.weknot_android.base.BaseViewModel;
 import com.example.weknot_android.network.comm.SocialComm;
-import com.example.weknot_android.network.request.NoneRequest;
 import com.example.weknot_android.room.entity.user.Friend;
-import com.example.weknot_android.room.entity.user.User;
 
 import java.util.List;
 
-public class SocialViewModel extends BaseViewModel<List<Friend>, NoneRequest> {
+public class SocialViewModel extends BaseViewModel<List<Friend>, Void, Void> {
 
     public MutableLiveData<List<Friend>> receiveList = new MutableLiveData<>();
     public MutableLiveData<List<Friend>> friendList = new MutableLiveData<>();
@@ -27,7 +25,7 @@ public class SocialViewModel extends BaseViewModel<List<Friend>, NoneRequest> {
         return friendList;
     }
 
-    protected SocialViewModel(Application application) {
+    public SocialViewModel(Application application) {
         super(application);
         socialComm = new SocialComm();
     }

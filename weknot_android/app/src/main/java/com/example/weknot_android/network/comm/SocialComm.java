@@ -13,4 +13,9 @@ public class SocialComm extends BaseComm<SocialApi> {
     public Single<List<Friend>> getFriends(String token) {
         return api.getFriends(token).map(getResponseObjectsFunction());
     }
+
+    @Override
+    protected Class<SocialApi> type() {
+        return SocialApi.class;
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.weknot_android.base;
 
+import com.example.weknot_android.network.api.SignApi;
 import com.example.weknot_android.network.response.Response;
 import com.example.weknot_android.util.Utils;
 
@@ -14,7 +15,7 @@ public abstract class BaseComm<V> {
     protected V api;
 
     public BaseComm() {
-        api = (V) Utils.RETROFIT.create(api.getClass());
+        api = Utils.RETROFIT.create(type());
     }
 
     protected <T> Function<retrofit2.Response<Response<T>>, T> getResponseObjectsFunction() {
@@ -29,5 +30,7 @@ public abstract class BaseComm<V> {
                     return (T) response.body().getData();
                 };
     }
+
+    protected abstract Class<V> type();
 
 }

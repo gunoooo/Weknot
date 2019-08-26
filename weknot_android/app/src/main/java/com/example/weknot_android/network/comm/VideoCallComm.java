@@ -11,4 +11,9 @@ public class VideoCallComm extends BaseComm<VideoCallApi> {
     public Single<VideoCall> requestCall(String token) {
         return api.requestCall(token).map(getResponseObjectsFunction());
     }
+
+    @Override
+    protected Class<VideoCallApi> type() {
+        return VideoCallApi.class;
+    }
 }

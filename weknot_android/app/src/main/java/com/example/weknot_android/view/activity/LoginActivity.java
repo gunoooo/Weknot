@@ -10,6 +10,7 @@ import com.example.weknot_android.R;
 import com.example.weknot_android.base.BaseActivity;
 import com.example.weknot_android.databinding.LoginActivityBinding;
 import com.example.weknot_android.network.request.LoginRequest;
+import com.example.weknot_android.room.entity.user.User;
 import com.example.weknot_android.viewmodel.LoginViewModel;
 
 public class LoginActivity extends BaseActivity<LoginActivityBinding> {
@@ -32,13 +33,24 @@ public class LoginActivity extends BaseActivity<LoginActivityBinding> {
     }
 
     private void observeLoginViewModel() {
-        loginViewModel.getData().observe(this, loginData -> {
-            loginViewModel.insertUser(loginData.getUser());
-            loginViewModel.setToken(loginData.getToken());
-            startActivity(new Intent(this, MainActivity.class));
-        });
 
         loginViewModel.getErrorMessage().observe(this, message -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+
+        loginViewModel.getData().observe(this, loginData -> {
+            loginViewModel.setToken(loginData.getToken());
+            loginViewModel.getUser();
+        });
+
+        loginViewModel.getEntity().observe(this, user -> {
+            if (user == null) {
+                loginViewModel.insertUser(loginViewModel.getData().getValue().getUser());
+            }
+            else {
+                loginViewModel.updateUser(loginViewModel.getData().getValue().getUser());
+            }
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        });
     }
 
     private void clickEvent() {

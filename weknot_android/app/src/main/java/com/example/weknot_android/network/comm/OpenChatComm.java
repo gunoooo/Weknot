@@ -24,4 +24,9 @@ public class OpenChatComm extends BaseComm<OpenChatApi> {
     public Single<List<User>> getChattingRoomUsers(String token, String roomNumber) {
         return api.getChattingRoomUsers(token, roomNumber).map(getResponseObjectsFunction());
     }
+
+    @Override
+    protected Class<OpenChatApi> type() {
+        return OpenChatApi.class;
+    }
 }

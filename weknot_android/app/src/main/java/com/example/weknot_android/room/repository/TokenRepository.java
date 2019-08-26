@@ -1,23 +1,30 @@
-package com.example.weknot_android.room;
+package com.example.weknot_android.room.repository;
 
 import android.content.Context;
 import android.util.Base64;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.weknot_android.room.sharedpreference.Token;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TokenManager {
+public class TokenRepository {
+
+    private final String PLAYLOAD_USER_ID = "memberId";
 
     private Context context;
+    private Token token;
 
-    public TokenManager(Context context) {
+    public TokenRepository(Context context) {
         this.context = context;
+        token = new Token(context);
     }
 
-    private Token getToken() {
-        return new Token(context);
+    public Token getToken() {
+        return token;
     }
 
     public void setToken(String token) {
@@ -36,10 +43,14 @@ public class TokenManager {
     public String getMyId() {
         try {
             Token token = getToken();
+            if (token.getToken() == "") {
+                System.out.println("aaaaaaaaaaaaaaaa");
+                return "";
+            }
             JSONObject payload = decodedPayloadObject(token.getToken());
-            return payload.getString("userId");
+            return payload.getString(PLAYLOAD_USER_ID);
         } catch (JSONException ignore) {
-            return null;
+            return "";
         }
     }
 }

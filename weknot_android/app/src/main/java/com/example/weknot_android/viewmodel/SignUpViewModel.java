@@ -5,13 +5,13 @@ import android.app.Application;
 import com.example.weknot_android.base.BaseViewModel;
 import com.example.weknot_android.network.comm.SignComm;
 import com.example.weknot_android.network.request.SignUpRequest;
-import com.example.weknot_android.network.response.data.NoneData;
+import com.example.weknot_android.room.entity.user.User;
 
-public class SignUpViewModel extends BaseViewModel<NoneData, SignUpRequest> {
+public class SignUpViewModel extends BaseViewModel<Void, SignUpRequest, Void> {
 
     private SignComm signComm;
 
-    protected SignUpViewModel(Application application) {
+    public SignUpViewModel(Application application) {
         super(application);
 
         signComm = new SignComm();

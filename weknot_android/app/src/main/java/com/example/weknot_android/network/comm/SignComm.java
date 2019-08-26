@@ -5,6 +5,7 @@ import com.example.weknot_android.network.api.SignApi;
 import com.example.weknot_android.network.request.LoginRequest;
 import com.example.weknot_android.network.request.SignUpRequest;
 import com.example.weknot_android.network.response.data.LoginData;
+import com.example.weknot_android.util.Utils;
 
 import io.reactivex.Single;
 import retrofit2.Response;
@@ -17,5 +18,10 @@ public class SignComm extends BaseComm<SignApi> {
 
     public Single<String> signUp(SignUpRequest signUpRequest) {
         return api.signUp(signUpRequest).map(Response::message);
+    }
+
+    @Override
+    protected Class<SignApi> type() {
+        return SignApi.class;
     }
 }

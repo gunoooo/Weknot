@@ -2,5 +2,5 @@ package com.example.weknot_android.util;
 
 public final class Strings {
 
-    public static final String MAIN_HOST = "http://13.209.88.32:8000";
+    public static final String MAIN_HOST = "http://192.168.1.50:8000";
 }
