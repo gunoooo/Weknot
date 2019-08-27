@@ -73,7 +73,7 @@ router.post('/changePassword', (req,res,next) => {
   });
 });
 
-router.post('/feeds', (req,res,next) => {
+router.get('/feeds', (req,res,next) => {
   const feeds = [
     {
       writePicture: "Wpic1",
@@ -131,7 +131,7 @@ router.post('/like', (req, res, next) => {
   });
 });
 
-router.post('/createFeed', (req, res, next) => {
+router.post('/feeds', (req, res, next) => {
   const feedPicture = "Fpic1";
   const feedComment = "Hello";
 
@@ -140,6 +140,25 @@ router.post('/createFeed', (req, res, next) => {
     message: "ok"
   });
 });
+
+router.put('/feeds/:feedId', (req, res, next)=>{
+  const feedId = req.params.feedId;
+  res.json({
+    result: "success",
+    message: "ok"
+  });
+});
+
+router.delete('/feeds/:feedId', (req, res, next)=>{
+  const feedId = req.params.feedId;
+  res.json({
+    result: "success",
+    message: "ok"
+  });
+});
+
+
+router.
 
 
 
