@@ -14,7 +14,9 @@ class OpenChatAdapter(private val context: Context, private val openChatRooms: L
         return OpenChatViewHolder(LayoutInflater.from(parent.context).inflate(layout.open_chat_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {}
+    override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {
+
+    }
 
     override fun getItemCount(): Int {
         return openChatRooms.size

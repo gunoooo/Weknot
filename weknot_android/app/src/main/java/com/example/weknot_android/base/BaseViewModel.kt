@@ -41,7 +41,7 @@ abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Appl
         return entity
     }
     val token: Token
-        get() = tokenManager.token
+        get() = tokenManager.token!!
 
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())

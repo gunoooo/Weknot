@@ -25,25 +25,25 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
     }
 
     private fun initViewModel() {
-        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
+        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)!!
     }
 
     private fun observeSignUpViewModel() {
-        signUpViewModel!!.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show() })
-        signUpViewModel!!.getSuccessMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_LONG).show() })
+        signUpViewModel.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show() })
+        signUpViewModel.getSuccessMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_LONG).show() })
     }
 
     private fun clickEvent() {
-        binding!!.signUpButton.setOnClickListener { v: View ->
+        binding.signUpButton.setOnClickListener { v: View ->
             setRequest()
-            signUpViewModel!!.signUp()
+            signUpViewModel.signUp()
         }
     }
 
     private fun setRequest() {
-        signUpViewModel!!.request.value = SignUpRequest(binding!!.idText.text.toString(), binding!!.pwText.text.toString(),
-                binding!!.nameText.text.toString(), binding!!.birthText.text.toString(), binding!!.genderText.text.toString(),
-                binding!!.phoneNumber.text.toString())
+        signUpViewModel.request.value = SignUpRequest(binding.idText.text.toString(), binding.pwText.text.toString(),
+                binding.nameText.text.toString(), binding.birthText.text.toString(), binding.genderText.text.toString(),
+                binding.phoneNumber.text.toString())
     }
 
     override fun layoutId(): Int {

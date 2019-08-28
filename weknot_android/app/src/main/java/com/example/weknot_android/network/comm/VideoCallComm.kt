@@ -8,7 +8,7 @@ import io.reactivex.Single
 class VideoCallComm : BaseComm<VideoCallApi>() {
 
     fun requestCall(token: String): Single<VideoCall> {
-        return api!!.requestCall(token).map(getResponseObjectsFunction())
+        return api.requestCall(token).map(getResponseObjectsFunction())
     }
 
     override fun type(): Class<VideoCallApi> {

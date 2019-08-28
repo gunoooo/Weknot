@@ -11,15 +11,15 @@ import retrofit2.Response
 class OpenChatComm : BaseComm<OpenChatApi>() {
 
     fun getChattingRooms(token: String): Single<List<OpenChatRoom>> {
-        return api!!.getChattingRooms(token).map(getResponseObjectsFunction())
+        return api.getChattingRooms(token).map(getResponseObjectsFunction())
     }
 
     fun createChattingRoom(token: String, openChatRequest: OpenChatRequest?): Single<String> {
-        return api!!.createChattingRoom(token, openChatRequest).map(getResponseMessageFunction())
+        return api.createChattingRoom(token, openChatRequest).map(getResponseMessageFunction())
     }
 
-    fun getChattingRoomUsers(token: String, roomNumber: String?): Single<List<User>> {
-        return api!!.getChattingRoomUsers(token, roomNumber).map(getResponseObjectsFunction())
+    fun getChattingRoomUsers(token: String, roomNumber: String): Single<List<User>> {
+        return api.getChattingRoomUsers(token, roomNumber).map(getResponseObjectsFunction())
     }
 
     override fun type(): Class<OpenChatApi> {

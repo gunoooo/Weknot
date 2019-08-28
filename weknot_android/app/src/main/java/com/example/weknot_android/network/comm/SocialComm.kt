@@ -8,7 +8,7 @@ import io.reactivex.Single
 class SocialComm : BaseComm<SocialApi>() {
 
     fun getFriends(token: String): Single<List<Friend>> {
-        return api!!.getFriends(token).map(getResponseObjectsFunction())
+        return api.getFriends(token).map(getResponseObjectsFunction())
     }
 
     override fun type(): Class<SocialApi> {

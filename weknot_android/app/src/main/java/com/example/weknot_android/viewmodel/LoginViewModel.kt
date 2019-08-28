@@ -12,11 +12,11 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData, Void, 
     var request = MutableLiveData<LoginRequest>()
 
     fun login() {
-        addDisposable(comm!!.login(request.value!!), dataObserver)
+        addDisposable(comm.login(request.value!!), dataObserver)
     }
 
     fun setToken(token: String) {
-        this.token!!.token = token
+        this.token.token = token
     }
 
     fun insertUser(user: User) {

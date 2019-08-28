@@ -9,16 +9,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
-    protected var binding: VB? = null
+
+    protected var binding: VB = DataBindingUtil.setContentView(this, layoutId())!!
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, layoutId())
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding = null
+        binding.unbind()
     }
 
     override fun setRequestedOrientation(requestedOrientation: Int) {

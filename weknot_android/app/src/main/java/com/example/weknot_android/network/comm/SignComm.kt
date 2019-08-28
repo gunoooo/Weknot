@@ -11,11 +11,11 @@ import retrofit2.Response
 class SignComm : BaseComm<SignApi>() {
 
     fun login(loginRequest: LoginRequest): Single<LoginData> {
-        return api!!.login(loginRequest).map(getResponseObjectsFunction())
+        return api.login(loginRequest).map(getResponseObjectsFunction())
     }
 
     fun signUp(signUpRequest: SignUpRequest): Single<String> {
-        return api!!.signUp(signUpRequest).map(getResponseMessageFunction())
+        return api.signUp(signUpRequest).map(getResponseMessageFunction())
     }
 
     override fun type(): Class<SignApi> {

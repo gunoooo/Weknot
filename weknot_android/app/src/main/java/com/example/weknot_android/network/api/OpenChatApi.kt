@@ -10,13 +10,13 @@ import retrofit2.http.*
 interface OpenChatApi {
 
     @GET("/chattingRooms")
-    fun getChattingRooms(@Header("Authorization") token: String?): Single<retrofit2.Response<Response<List<OpenChatRoom>>>>
+    fun getChattingRooms(@Header("Authorization") token: String): Single<retrofit2.Response<Response<List<OpenChatRoom>>>>
 
     @POST("/createChattingRoom")
-    fun createChattingRoom(@Header("Authorization") token: String?,
-                           @Body openChatRequest: OpenChatRequest?): Single<retrofit2.Response<Response<Any>>>
+    fun createChattingRoom(@Header("Authorization") token: String,
+                           @Body openChatRequest: OpenChatRequest): Single<retrofit2.Response<Response<Any>>>
 
     @GET("/chattingRooms/{roomNumber}")
-    fun getChattingRoomUsers(@Header("Authorization") token: String?,
-                             @Path("roomNumber") roomNumber: String?): Single<retrofit2.Response<Response<List<User>>>>
+    fun getChattingRoomUsers(@Header("Authorization") token: String,
+                             @Path("roomNumber") roomNumber: String): Single<retrofit2.Response<Response<List<User>>>>
 }

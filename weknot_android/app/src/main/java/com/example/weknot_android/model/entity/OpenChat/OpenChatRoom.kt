@@ -8,5 +8,5 @@ class OpenChatRoom(@field:PrimaryKey
                    var roomNumber: String,
                    var roomName: String,
                    var masterName: String,
-                   var roomPassword: String,
+                   var roomPassword: String?,
                    var roomType: String)

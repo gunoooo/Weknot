@@ -27,29 +27,29 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
     }
 
     private fun initViewModel() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)!!
     }
 
     private fun observeLoginViewModel() {
-        loginViewModel!!.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show() })
+        loginViewModel.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show() })
 
-        loginViewModel!!.getData().observe(this, Observer { loginData: LoginData ->
-            loginViewModel!!.setToken(loginData.token)
-            loginViewModel!!.insertUser(loginData.user)
+        loginViewModel.getData().observe(this, Observer { loginData: LoginData ->
+            loginViewModel.setToken(loginData.token)
+            loginViewModel.insertUser(loginData.user)
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         })
     }
 
     private fun clickEvent() {
-        binding!!.loginBtn.setOnClickListener { v: View ->
+        binding.loginBtn.setOnClickListener { v: View ->
             setRequest()
-            loginViewModel!!.login()
+            loginViewModel.login()
         }
     }
 
     private fun setRequest() {
-        loginViewModel!!.request.value = LoginRequest(binding!!.idText.text.toString(), binding!!.pwText.text.toString())
+        loginViewModel.request.value = LoginRequest(binding.idText.text.toString(), binding.pwText.text.toString())
     }
 
     override fun layoutId(): Int {

@@ -20,10 +20,10 @@ class RoomRepository(application: Application) {
     protected var openChatDao: OpenChatDao
 
     init {
-        val database = RoomDatabase.getInstance(application)
-        userDao = database!!.userDao()
-        videoCallDao = database!!.videoCallDao()
-        openChatDao = database!!.openChatDao()
+        val database = RoomDatabase.getInstance(application)!!
+        userDao = database.userDao()
+        videoCallDao = database.videoCallDao()
+        openChatDao = database.openChatDao()
     }
 
     private val user: Single<User>? = userDao.getUser(TokenRepository(application).myId)
