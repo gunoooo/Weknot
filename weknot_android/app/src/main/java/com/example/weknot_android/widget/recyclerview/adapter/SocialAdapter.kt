@@ -15,7 +15,7 @@ class SocialAdapter(private val context: Context, private val friends: List<Frie
     }
 
     override fun onBindViewHolder(holder: SocialViewHolder, position: Int) {
-        
+
     }
 
     override fun getItemCount(): Int {
