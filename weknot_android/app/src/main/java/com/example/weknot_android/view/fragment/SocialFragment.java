@@ -5,16 +5,13 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weknot_android.R;
 import com.example.weknot_android.base.BaseFragment;
 import com.example.weknot_android.databinding.SocialFragmentBinding;
-import com.example.weknot_android.room.entity.user.Friend;
+import com.example.weknot_android.model.entity.user.Friend;
 import com.example.weknot_android.viewmodel.SocialViewModel;
 import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter;
-
-import java.util.List;
 
 public class SocialFragment extends BaseFragment<SocialFragmentBinding> {
 

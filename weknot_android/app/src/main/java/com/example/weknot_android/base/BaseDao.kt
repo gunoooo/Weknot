@@ -1,20 +1,21 @@
 package com.example.weknot_android.base
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Update
+import androidx.room.*
+import io.reactivex.Completable
 
 @Dao
-interface BaseDao<TE> {
+interface BaseDao<ET> {
 
-    @Insert
-    fun insert(entity: TE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(entity: ET): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(entity: Array<out ET>): Completable
 
     @Update
-    fun update(entity: TE)
+    fun update(entity: ET): Completable
 
     @Delete
-    fun delete(entity: TE)
+    fun delete(entity: ET): Completable
 
 }

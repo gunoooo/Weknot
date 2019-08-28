@@ -9,11 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.weknot_android.R;
 import com.example.weknot_android.base.BaseFragment;
 import com.example.weknot_android.databinding.OpenChatFragmentBinding;
-import com.example.weknot_android.room.entity.OpenChat.OpenChatRoom;
 import com.example.weknot_android.viewmodel.OpenChatViewModel;
 import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter;
-
-import java.util.List;
 
 public class OpenChatFragment extends BaseFragment<OpenChatFragmentBinding> {
 
