@@ -10,7 +10,7 @@ class TokenRepository(private val context: Context) {
     private val PLAYLOAD_USER_ID = "memberId"
     val token: Token
 
-    fun setToken(token: String?) {
+    fun setToken(token: String) {
         Token(context).token = token
     }
 

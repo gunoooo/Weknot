@@ -18,9 +18,9 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Application, protected var comm: CM) : AndroidViewModel(application!!) {
-    private val disposable: CompositeDisposable
-    private val tokenManager: TokenRepository
-    protected val repository: RoomRepository
+    private val disposable: CompositeDisposable = CompositeDisposable()
+    private val tokenManager: TokenRepository = TokenRepository(application)
+    protected val repository: RoomRepository = RoomRepository(application!!)
 
     protected val successMessage = MutableLiveData<String>()
     protected val errorMessage = MutableLiveData<String>()
@@ -80,10 +80,4 @@ abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Appl
                 errorMessage.value = e.message
             }
         }
-
-    init {
-        disposable = CompositeDisposable()
-        tokenManager = TokenRepository(application)
-        repository = RoomRepository(application!!)
-    }
 }

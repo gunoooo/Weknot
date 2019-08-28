@@ -14,20 +14,14 @@ import com.example.weknot_android.network.response.data.LoginData
 import com.example.weknot_android.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<LoginActivityBinding>() {
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initViewModel()
-
         observeLoginViewModel()
 
         clickEvent()
-    }
-
-    private fun initViewModel() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)!!
     }
 
     private fun observeLoginViewModel() {

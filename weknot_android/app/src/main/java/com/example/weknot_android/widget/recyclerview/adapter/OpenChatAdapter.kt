@@ -8,7 +8,7 @@ import com.example.weknot_android.R.layout
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.widget.recyclerview.holder.OpenChatViewHolder
 
-class OpenChatAdapter(private val context: Context, private val openChatRooms: List<OpenChatRoom>) : Adapter<OpenChatViewHolder>() {
+class OpenChatAdapter(private val context: Context, private val openChatRooms: List<OpenChatRoom>?) : Adapter<OpenChatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         return OpenChatViewHolder(LayoutInflater.from(parent.context).inflate(layout.open_chat_item, parent, false))
@@ -19,7 +19,7 @@ class OpenChatAdapter(private val context: Context, private val openChatRooms: L
     }
 
     override fun getItemCount(): Int {
-        return openChatRooms.size
+        return openChatRooms!!.size
     }
 
 }

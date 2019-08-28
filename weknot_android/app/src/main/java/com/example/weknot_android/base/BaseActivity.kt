@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity() {
-
     protected var binding: VB = DataBindingUtil.setContentView(this, layoutId())!!
 
     public override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,7 +8,7 @@ import com.example.weknot_android.R.layout
 import com.example.weknot_android.model.entity.user.Friend
 import com.example.weknot_android.widget.recyclerview.holder.SocialViewHolder
 
-class SocialAdapter(private val context: Context, private val friends: List<Friend>) : Adapter<SocialViewHolder>() {
+class SocialAdapter(private val context: Context, private val friends: List<Friend>?) : Adapter<SocialViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SocialViewHolder {
         return SocialViewHolder(LayoutInflater.from(parent.context).inflate(layout.social_item, parent, false))
@@ -19,7 +19,7 @@ class SocialAdapter(private val context: Context, private val friends: List<Frie
     }
 
     override fun getItemCount(): Int {
-        return friends.size
+        return friends!!.size
     }
 
 }

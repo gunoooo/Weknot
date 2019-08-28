@@ -12,20 +12,14 @@ import com.example.weknot_android.network.request.SignUpRequest
 import com.example.weknot_android.viewmodel.SignUpViewModel
 
 class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
-    private lateinit var signUpViewModel: SignUpViewModel
+    private val signUpViewModel: SignUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initViewModel()
-
         observeSignUpViewModel()
 
         clickEvent()
-    }
-
-    private fun initViewModel() {
-        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)!!
     }
 
     private fun observeSignUpViewModel() {

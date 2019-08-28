@@ -18,10 +18,10 @@ class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatR
         get() = addDisposable(comm.getChattingRooms(token.token), dataObserver)
 
     fun createChattingRoom() {
-        addDisposable(comm.createChattingRoom(token.token, request.value), baseObserver)
+        addDisposable(comm.createChattingRoom(token.token, request.value!!), baseObserver)
     }
 
-    fun getChattingRoomUsers(roomNumber: String?) {
+    fun getChattingRoomUsers(roomNumber: String) {
         val observer: DisposableSingleObserver<List<User>> = object : DisposableSingleObserver<List<User>>() {
             override fun onSuccess(t: List<User>) {
                 chatRoomUsers.value = t

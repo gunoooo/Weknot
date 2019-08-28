@@ -9,9 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-/**
- * @author 박건우
- */
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     protected lateinit var binding: VB
 

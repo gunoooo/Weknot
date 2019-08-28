@@ -14,7 +14,7 @@ class OpenChatComm : BaseComm<OpenChatApi>() {
         return api.getChattingRooms(token).map(getResponseObjectsFunction())
     }
 
-    fun createChattingRoom(token: String, openChatRequest: OpenChatRequest?): Single<String> {
+    fun createChattingRoom(token: String, openChatRequest: OpenChatRequest): Single<String> {
         return api.createChattingRoom(token, openChatRequest).map(getResponseMessageFunction())
     }
 
