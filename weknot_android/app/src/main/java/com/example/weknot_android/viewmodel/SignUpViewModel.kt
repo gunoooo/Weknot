@@ -10,6 +10,6 @@ class SignUpViewModel(application: Application) : BaseViewModel<Void, Void, Sign
     var request = MutableLiveData<SignUpRequest>()
 
     fun signUp() {
-        addDisposable(comm!!.signUp(request.value!!), baseObserver)
+        addDisposable(comm.signUp(request.value!!), baseObserver)
     }
 }

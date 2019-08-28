@@ -10,8 +10,8 @@ import com.f2prateek.rx.preferences2.RxSharedPreferences
 class Token(context: Context) : ContextWrapper(context) {
     var token: String = ""
         get() {
-            val sharedPreferences: SharedPreferences? = getSharedPreferences("weknot", Context.MODE_PRIVATE)
-            val rxPreferences = RxSharedPreferences.create(sharedPreferences!!)
+            val sharedPreferences: SharedPreferences = getSharedPreferences("weknot", Context.MODE_PRIVATE)
+            val rxPreferences = RxSharedPreferences.create(sharedPreferences)
             val tokenObservable: Preference<String> = rxPreferences.getString("token")
             tokenObservable.asObservable().subscribe { token: String -> field = token }
             return field

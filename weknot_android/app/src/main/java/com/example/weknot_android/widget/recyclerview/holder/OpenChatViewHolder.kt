@@ -6,10 +6,5 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.weknot_android.databinding.OpenChatItemBinding
 
 class OpenChatViewHolder(itemView: View) : ViewHolder(itemView) {
-
-    private val binding: OpenChatItemBinding
-
-    init {
-        binding = DataBindingUtil.bind(itemView)!!
-    }
+    private val binding: OpenChatItemBinding = DataBindingUtil.bind(itemView)!!
 }

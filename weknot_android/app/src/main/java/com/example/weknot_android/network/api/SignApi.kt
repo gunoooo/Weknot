@@ -11,8 +11,8 @@ import retrofit2.http.POST
 interface SignApi {
 
     @POST("/auth/login")
-    fun login(@Body loginRequest: LoginRequest?): Single<retrofit2.Response<Response<LoginData>>>
+    fun login(@Body loginRequest: LoginRequest): Single<retrofit2.Response<Response<LoginData>>>
 
     @POST("/auth/signUp")
-    fun signUp(@Body signUpRequest: SignUpRequest?): Single<retrofit2.Response<Response<Any>>>
+    fun signUp(@Body signUpRequest: SignUpRequest): Single<retrofit2.Response<Response<Any>>>
 }
