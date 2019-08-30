@@ -370,8 +370,13 @@ router.post('./createChattingRoom',(req,res,next) => {
   const roomPassword="";
   const roomType="free";
 
+  const roomId = 2;
+  /*
+    addMember()
+  */
+
   res.json({
-    result: "success",
+    result: ["success",roomId],
     message: "ok"
   })
 
@@ -383,8 +388,68 @@ router.post('./createChattingRoom',(req,res,next) => {
   */
 });
 
-router.post('./removeChattingRoom', (req,res,next) => {
+router.put('./enterRoom', (req,res,next) => {
+  const roomId = 2;
+  const userId = "wowj";
 
-})
+  res.json({
+    result: "success",
+    message: "ok"
+  });
+
+  /*
+  res.json({
+    result: "fail",
+    message: "error"
+  })
+  */
+});
+
+router.post('./exitChattingRoom', (req,res,next) => {// 퇴장 할 때마다 룸의 멤버 수를 체크하고 메버 수가 0명이 되었을 경우 룸 삭제해야함.
+  const roomId = 2;
+  const userId = "wowjd";
+
+  res.json({
+    result: "success",
+    message: "ok"
+  });
+
+  /*
+  res.json({
+    result: "fail",
+    message: "error"
+  })
+  */
+});
+
+router.post('./requestMatching', (req,res,next) => {// 매칭하기를 누르면 매칭 테이블에 넣고, 매칭 취소하면 빼기
+  const userId = "wowjd";
+
+  const otherUser = [
+    {
+      id: "fkffkffn",
+      name: "fkffkffn",
+      password: "fkffkffn",
+      birth: 19566854,
+      gender: "0",//남자
+      phoneNumber: "010-9121-0769",
+      picture:"dsd",
+      intro: "나는 15세 남자다",
+      point: 35030,
+    }
+  ]
+  //createChattingRoom
+  res.json({
+    result: otherUser,
+    message: "ok"
+  })
+  
+  /*
+  res.json({
+    result: "fail",
+    message: "error"
+  })
+  */
+});
 
 module.exports = router;
