@@ -15,8 +15,8 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData, Void, 
         addDisposable(comm.login(request.value!!), dataObserver)
     }
 
-    fun setToken(token: String) {
-        this.token.token = token
+    fun insertToken(token: String) {
+        this.token = token
     }
 
     fun insertUser(user: User) {

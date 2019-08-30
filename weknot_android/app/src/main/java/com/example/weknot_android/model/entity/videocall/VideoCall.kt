@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.weknot_android.model.entity.user.User
 
-@Entity(tableName = "videocall_table")
+@Entity(tableName = "video_call_table")
 class VideoCall(@field:PrimaryKey
                 var idx: Int,
-                var user: User,
+                var user: String,
                 var roomIdx: Int)

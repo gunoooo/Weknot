@@ -11,6 +11,6 @@ import io.reactivex.Single
 @Dao
 interface VideoCallDao : BaseDao<VideoCall> {
 
-    @Query("SELECT * FROM videocall_table WHERE idx=:idx")
+    @Query("SELECT * FROM video_call_table WHERE idx=:idx")
     fun getVideoCall(idx: Int): Single<VideoCall>?
 }

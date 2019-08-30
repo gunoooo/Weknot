@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.VideoCallFragmentBinding
 import com.example.weknot_android.model.entity.videocall.VideoCall
@@ -16,15 +17,29 @@ import java.net.MalformedURLException
 import java.net.URL
 
 class VideoCallFragment : BaseFragment<VideoCallFragmentBinding>() {
-    private val videoCallViewModel: VideoCallViewModel = ViewModelProviders.of(this).get(VideoCallViewModel::class.java)!!
+    private lateinit var videoCallViewModel: VideoCallViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initViewModel()
         initVideoCall()
 
         observeVideoCallViewModel()
 
         clickEvent()
+    }
+
+    private fun observeVideoCallViewModel() {
+        videoCallViewModel.getData().observe(this, Observer { videoCall: VideoCall ->
+            val options: JitsiMeetConferenceOptions? = Builder()
+                    .setRoom(Integer.toString(videoCall.roomIdx))
+                    .build()
+            JitsiMeetActivity.launch(context, options)
+        })
+    }
+
+    private fun clickEvent() {
+        binding.videoCallBtn.setOnClickListener { videoCallViewModel.requestCall() }
     }
 
     private fun initVideoCall() {
@@ -42,20 +57,11 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding>() {
         JitsiMeet.setDefaultConferenceOptions(defaultOptions)
     }
 
-    private fun observeVideoCallViewModel() {
-        videoCallViewModel.getData().observe(this, Observer { videoCall: VideoCall ->
-            val options: JitsiMeetConferenceOptions? = Builder()
-                    .setRoom(Integer.toString(videoCall.roomIdx))
-                    .build()
-            JitsiMeetActivity.launch(context, options)
-        })
-    }
-
-    private fun clickEvent() {
-        binding.videoCallBtn.setOnClickListener { v: View? -> videoCallViewModel.requestCall() }
+    private fun initViewModel() {
+        videoCallViewModel = ViewModelProviders.of(this).get(VideoCallViewModel::class.java)
     }
 
     override fun layoutId(): Int {
-        return 0
+        return R.layout.video_call_fragment
     }
 }

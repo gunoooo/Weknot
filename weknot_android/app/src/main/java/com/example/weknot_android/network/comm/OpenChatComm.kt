@@ -6,7 +6,6 @@ import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.api.OpenChatApi
 import com.example.weknot_android.network.request.OpenChatRequest
 import io.reactivex.Single
-import retrofit2.Response
 
 class OpenChatComm : BaseComm<OpenChatApi>() {
 

@@ -17,10 +17,10 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Application, protected var comm: CM) : AndroidViewModel(application!!) {
+abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Application, protected var comm: CM) : AndroidViewModel(application) {
     private val disposable: CompositeDisposable = CompositeDisposable()
     private val tokenManager: TokenRepository = TokenRepository(application)
-    protected val repository: RoomRepository = RoomRepository(application!!)
+    protected val repository: RoomRepository = RoomRepository(application)
 
     protected val successMessage = MutableLiveData<String>()
     protected val errorMessage = MutableLiveData<String>()
@@ -40,9 +40,11 @@ abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Appl
     fun getEntity(): LiveData<ET> {
         return entity
     }
-    val token: Token
-        get() = tokenManager.token!!
+    var token: String
+        get() = tokenManager.token.token
+        set(value) = tokenManager.setToken(value)
 
+    @SuppressWarnings("Unchecked")
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(observer as SingleObserver<Any>) as Disposable)

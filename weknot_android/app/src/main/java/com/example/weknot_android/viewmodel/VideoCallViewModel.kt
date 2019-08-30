@@ -8,6 +8,6 @@ import com.example.weknot_android.network.comm.VideoCallComm
 class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall, Void, VideoCallComm>(application, VideoCallComm()) {
 
     fun requestCall() {
-        addDisposable(comm.requestCall(token.token), dataObserver)
+        addDisposable(comm.requestCall(token), dataObserver)
     }
 }

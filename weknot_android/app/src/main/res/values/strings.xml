@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">weknot_android</string>
+
+    <string name="main_title">Weknot</string>
+
+    <string name="id_text">아이디</string>
+    <string name="pw_text">비밀번호</string>
+    <string name="no_id_text">계정이 없으신가요?</string>
+    <string name="login_text">로그인</string>
+    <string name="signup_text">회원가입</string>
 </resources>

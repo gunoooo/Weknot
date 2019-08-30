@@ -7,12 +7,12 @@ import org.json.JSONObject
 import java.util.*
 
 abstract class BaseComm<V> {
-    protected val api: V = Utils.RETROFIT.create(type())!!
+    protected val api: V = Utils.RETROFIT.create(type())
 
     protected fun <T> getResponseObjectsFunction(): Function<retrofit2.Response<Response<T>>, T> {
         return Function { response: retrofit2.Response<Response<T>> ->
             checkError(response)
-            response.body()!!.data as T
+            response.body()!!.data
         }
     }
 
@@ -27,7 +27,7 @@ abstract class BaseComm<V> {
         if (!response.isSuccessful) {
             val errorBody = JSONObject(Objects
                     .requireNonNull(
-                            response.errorBody())!!.string())
+                            response.errorBody())?.string())
             throw Exception(errorBody.getString("message"))
         }
     }

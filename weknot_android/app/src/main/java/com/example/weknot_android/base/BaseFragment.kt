@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     protected lateinit var binding: VB
+    protected lateinit var currentView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(
-                inflater, layoutId(), container, false)
-        return view
+                inflater, layoutId(), container, false)!!
+        currentView = binding.root
+        return currentView
     }
 
     @LayoutRes

@@ -23,9 +23,12 @@ object Utils {
             .build()
 
     private val client: OkHttpClient
-        private get() {
+        get() {
             val builder = OkHttpClient.Builder()
-            if (BuildConfig.DEBUG) builder.addInterceptor(HttpLoggingInterceptor().setLevel(Level.BODY))
+            if (BuildConfig.DEBUG) {
+                val httpLoggingInterceptor = HttpLoggingInterceptor()
+                builder.addInterceptor(httpLoggingInterceptor.apply { httpLoggingInterceptor.level = Level.BODY })
+            }
             return builder.build()
         }
 

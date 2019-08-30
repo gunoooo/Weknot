@@ -12,19 +12,16 @@ import com.example.weknot_android.viewmodel.OpenChatViewModel
 import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 
 class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
-    private val openChatViewModel: OpenChatViewModel = ViewModelProviders.of(this).get(OpenChatViewModel::class.java)!!
+    private lateinit var openChatViewModel: OpenChatViewModel
 
     private var openChatAdapter: OpenChatAdapter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initViewModel()
         initData()
 
         observeOpenChatViewModel()
-    }
-
-    private fun initData() {
-        openChatViewModel.chattingRooms
     }
 
     private fun observeOpenChatViewModel() {
@@ -38,6 +35,15 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
         val linearLayoutManager = LinearLayoutManager(context)
         binding.chatRoomRecyclerview.adapter = openChatAdapter
         binding.chatRoomRecyclerview.layoutManager = linearLayoutManager
+    }
+
+
+    private fun initData() {
+        openChatViewModel.chattingRooms
+    }
+
+    private fun initViewModel() {
+        openChatViewModel = ViewModelProviders.of(this).get(OpenChatViewModel::class.java)
     }
 
     override fun layoutId(): Int {

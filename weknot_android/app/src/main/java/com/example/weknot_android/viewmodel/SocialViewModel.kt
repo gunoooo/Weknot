@@ -11,5 +11,5 @@ class SocialViewModel(application: Application) : BaseViewModel<List<Friend>?, V
     var friendList = MutableLiveData<ArrayList<Friend>?>()
 
     val friends: Unit
-        get() = addDisposable(comm.getFriends(token.token), dataObserver)
+        get() = addDisposable(comm.getFriends(token), dataObserver)
 }

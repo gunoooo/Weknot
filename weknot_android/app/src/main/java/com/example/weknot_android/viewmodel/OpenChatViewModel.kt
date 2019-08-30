@@ -15,10 +15,10 @@ class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatR
     val chatRoomUsers = MutableLiveData<List<User>>()
 
     val chattingRooms: Unit
-        get() = addDisposable(comm.getChattingRooms(token.token), dataObserver)
+        get() = addDisposable(comm.getChattingRooms(token), dataObserver)
 
     fun createChattingRoom() {
-        addDisposable(comm.createChattingRoom(token.token, request.value!!), baseObserver)
+        addDisposable(comm.createChattingRoom(token, request.value!!), baseObserver)
     }
 
     fun getChattingRoomUsers(roomNumber: String) {
@@ -31,6 +31,6 @@ class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatR
                 errorMessage.value = e.message
             }
         }
-        addDisposable(comm.getChattingRoomUsers(token.token, roomNumber), observer)
+        addDisposable(comm.getChattingRoomUsers(token, roomNumber), observer)
     }
 }

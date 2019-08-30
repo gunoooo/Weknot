@@ -2,6 +2,7 @@ package com.example.weknot_android.model.repository
 
 import android.content.Context
 import android.util.Base64
+import android.util.Log
 import com.example.weknot_android.model.sharedpreference.Token
 import org.json.JSONException
 import org.json.JSONObject
@@ -21,6 +22,7 @@ class TokenRepository(private val context: Context) {
                 if (token.token == "") {
                     return null
                 }
+                Log.e("Token",token.token)
                 val payload = decodedPayloadObject(token.token)
                 return payload!!.getString(PLAYLOAD_USER_ID)
             } catch (ignore: JSONException) {

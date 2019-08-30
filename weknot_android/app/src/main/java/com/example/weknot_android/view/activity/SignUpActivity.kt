@@ -12,10 +12,11 @@ import com.example.weknot_android.network.request.SignUpRequest
 import com.example.weknot_android.viewmodel.SignUpViewModel
 
 class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
-    private val signUpViewModel: SignUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)!!
+    private lateinit var signUpViewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initViewModel()
 
         observeSignUpViewModel()
 
@@ -28,7 +29,7 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
     }
 
     private fun clickEvent() {
-        binding.signUpButton.setOnClickListener { v: View ->
+        binding.signUpButton.setOnClickListener {
             setRequest()
             signUpViewModel.signUp()
         }
@@ -38,6 +39,10 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
         signUpViewModel.request.value = SignUpRequest(binding.idText.text.toString(), binding.pwText.text.toString(),
                 binding.nameText.text.toString(), binding.birthText.text.toString(), binding.genderText.text.toString(),
                 binding.phoneNumber.text.toString())
+    }
+
+    private fun initViewModel() {
+        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
     }
 
     override fun layoutId(): Int {

@@ -12,20 +12,17 @@ import com.example.weknot_android.viewmodel.SocialViewModel
 import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter
 
 class SocialFragment : BaseFragment<SocialFragmentBinding>() {
-    private val socialViewModel: SocialViewModel = ViewModelProviders.of(this).get(SocialViewModel::class.java)!!
+    private lateinit var socialViewModel: SocialViewModel
 
     private var receiveAdapter: SocialAdapter? = null
     private var friendAdapter: SocialAdapter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initViewModel()
         initData()
 
         observeSocialViewModel()
-    }
-
-    private fun initData() {
-        socialViewModel.friends
     }
 
     private fun observeSocialViewModel() {
@@ -49,6 +46,14 @@ class SocialFragment : BaseFragment<SocialFragmentBinding>() {
         binding.friendRecyclerview.adapter = friendAdapter
         binding.receiveRecyclerview.layoutManager = linearLayoutManager
         binding.friendRecyclerview.layoutManager = linearLayoutManager
+    }
+
+    private fun initData() {
+        socialViewModel.friends
+    }
+
+    private fun initViewModel() {
+        socialViewModel = ViewModelProviders.of(this).get(SocialViewModel::class.java)
     }
 
     override fun layoutId(): Int {
