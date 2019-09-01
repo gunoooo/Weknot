@@ -1,23 +1,29 @@
 package com.example.weknot_android.view.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.model.entity.feed.Feed
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
-import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 
 class FeedFragment : BaseFragment<FeedFragmentBinding>() {
 
+    private var isOpenWriteBtn : Boolean = true
+
+    private lateinit var animAddShow : Animation
+    private lateinit var animAddHide : Animation
     private var feedAdapter: FeedAdapter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initData()
 
         var feeds: ArrayList<Feed> = ArrayList()
         feeds.add(Feed("aa","https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/67403926_132863061286633_2428159034944126976_n.jpg?_nc_cat=111&_nc_eui2=AeEBBhNE_x8QbW2VUZ44ux6LJpQKHjEs3OFl2jHv6NuUeB8E7WlH-TFTP0r69Y136W7aIWS_xMNg4RJD4_tdOZBBXgFWECi85CYsr5JLAZTh_Q&_nc_oc=AQnq-O1fFeIUpXbLH0zOByqesQqQ4e1cmcKsxsWKWodyBvlyoGBuTt4Fh2VuEwjjCsA&_nc_ht=scontent-icn1-1.xx&oh=05ceb3efda3ccc6ce6186bd734e12d61&oe=5E156726","박건우",312321,"aa","https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/69202764_473249329945552_962513982193664000_n.jpg?_nc_cat=110&_nc_eui2=AeH7a1b9giy40MxTdssYQk4MseQOim8RLW_fqffye6br8dUX2ZNUC6_AgbKZko07hhn1_xEMG2Uk2dFsRkcRDTKz4xCfkjuncUFRdqBlRzXsLw&_nc_oc=AQmU1Q4Y5UF1mkbl6IvjqPeoEGwM95ij3HdoGZB8yisg74T5rgJbPx8rzAPqZ3xEjo0&_nc_ht=scontent-icn1-1.xx&oh=3a7b0279cef60956ecd0a1a5b7d88f08&oe=5DCAABEA","aa",1,false))
@@ -31,6 +37,42 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
 
         feedAdapter = FeedAdapter(context!!, feeds)
         setRecyclerView()
+
+        clickEvent()
+        scrollEvent()
+    }
+
+    private fun initData() {
+        animAddShow = AnimationUtils.loadAnimation(context, R.anim.animation_add_show)
+        animAddHide = AnimationUtils.loadAnimation(context, R.anim.animation_add_hide)
+    }
+
+    private fun clickEvent() {
+        binding.writeBtn.setOnClickListener {  }
+    }
+
+    private fun scrollEvent() {
+        binding.feedRecyclerview.addOnScrollListener(object : OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (dy > 20) {
+                    if (isOpenWriteBtn) {
+                        binding.writeBtn.startAnimation(animAddHide)
+                        binding.writeBtn.visibility = View.INVISIBLE
+                        isOpenWriteBtn = false
+                    }
+                }
+                else if (dy < -20) {
+                    if (!isOpenWriteBtn) {
+                        binding.writeBtn.startAnimation(animAddShow)
+                        binding.writeBtn.visibility = View.VISIBLE
+                        isOpenWriteBtn = true
+                    }
+                }
+            }
+        })
     }
 
     private fun setRecyclerView() {

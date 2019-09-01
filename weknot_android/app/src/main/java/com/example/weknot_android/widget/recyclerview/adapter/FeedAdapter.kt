@@ -36,40 +36,44 @@ class FeedAdapter(private val context: Context, private val feeds: List<Feed>) :
     private fun likeClick(holder: FeedViewHolder) {
         holder.binding.likeOffBtn.setOnClickListener {
             holder.binding.likeOffAnimation.startAnimation(animLikeOnFirst)
-            animLikeOnFirst.setAnimationListener(object : Animation.AnimationListener{
+            animLikeOnFirst.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
                     holder.binding.likeOnAnimation.startAnimation(animLikeOnSecond)
                 }
+
                 override fun onAnimationStart(p0: Animation?) {
                     holder.binding.likeOffBtn.visibility = View.INVISIBLE
                 }
             })
-            animLikeOnSecond.setAnimationListener(object : Animation.AnimationListener{
+            animLikeOnSecond.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
                     holder.binding.likeOnBtn.visibility = View.VISIBLE
                 }
+
                 override fun onAnimationStart(p0: Animation?) {}
             })
         }
 
         holder.binding.likeOnBtn.setOnClickListener {
             holder.binding.likeOnAnimation.startAnimation(animLikeOffFirst)
-            animLikeOffFirst.setAnimationListener(object : Animation.AnimationListener{
+            animLikeOffFirst.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
                     holder.binding.likeOffAnimation.startAnimation(animLikeOffSecond)
                 }
+
                 override fun onAnimationStart(p0: Animation?) {
                     holder.binding.likeOnBtn.visibility = View.INVISIBLE
                 }
             })
-            animLikeOffSecond.setAnimationListener(object : Animation.AnimationListener{
+            animLikeOffSecond.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
                     holder.binding.likeOffBtn.visibility = View.VISIBLE
                 }
+
                 override fun onAnimationStart(p0: Animation?) {}
             })
         }
