@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
+            android:id="@+id/toolbar"
             android:stateListAnimator="@null"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
             <androidx.appcompat.widget.Toolbar

@@ -14,9 +14,6 @@ import com.example.weknot_android.model.entity.feed.Feed
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 
 class FeedFragment : BaseFragment<FeedFragmentBinding>() {
-
-    private var isOpenWriteBtn : Boolean = true
-
     private lateinit var animAddShow : Animation
     private lateinit var animAddHide : Animation
     private var feedAdapter: FeedAdapter? = null
@@ -60,14 +57,18 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
                 if (dy > 20) {
                     if (isOpenWriteBtn) {
                         binding.writeBtn.startAnimation(animAddHide)
+                        appBarBinding.toolbar.startAnimation(animToolbarHide)
                         binding.writeBtn.visibility = View.INVISIBLE
+                        appBarBinding.toolbar.visibility = View.INVISIBLE
                         isOpenWriteBtn = false
                     }
                 }
                 else if (dy < -20) {
                     if (!isOpenWriteBtn) {
                         binding.writeBtn.startAnimation(animAddShow)
+                        appBarBinding.toolbar.startAnimation(animToolbarShow)
                         binding.writeBtn.visibility = View.VISIBLE
+                        appBarBinding.toolbar.visibility = View.VISIBLE
                         isOpenWriteBtn = true
                     }
                 }
