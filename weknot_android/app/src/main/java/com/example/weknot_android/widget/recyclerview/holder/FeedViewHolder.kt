@@ -1,0 +1,11 @@
+package com.example.weknot_android.widget.recyclerview.holder
+
+import android.view.View
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.example.weknot_android.databinding.FeedItemBinding
+import com.google.android.gms.common.util.DataUtils
+
+class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val binding: FeedItemBinding = DataBindingUtil.bind(itemView)!!
+}

@@ -11,7 +11,6 @@ import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.model.entity.videocall.VideoCall
 import io.reactivex.Completable
 import io.reactivex.Single
-import org.w3c.dom.Entity
 
 class RoomRepository(application: Application) {
 

@@ -1,9 +1,11 @@
 package com.example.weknot_android.view.fragment
 
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.VideoCallFragmentBinding
@@ -22,6 +24,7 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initViewModel()
+        initView()
         initVideoCall()
 
         observeVideoCallViewModel()
@@ -40,6 +43,10 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding>() {
 
     private fun clickEvent() {
         binding.videoCallBtn.setOnClickListener { videoCallViewModel.requestCall() }
+    }
+
+    private fun initView() {
+//        Glide.with(this).load(R.drawable.profile).into(binding.profileImage)
     }
 
     private fun initVideoCall() {

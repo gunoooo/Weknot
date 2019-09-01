@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_marginBottom="10dp">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/writer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="박건우"
+            android:textSize="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/profile_image"
+            app:layout_constraintTop_toTopOf="@+id/profile_image"
+            android:fontFamily="@font/nanum_squareb"
+            android:textColor="@color/textColorDark"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019-8-30 17:30"
+            android:textSize="7dp"
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/nanum_squarel"
+            app:layout_constraintTop_toBottomOf="@+id/writer_name"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+            app:layout_constraintStart_toStartOf="@+id/writer_name"/>
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="장원영 사진"
+            android:textSize="10dp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/nanum_squareb"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:layout_constraintTop_toBottomOf="@+id/content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/wonyoung"/>
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/like_off_btn"
+            app:cardCornerRadius="20dp"
+            android:elevation="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/background_like"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintEnd_toEndOf="@+id/image">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="7dp"
+                android:fontFamily="@font/nanum_squareb"
+                android:textColor="@android:color/black"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/like_off" />
+            <TextView
+                android:id="@+id/like_right_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200개"
+                android:textSize="7dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/like_off_animation"
+            android:visibility="invisible"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/like_off"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintEnd_toEndOf="@+id/image" />
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible"
+            android:id="@+id/like_on_btn"
+            android:orientation="vertical"
+            android:background="@drawable/background_like"
+            android:elevation="10dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="@+id/image">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="7dp"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/like_on" />
+            <TextView
+                android:id="@+id/like_left_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200개"
+                android:textSize="7dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/like_on_animation"
+            android:visibility="invisible"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/like_on"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toStartOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="@+id/image"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

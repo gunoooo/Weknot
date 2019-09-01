@@ -8,4 +8,5 @@
     <string name="no_id_text">계정이 없으신가요?</string>
     <string name="login_text">로그인</string>
     <string name="signup_text">회원가입</string>
+    <string name="video_call_text">랜덤매칭하기</string>
 </resources>
