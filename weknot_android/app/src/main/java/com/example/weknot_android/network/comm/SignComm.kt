@@ -1,6 +1,7 @@
 package com.example.weknot_android.network.comm
 
 import com.example.weknot_android.base.BaseComm
+import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.api.SignApi
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.request.SignUpRequest
@@ -16,6 +17,10 @@ class SignComm : BaseComm<SignApi>() {
 
     fun signUp(signUpRequest: SignUpRequest): Single<String> {
         return api.signUp(signUpRequest).map(getResponseMessageFunction())
+    }
+
+    fun autoLogin(token: String): Single<User> {
+        return api.autoLogin(token).map(getResponseObjectsFunction())
     }
 
     override fun type(): Class<SignApi> {

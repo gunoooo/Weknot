@@ -9,9 +9,11 @@ import com.example.weknot_android.R
 import com.example.weknot_android.R.layout
 import com.example.weknot_android.base.BaseActivity
 import com.example.weknot_android.databinding.LoginActivityBinding
+import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.response.data.LoginData
 import com.example.weknot_android.viewmodel.LoginViewModel
+import com.example.weknot_android.viewmodel.UserViewModel
 
 class LoginActivity : BaseActivity<LoginActivityBinding>() {
     private lateinit var loginViewModel: LoginViewModel
@@ -32,6 +34,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
         loginViewModel.getData().observe(this, Observer { loginData: LoginData ->
             loginViewModel.insertToken(loginData.token)
             loginViewModel.insertUser(loginData.user)
+            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
             startActivityWithFinish(MainActivity::class.java)
         })
     }
@@ -40,7 +43,6 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
         binding.loginBtn.setOnClickListener {
             setRequest()
             loginViewModel.login()
-            startActivityWithFinish(MainActivity::class.java)
         }
 
         binding.signUpButton.setOnClickListener { startActivity(SignUpActivity::class.java) }

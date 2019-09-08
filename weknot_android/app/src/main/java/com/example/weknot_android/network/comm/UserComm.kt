@@ -12,10 +12,6 @@ class UserComm : BaseComm<UserApi>() {
         return api.getProfile(token, userId).map(getResponseObjectsFunction())
     }
 
-    fun getUser(token: String): Single<User> {
-        return api.getUser(token).map(getResponseObjectsFunction())
-    }
-
     override fun type(): Class<UserApi> {
         return UserApi::class.java
     }
