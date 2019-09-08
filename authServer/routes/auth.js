@@ -286,7 +286,7 @@ router.get('/chattingRooms',(req, res, next) => {//userId
   });
 });//roomNumber,roomName,masterName,roomPassword,roomType
 
-router.post('/dm',(req, res, next) => {//userId
+router.get('/dm',(req, res, next) => {//userId
 //  const userId = req.body.userId;
   const userId = "w";
   let dm;
