@@ -84,14 +84,14 @@ router.post('/autoLogin', authMiddle, (req,res,next) => {
 })
 
 router.post('/register',(req, res, next) => {
-  const user = [
-    id = req.body.id,
-    name = req.body.userName,
-    password = req.body.userPassword,
-    birth = req.body.userBirth,
-    gender = req.body.userGender,
-    phoneNumber = req.body.userPhoneNumber
-  ];
+  const user = {
+    id: req.body.id,
+    name: req.body.userName,
+    password: req.body.userPassword,
+    birth: req.body.userBirth,
+    gender: req.body.userGender,
+    phoneNumber: req.body.userPhoneNumber
+  };
 
   console.log(user.birth);
 

@@ -73,54 +73,6 @@ router.post('/changePassword', (req,res,next) => {
   });
 });
 
-router.get('/feeds', (req,res,next) => {
-  const feeds = [
-    {
-      writePicture: "Wpic1",
-      writeName: "aaaa",
-      date: "2002-12-12",
-      feedId: "sunny",
-      feedPicture: "Fpic1",
-      feedComment: "Apple",
-      likeCount: 3,
-      isLiked: true
-    },
-    {
-      writePicture: "Wpic2",
-      writeName: "bbbb",
-      date: "2000-01-05",
-      feedId: "cloudy",
-      feedPicture: "Fpic2",
-      feedComment: "Bench",
-      likeCount: 10,
-      isLiked: false
-    },
-    {
-      writePicture: "Wpic3",
-      writeName: "cccc",
-      feedId: "windy",
-      feedPicture: "Fpic3",
-      feedComment: "Cry",
-      likeCount: 109,
-      isLiked: true
-    },
-    {
-      writePicture: "Wpic4",
-      writeName: "dddd",
-      feedId: "snow",
-      feedPicture: "Fpic4",
-      feedComment: "Im lonely",
-      likeCount: 42151,
-      isLiked: true
-    },
-  ];
-
-  res.json({
-    result: feeds,
-    message: "ok"
-  });
-});
-
 router.post('/like', (req, res, next) => {
   const userId = "tjrwns";
   const feedId = "sunday";
@@ -131,36 +83,8 @@ router.post('/like', (req, res, next) => {
   });
 });
 
-router.post('/feeds', (req, res, next) => {
-  const feedPicture = "Fpic1";
-  const feedComment = "Hello";
-
-  res.json({
-    result: "success",
-    message: "ok"
-  });
-});
-
-router.put('/feeds/:feedId', (req, res, next)=>{
-  const feedId = req.params.feedId;
-  res.json({
-    result: "success",
-    message: "ok"
-  });
-});
-
-router.delete('/feeds/:feedId', (req, res, next)=>{
-  const feedId = req.params.feedId;
-  res.json({
-    result: "success",
-    message: "ok"
-  });
-});
-
 
 // router.
-
-
 
 /*router.get('/:id/log/:category', function(req, res, next) {
   const pool = mariadb.createPool(dbcp);
