@@ -32,11 +32,14 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
         loginViewModel.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show() })
 
         loginViewModel.getData().observe(this, Observer { loginData: LoginData ->
-            loginViewModel.insertToken(loginData.token)
-            loginViewModel.insertUser(loginData.user)
-            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-            startActivityWithFinish(MainActivity::class.java)
+            loginSuccessEvent(loginData)
         })
+    }
+
+    private fun loginSuccessEvent(loginData: LoginData) {
+        loginViewModel.insertLoginData(loginData)
+        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+        startActivityWithFinish(MainActivity::class.java)
     }
 
     private fun clickEvent() {

@@ -2,6 +2,7 @@
     <string name="app_name">weknot_android</string>
 
     <string name="main_title">Weknot</string>
+    <string name="feed_write_title">글쓰기</string>
 
     <string name="id_text">아이디</string>
     <string name="pw_text">비밀번호</string>

@@ -1,5 +1,6 @@
 package com.example.weknot_android.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -11,6 +12,7 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.model.entity.feed.Feed
+import com.example.weknot_android.view.activity.FeedWriteActivity
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 
 class FeedFragment : BaseFragment<FeedFragmentBinding>() {
@@ -48,7 +50,10 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
     }
 
     private fun clickEvent() {
-        binding.writeBtn.setOnClickListener {  }
+        binding.writeBtn.setOnClickListener {
+            startActivity(Intent(context, FeedWriteActivity::class.java))
+            activity!!.finish()
+        }
     }
 
     private fun scrollEvent() {
@@ -57,14 +62,14 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                if (dy > 20) {
+                if (dy > 10) {
                     if (isOpenWriteBtn) {
                         binding.writeBtn.startAnimation(animAddHide)
                         binding.writeBtn.visibility = View.INVISIBLE
                         isOpenWriteBtn = false
                     }
                 }
-                else if (dy < -20) {
+                else if (dy < -10) {
                     if (!isOpenWriteBtn) {
                         binding.writeBtn.startAnimation(animAddShow)
                         binding.writeBtn.visibility = View.VISIBLE
