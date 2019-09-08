@@ -26,7 +26,6 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initViewModel()
-        initData()
 
         var feeds: ArrayList<Feed> = ArrayList()
         feeds.add(Feed("aa","https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/67403926_132863061286633_2428159034944126976_n.jpg?_nc_cat=111&_nc_eui2=AeEBBhNE_x8QbW2VUZ44ux6LJpQKHjEs3OFl2jHv6NuUeB8E7WlH-TFTP0r69Y136W7aIWS_xMNg4RJD4_tdOZBBXgFWECi85CYsr5JLAZTh_Q&_nc_oc=AQnq-O1fFeIUpXbLH0zOByqesQqQ4e1cmcKsxsWKWodyBvlyoGBuTt4Fh2VuEwjjCsA&_nc_ht=scontent-icn1-1.xx&oh=05ceb3efda3ccc6ce6186bd734e12d61&oe=5E156726","박건우",312321,"aa","https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/69202764_473249329945552_962513982193664000_n.jpg?_nc_cat=110&_nc_eui2=AeH7a1b9giy40MxTdssYQk4MseQOim8RLW_fqffye6br8dUX2ZNUC6_AgbKZko07hhn1_xEMG2Uk2dFsRkcRDTKz4xCfkjuncUFRdqBlRzXsLw&_nc_oc=AQmU1Q4Y5UF1mkbl6IvjqPeoEGwM95ij3HdoGZB8yisg74T5rgJbPx8rzAPqZ3xEjo0&_nc_ht=scontent-icn1-1.xx&oh=3a7b0279cef60956ecd0a1a5b7d88f08&oe=5DCAABEA","aa",1,false))
@@ -41,6 +40,8 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding>() {
 
     private fun observeUserViewModel() {
         userViewModel.getData().observe(this, Observer { profile: Profile -> initView(profile) })
+
+        userViewModel.getUserData().observe(this, Observer { user: User -> initData(user.id) })
 
         userViewModel.getEntity().observe(this, Observer { user: User -> userViewModel.getProfile(user.id) })
     }
@@ -73,8 +74,8 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding>() {
         binding.feedRecyclerview.layoutManager = linearLayoutManager
     }
 
-    private fun initData() {
-        userViewModel.getMyId()
+    private fun initData(id: String) {
+        userViewModel.getMyId(id)
     }
 
     private fun initViewModel() {
