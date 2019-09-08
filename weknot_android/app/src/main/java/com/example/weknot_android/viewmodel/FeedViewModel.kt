@@ -22,4 +22,8 @@ class FeedViewModel(application: Application) : BaseViewModel<List<Feed>, Void, 
     fun createFeed() {
         addDisposable(comm.createFeed(token, picture.value!!, comment.value!!), baseObserver)
     }
+
+    fun getFeeds() {
+        addDisposable(comm.getFeeds(token), dataObserver)
+    }
 }
