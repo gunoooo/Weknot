@@ -195,7 +195,7 @@ router.post('/addFriend',authMiddle, (req, res, next) => {//userId,friendId
 router.get('/profile/:userId',(req, res, next) => {
   const userId = req.params.userId;
 
-  users.showUserProfile(userId)
+  feeds.showUserProfile(userId)
   .then((result) =>{
     if(result)
     {
