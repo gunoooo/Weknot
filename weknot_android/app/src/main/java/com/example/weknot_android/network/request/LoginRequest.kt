@@ -10,7 +10,8 @@ class LoginRequest(id: String, pw: String) {
     init {
         try {
             this.id = id
-            this.pw = Utils.encryptSHA512(pw)
+//            this.pw = Utils.encryptSHA512(pw)
+            this.pw = pw
         } catch (e: NoSuchAlgorithmException) {
             e.printStackTrace()
         }

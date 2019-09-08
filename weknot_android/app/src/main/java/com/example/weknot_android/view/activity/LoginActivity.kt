@@ -31,7 +31,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
 
         loginViewModel.getData().observe(this, Observer { loginData: LoginData ->
             loginViewModel.insertToken(loginData.token)
-//            loginViewModel.insertUser(loginData.user)
+            loginViewModel.insertUser(loginData.user)
             startActivityWithFinish(MainActivity::class.java)
         })
     }
