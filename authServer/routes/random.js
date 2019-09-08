@@ -33,12 +33,12 @@ router.post('/', authMiddle, function(req, res, next) {
         return res.json({
           message: "ok",
           data: {
-            c
+            channel:c.channel,
+            users:c.users
           }
         });
       } 
     }
-    newChannel(id);
   }
 });
 

@@ -8,6 +8,10 @@ const dbcp = require('../models/dbcp');
 const users = require('../models/users');
 const authMiddle = require("../middlewares/auth");
 
+const fs = require('fs');
+const multer = require('multer');
+const path = require('path');
+
 /* GET user authentication. */
 router.get('/', (req, res, next) => {
   res.send('auth main');
