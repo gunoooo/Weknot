@@ -28,7 +28,7 @@ exports.loginUser = (req,res,user) => {
           userName: user.name,
           exp: exptime,
           iss: 'weknot',
-          sub: user.userId,
+          sub: user.id,
           aud: 'weknot',
           iat: Math.floor(Date.now() / 1000),
         },

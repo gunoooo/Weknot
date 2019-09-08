@@ -18,79 +18,74 @@ router.post('/login',(req, res, next) => {//userId,userPassword
   // const userId = req.body.userId;
   // const password = req.body.userPassword;
 
-  const {userId, password} = req.body;
-  if(!userId || !password){
-    res.json({
-      error:{message:"invalid parameter"}
+  const {id, password} = req.body;
+  if(!id || !password){
+    res.status(403).json({
+      message:"invalid parameter"
     });
     return;
   }
 
-  users.getQueryUser(userId)
+  users.getQueryUser(id)
   .then((result) => {
     let user;
     if(result != null) user = result[0];
     if(user == undefined){
-      res.json({
-        error: {message:"undefined user"}})
+      res.status(403).json({
+        message:"undefined user"
+      });
       return;
     }
     if(user.password == password){
       users.loginUser(req,res,user)
       .then((token) => {
         res.json({
-          token,
-          user:user,
-          message: "login"});
+          data:{token,user:user},
+          message: "login"
+        });
       })
       
     }
     else
-      res.json({
-        error:{message:"invalid password"}
-        });
+      res.status(403).json({
+        message:"invalid password"
+    });
   })
   .catch((err) => {
     console.log(err);
     //res.render('error', {error:err});
-    res.json({
-              error: {message:err.message}
-            });
+    res.status(500).json({message:err.message});
   });
 });
 
-router.post('./autoLogin', authMiddle, (req,res,next) => {
-  const userId = decodedToken.sub;
-  users.getQueryUser(userId)
+router.post('/autoLogin', authMiddle, (req,res,next) => {
+  console.log(req.decodedToken);
+  const id = req.decodedToken.sub;
+  console.log(id);
+  users.getQueryUser(id)
   .then((result) => {
     let user;
     if(result != null) user = result[0];
     if(user == undefined){
-      res.json({
-        error:{message:'undefined user'}
-      })
-      return;
-    }
-    users.loginUser(req,res,user)
-    .then((token) => {
-      res.json({
-        token,
-        user:user,
-        message: "login"});
+      res.status(403).json({
+        message:'undefined user'
       });
+      return;
+    } else {
+      res.json({
+        data:{user:user},
+        message: "login"});
+    }
   })
   .catch((err) => {
     console.log(err);
-    //res.render('error', {error:err});
-    res.json({
-              error: {message:err.message}
-            });
+    res.status(500).json({ message:err.message});
   });
 })
 
 router.post('/register',(req, res, next) => {
   const user = [
-    id = req.body.userId,
+    id = req.body.id,
     name = req.body.userName,
     password = req.body.userPassword,
     birth = req.body.userBirth,
