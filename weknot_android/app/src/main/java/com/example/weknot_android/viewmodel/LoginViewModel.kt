@@ -13,8 +13,6 @@ import com.example.weknot_android.network.response.data.LoginData
 class LoginViewModel(application: Application) : BaseViewModel<LoginData, Void, SignComm>(application, SignComm()) {
     var request = MutableLiveData<LoginRequest>()
 
-    private val userIdRepository: UserIdRepository = UserIdRepository(application)
-
     fun login() {
         addDisposable(comm.login(request.value!!), dataObserver)
     }
@@ -34,6 +32,6 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData, Void, 
     }
 
     fun insertId(id: String) {
-        userIdRepository.setId(id)
+        userId = id
     }
 }

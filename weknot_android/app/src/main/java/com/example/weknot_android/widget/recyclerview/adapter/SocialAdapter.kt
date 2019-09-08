@@ -28,7 +28,7 @@ class SocialAdapter(private val context: Context, private val friends: List<Frie
     @SuppressLint("SetTextI18n")
     private fun initView(binding: SocialItemBinding, friend: Friend) {
         binding.name.text = friend.friendName
-        binding.point.text = Integer.toString(friend.friendPoint) + "점"
+        binding.point.text = friend.friendPoint.toString() + "점"
         if (friend.friendPicture == null) {
             // todo
         }

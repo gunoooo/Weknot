@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout
 
 
 class MainActivity: BaseActivity<MainActivityBinding>() {
-    private lateinit var baseViewModel: BaseViewModel<*,*,*>
 
     private var PAGE_COUNT: Int = 5
 
@@ -83,7 +82,6 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
 
     private fun appbarClickEvent() {
         appBarBinding.back.setOnClickListener {
-            baseViewModel.token = ""
             startActivityWithFinish(LoginActivity::class.java)
         }
 

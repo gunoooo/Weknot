@@ -12,13 +12,11 @@ import io.reactivex.observers.DisposableSingleObserver
 
 class UserViewModel(application: Application) : BaseViewModel<Profile, User, UserComm>(application, UserComm()) {
 
-    private val userIdRepository: UserIdRepository = UserIdRepository(application)
-
     fun getProfile(userId: String) {
         addDisposable(comm.getProfile(token, userId), dataObserver)
     }
 
     fun getMyId(): String {
-        return userIdRepository.getId()
+        return userId
     }
 }

@@ -8,13 +8,9 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class TokenRepository(private val context: Context) {
-    val token: Token
+    val token: Token = Token(context)
 
     fun setToken(token: String) {
         Token(context).token = token
-    }
-
-    init {
-        token = Token(context)
     }
 }

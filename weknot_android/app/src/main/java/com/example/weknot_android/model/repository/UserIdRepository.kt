@@ -9,12 +9,9 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class UserIdRepository(private val context: Context) {
+    val userId: UserId = UserId(context)
 
-    fun setId(id: String) {
+    fun setUserId(id: String) {
         UserId(context).id = id
-    }
-
-    fun getId(): String {
-        return UserId(context).id
     }
 }

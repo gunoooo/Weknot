@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.model.repository.RoomRepository
 import com.example.weknot_android.model.repository.TokenRepository
+import com.example.weknot_android.model.repository.UserIdRepository
 import com.example.weknot_android.model.sharedpreference.Token
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -20,6 +21,7 @@ import java.util.*
 abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Application, protected var comm: CM) : AndroidViewModel(application) {
     private val disposable: CompositeDisposable = CompositeDisposable()
     private val tokenManager: TokenRepository = TokenRepository(application)
+    private val userIdManager: UserIdRepository = UserIdRepository(application)
     protected val repository: RoomRepository = RoomRepository(application)
 
     protected val successMessage = MutableLiveData<String>()
@@ -43,6 +45,9 @@ abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Appl
     var token: String
         get() = tokenManager.token.token
         set(value) = tokenManager.setToken(value)
+    var userId: String
+        get() = userIdManager.userId.id
+        set(value) = userIdManager.setUserId(value)
 
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())
