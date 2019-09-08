@@ -26,9 +26,7 @@ router.post('/login',function(req,res,next){
   let userId = req.body.id;
   let password = req.body.password;
 
-  const pool = mariadb.createPool(dbcp);
-
-  users.queryUser(pool, userId)
+  users.queryUser(userId)
   .then(function(result){
     if(result.password === password){
       res.json({result:"success"});
@@ -51,10 +49,8 @@ router.post('/register',function(req,res,next) {
     gender : req.body.gender,
     phoneNumber : req.body.phoneNumber
   };
-  
-  const pool = mariadb.createPool(dbcp);
 
-  users.registerUser(pool, user)
+  users.registerUser(user)
   .then(function(result){
     res.send('{"result":"sucess"}')
   })
