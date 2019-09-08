@@ -1,7 +1,7 @@
 const dbcp = require ('./dbcp');
 
 exports.addFeed = (feed)=>{
-  console.log(feed);
+  //console.log(feed);
   
   const sql = 'INSERT INTO feed(writer, picture, comment) VALUES (?,?,?)';
   const query = (conn)=>{
@@ -10,7 +10,7 @@ exports.addFeed = (feed)=>{
         .query(sql, [feed.writer, feed.picture, feed.comment])
         .then((result)=> {
           conn.end()
-          console.log(result)
+          //console.log(result)
           resolve(result)
         })
         .catch((err) =>{reject(err)})
@@ -47,8 +47,9 @@ exports.showUserProfile = async (cid) => {
 
 exports.getFeeds = async (id) => {
   let conn;
-  // 필요한거 user.id, user.name, user.photo, feed.picture, feed.comment, feed.time
-  const sql = "SELECT user.id, user.name,  feed.picture, feed.comment, feed.time FROM user INNER JOIN feed ON feed.writer=user.id";
+  // 내꺼랑 친구꺼 피드만 보내기 (현재는 모든사용자 피드)
+  // 필요한거 user.photo 좋아요 갯수, 내가 좋아요했는지 or 안했는지
+  const sql = "SELECT user.id, user.name,  feed.picture, feed.comment, feed.time FROM user INNER JOIN feed ON feed.writer=user.id order by feed.time desc";
   let result;
   try{
     conn = await dbcp.getConnection();

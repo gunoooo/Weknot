@@ -4,7 +4,7 @@ const authMiddleware = (req, res, next) => {
 
   // read the token from header or url
   const token = req.headers['authorization'];// || req.query.token
-  console.log(token);
+  //console.log(token);
   if(!token) {
       return res.status(403).json({
         message : 'No Token'
@@ -41,7 +41,7 @@ const authMiddleware = (req, res, next) => {
     .then(checkSubject)
     .then((decodedToken)=>{
       req.decodedToken = decodedToken
-      console.log(req.decodedToken)
+      //console.log(req.decodedToken)
       next()
     })
     .catch(onError)

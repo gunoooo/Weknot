@@ -89,17 +89,34 @@ router.post('/autoLogin', authMiddle, (req,res,next) => {
   });
 })
 
-router.post('/register',(req, res, next) => {
+
+let stroage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, 'public/image');
+  },
+  filename: function (req, file, callback) {
+    let extension = path.extname(file.originalname);
+    let basename = path.basename(file.originalname, extension);
+    callback(null, basename + "-" + Date.now() + extension);
+  }
+});
+let upload = multer({ storage: stroage }).fields([{ name: 'photo', maxCount: 1 }]);
+
+// 회원가입 테스트 해보기 photo 주면 photo사진 안주면 dgsw 로고
+router.post('/register', upload, (req, res, next) => {
   const user = {
     id: req.body.id,
     name: req.body.userName,
     password: req.body.userPassword,
     birth: req.body.userBirth,
     gender: req.body.userGender,
-    phoneNumber: req.body.userPhoneNumber
+    phoneNumber: req.body.userPhoneNumber,
+    photo: 'default.jpg'
   };
 
-  console.log(user.birth);
+  if(req.files['photo'][0] != null){
+    user.photo = req.files['photo'][0].filename;
+  }
 
   users.registerUser(user)
   .then((result) => {
