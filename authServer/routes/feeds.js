@@ -2,34 +2,66 @@ var express = require('express');
 var router = express.Router();
 const authMiddle = require("../middlewares/auth");
 const feedModel = require('../models/feeds')
+const fs = require('fs');
+const multer = require('multer');
+const path = require('path');
+
+let stroage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, 'public/image');
+  },
+  filename: function (req, file, callback) {
+    let extension = path.extname(file.originalname);
+    let basename = path.basename(file.originalname, extension);
+    callback(null, basename + "-" + Date.now() + extension);
+  }
+});
+let upload = multer({ storage: stroage }).fields([{ name: 'picture', maxCount: 1 }]);
 
 // 전체 피드 조회 (내꺼 + 친구꺼)
 router.get('/', authMiddle, function(req, res, next) {
   const id = req.decodedToken.sub;
-  const feeds = [{
-    writePicture: "Wpic3",
-    writeName: "cccc",
-    feedId: "windy",
-    feedPicture: "Fpic3",
-    feedComment: "Cry",
-    likeCount: 109,
-    isLiked: true
-    }];
 
-  res.json({
-    data:{feeds},
-    message: "ok"
-  });
+  feedModel.getFeeds(id)
+  .then((result) => {
+    console.log(result);
+    res.json({message: 'ok', data: result});
+  })
+  .catch((err) => {
+    res.status(500).json({
+      error: {message:err.message}});
+  })
+  //res.render('feedTest');
 });
 
-router.post('/', authMiddle,  (req, res, next) => {
-  // const id = req.decodedToken.sub;
-  // const feed = {
-  //   writer: id,
-  //   commnet: req.body.commnet
-  // };
-  // feedModel.addFeed(feed)
-  // .then(function)
+router.post('/', [authMiddle, upload], (req, res, next) => {
+  const id = req.decodedToken.sub;
+  const fileName = req.files['picture'][0].filename;
+  
+  
+  const feed = {
+    writer: id,
+    comment: req.body.comment,
+    picture: fileName
+  };
+  console.log(feed);
+  
+  feedModel.addFeed(feed)
+  .then((result) => {
+    if(result.affectedRows === 1)
+    {
+      res.json({
+        message: "ok"
+      })
+    }
+    else {
+      res.status(500).json({message: 'fail'})
+    }
+  })
+  .catch((err) => {
+    res.status(500).json({
+      error: {message:err.message}});
+  });
 });
 
 module.exports = router;
