@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  form(action='/feeds/' method='POST' enctype='multipart/form-data')
+    input(type='text' name='comment')
+    input(type='file' name='picture')
+    input(type='submit' value='send')
