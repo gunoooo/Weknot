@@ -40,9 +40,8 @@ exports.loginUser = (req,res,user) => {
       })
       return p;
   }
-
    return sign(user);
-  }
+}
 exports.getQueryUser = (cid) => {
   const query = (conn)=>{
     const p = new Promise((resolve, reject)=> {
@@ -69,7 +68,7 @@ exports.getQueryUser = (cid) => {
   return p;
 };
 
-/*exports.allUsers = async () => {
+exports.allUsers = async () => {
   let conn;
   let result;
   try{
@@ -81,7 +80,7 @@ exports.getQueryUser = (cid) => {
     if(conn) await conn.end();
     return result;
   }
-};*/
+};
 
 /*exports.registerUser = async (user) => {
   let conn;
@@ -148,7 +147,7 @@ exports.registerUser = (user) => {
   });
 }*/
 
-/*exports.showUserProfile = async (cid) => {
+exports.showUserProfile = async (cid) => {
   let conn;
   const sql = "SELECT id,name,birth,gender,picture,intro,scope,point FROM user WHERE id = ? "
   let result;
@@ -162,33 +161,33 @@ exports.registerUser = (user) => {
     if(conn) await conn.end();
     return result
   }
-};*/
-
-exports.showUserProfile = (cid) => {
-  const query = (conn)=>{
-    const p = new Promise((resolve, reject)=> {
-      conn
-        .query('SELECT id,name,birth,gender,picture,intro,scope,point FROM user WHERE id = ?', [cid])
-        .then((result)=> {
-          conn.end()
-          resolve(result)
-        })
-        .catch((err) =>{
-          reject(err)})
-    })
-    return p;
-  }
-
-  const p = new Promise((resolve, reject) => {
-    dbcp.getConnection()
-      .then(query)
-      .then((result=> {
-        resolve(result)
-      }))
-      .catch((err) => {reject(err)})
-  })
-  return p;
 };
+
+// exports.showUserProfile = (cid) => {
+//   const query = (conn)=>{
+//     const p = new Promise((resolve, reject)=> {
+//       conn
+//         .query('SELECT id,name,birth,gender,picture,intro,scope,point FROM user WHERE id = ?', [cid])
+//         .then((result)=> {
+//           conn.end()
+//           resolve(result)
+//         })
+//         .catch((err) =>{
+//           reject(err)})
+//     })
+//     return p;
+//   }
+
+//   const p = new Promise((resolve, reject) => {
+//     dbcp.getConnection()
+//       .then(query)
+//       .then((result=> {
+//         resolve(result)
+//       }))
+//       .catch((err) => {reject(err)})
+//   })
+//   return p;
+// };
 
 /*exports.addFriend = async (idList) => {//requester랑receiver가 db값과 둘다 같다면?  
   let conn;
