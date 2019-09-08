@@ -73,7 +73,13 @@ router.post('/autoLogin', authMiddle, (req,res,next) => {
       return;
     } else {
       res.json({
-        data:{user:user},
+        data:{
+          id:user.id,
+          name:user.name,
+          birth:user.birth,
+          gender:user.gender,
+          phoneNumber:user.phoneNumber
+        },
         message: "login"});
     }
   })
@@ -195,7 +201,7 @@ router.post('/addFriend',authMiddle, (req, res, next) => {//userId,friendId
 router.get('/profile/:userId',(req, res, next) => {
   const userId = req.params.userId;
 
-  feeds.showUserProfile(userId)
+  users.showUserProfile(userId)
   .then((result) =>{
     if(result)
     {

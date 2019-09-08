@@ -26,7 +26,7 @@ router.post('/', authMiddle,  (req, res, next) => {
   const id = req.decodedToken.sub;
   const feed = {
     writer: id,
-    
+    commnet: req.body.commnet
   };
   feedModel.addFeed(feed)
   .then(function)
