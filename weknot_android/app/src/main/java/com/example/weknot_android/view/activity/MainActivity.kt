@@ -12,6 +12,8 @@ import com.google.android.material.tabs.TabLayout
 
 class MainActivity: BaseActivity<MainActivityBinding>() {
 
+    private var PAGE_COUNT: Int = 5
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewPager()
@@ -22,7 +24,7 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
     private fun initViewPager() {
         val pagerAdapter = MainPagerAdapter(supportFragmentManager)
 
-        binding.viewPager.offscreenPageLimit = 5
+        binding.viewPager.offscreenPageLimit = PAGE_COUNT
         binding.viewPager.adapter = pagerAdapter
     }
 

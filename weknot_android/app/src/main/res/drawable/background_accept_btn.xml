@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="70dp"/>
             <gradient
-                android:startColor="@color/colorLine"
-                android:centerColor="@color/colorLine"
-                android:endColor="@color/colorLine"/>
+                android:angle="0"
+                android:endColor="@color/colorMainDark"
+                android:startColor="@color/colorMainDark" />
+            <corners android:radius="7dp"/>
             <padding
                 android:bottom="1dp"
                 android:left="1dp"
@@ -18,8 +17,8 @@
 
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="70dp"/>
             <solid android:color="?android:textColorPrimaryInverse" />
+            <corners android:radius="7dp"/>
             <padding
                 android:bottom="2dp"
                 android:left="2dp"
@@ -27,5 +26,4 @@
                 android:top="2dp" />
         </shape>
     </item>
-
 </layer-list>

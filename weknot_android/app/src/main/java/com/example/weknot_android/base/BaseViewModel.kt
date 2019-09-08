@@ -44,7 +44,6 @@ abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Appl
         get() = tokenManager.token.token
         set(value) = tokenManager.setToken(value)
 
-    @SuppressWarnings("Unchecked")
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(observer as SingleObserver<Any>) as Disposable)

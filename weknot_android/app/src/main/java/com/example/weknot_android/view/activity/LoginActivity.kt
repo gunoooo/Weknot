@@ -40,6 +40,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
         binding.loginBtn.setOnClickListener {
             setRequest()
             loginViewModel.login()
+            startActivityWithFinish(MainActivity::class.java)
         }
 
         binding.signUpButton.setOnClickListener { startActivity(SignUpActivity::class.java) }

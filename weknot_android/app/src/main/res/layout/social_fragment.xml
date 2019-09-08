@@ -1,26 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/receive_recyclerview"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:padding="15dp"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/nanum_squareeb"
+                android:background="@android:color/white"
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="매듭요청" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friend_recyclerview"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        app:layout_constraintTop_toBottomOf="@+id/receive_recyclerview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:id="@+id/receive_recyclerview"
+                tools:listitem="@layout/social_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="친구목록"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/nanum_squareeb"
+                android:background="@drawable/background_friend_part"
+                android:textSize="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:id="@+id/friend_recyclerview"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/social_item"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

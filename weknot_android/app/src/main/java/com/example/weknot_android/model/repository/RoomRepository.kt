@@ -25,11 +25,11 @@ class RoomRepository(application: Application) {
         openChatDao = database.openChatDao()
     }
 
-//    private val user: Single<User>? = userDao.getUser(TokenRepository(application).myId)
+//    private val user: Single<User> = userDao.getUser(TokenRepository(application).myId)
     fun insertUser(entity: User) { Completable.fromAction { userDao.insert(entity) } }
     fun updateUser(entity: User) { Completable.fromAction { userDao.update(entity) } }
     fun deletUser(entity: User) { Completable.fromAction { userDao.delete(entity) } }
-//    fun getUser(): Single<User>? { return user }
+//    fun getUser(): Single<User> { return user }
 
     fun insertVideoCall(entity: VideoCall) { Completable.fromAction { videoCallDao.insert(entity) } }
     fun insertVideoCall(vararg entity: VideoCall) { Completable.fromAction { videoCallDao.insert(entity) } }
