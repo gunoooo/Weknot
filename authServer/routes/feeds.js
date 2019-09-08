@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const authMiddle = require("../middlewares/auth");
-const feedModel = require('../models/feed')
+const feedModel = require('../models/feeds')
 
 // 전체 피드 조회 (내꺼 + 친구꺼)
 router.get('/', authMiddle, function(req, res, next) {
@@ -23,13 +23,13 @@ router.get('/', authMiddle, function(req, res, next) {
 });
 
 router.post('/', authMiddle,  (req, res, next) => {
-  const id = req.decodedToken.sub;
-  const feed = {
-    writer: id,
-    commnet: req.body.commnet
-  };
-  feedModel.addFeed(feed)
-  .then(function)
+  // const id = req.decodedToken.sub;
+  // const feed = {
+  //   writer: id,
+  //   commnet: req.body.commnet
+  // };
+  // feedModel.addFeed(feed)
+  // .then(function)
 });
 
 module.exports = router;

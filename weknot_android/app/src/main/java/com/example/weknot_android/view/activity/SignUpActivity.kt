@@ -1,7 +1,6 @@
 package com.example.weknot_android.view.activity
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -38,7 +37,7 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
     private fun setRequest() {
         signUpViewModel.request.value = SignUpRequest(binding.idText.text.toString(), binding.pwText.text.toString(),
                 binding.nameText.text.toString(), binding.birthText.text.toString(), binding.genderText.text.toString(),
-                binding.phoneNumber.text.toString())
+                binding.phoneNumberText.text.toString())
     }
 
     private fun initViewModel() {

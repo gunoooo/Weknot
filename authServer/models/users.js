@@ -104,13 +104,15 @@ exports.registerUser = (user) => {
   const query = (conn)=>{
     const p = new Promise((resolve, reject)=> {
       conn
-        .query(sql,user)
+        .query(sql,[user.id, user.name, user.password, user.birth, user.gender, user.phoneNumber])
         .then((result)=> {
           conn.end()
           console.log(result)
           resolve(result)
         })
-        .catch((err) =>{reject(err)})
+        .catch((err) =>{
+          console.log(err);
+          reject(err)})
     })
     return p;
   }

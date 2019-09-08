@@ -173,8 +173,8 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
 router.post('/addFriend',authMiddle, (req, res, next) => {//userId,friendId
   const idList = [
-    userId = req.body.userId,
-    friendId = req.body.friendId,
+    requester = req.decodedToken.sub,
+    receiver = req.body.receiver,
     state = 0
   ];
 
@@ -192,9 +192,7 @@ router.post('/addFriend',authMiddle, (req, res, next) => {//userId,friendId
     }
   })
   .catch((err) => {
-    res.json({
-      result:"error",
-      error:err.message});
+    res.status(500).json({ message:err.message});
   });
 });
 
