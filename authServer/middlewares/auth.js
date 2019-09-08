@@ -7,8 +7,7 @@ const authMiddleware = (req, res, next) => {
   console.log(token);
   if(!token) {
       return res.status(403).json({
-        result: "fail",
-        error : 'No Token'
+        message : 'No Token'
       })
   }
 
@@ -22,7 +21,7 @@ const authMiddleware = (req, res, next) => {
       }
   )
 
-  const checkSubjectAndPurpose = (decodedToken)=>{
+  const checkSubject = (decodedToken)=>{
     const userid = decodedToken.sub;
     const userName = decodedToken.userName;
 
@@ -33,14 +32,13 @@ const authMiddleware = (req, res, next) => {
   // if it has failed to verify, it will return an error message
   const onError = (error) => {
       res.status(403).json({
-          result: "fail",
-          error: error.message
+          message: error.message
       })
   }
 
   // process the promise
   checkToken
-    .then(checkSubjectAndPurpose)
+    .then(checkSubject)
     .then((decodedToken)=>{
       req.decodedToken = decodedToken
       console.log(req.decodedToken)

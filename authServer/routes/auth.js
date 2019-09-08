@@ -15,63 +15,89 @@ router.get('/', (req, res, next) => {
 
 
 router.post('/login',(req, res, next) => {//userId,userPassword
-  const userId = req.body.userId;
-  const password = req.body.userPassword;
+  // const userId = req.body.userId;
+  // const password = req.body.userPassword;
 
-  if(!userId || !password){
-    res.json({
-      result: "fail",
-      token: "babo"
+  const {id, password} = req.body;
+  if(!id || !password){
+    res.status(403).json({
+      message:"invalid parameter"
     });
     return;
   }
 
-  users.getQueryUser(userId)
+  users.getQueryUser(id)
   .then((result) => {
     let user;
     if(result != null) user = result[0];
     if(user == undefined){
-      res.json({
-        result:"fail",
-        error: 'do not use id'})
+      res.status(403).json({
+        message:"undefined user"
+      });
       return;
     }
     if(user.password == password){
       users.loginUser(req,res,user)
       .then((token) => {
         res.json({
-          result: "success",
-          token,
-          message: "토큰 보내기 성공"});
+          data:{token,user:user},
+          message: "login"
+        });
       })
       
     }
     else
-      res.json({result:"fail",
-                message:"토큰 보내는데 실패함."});
+      res.status(403).json({
+        message:"invalid password"
+    });
   })
   .catch((err) => {
     console.log(err);
     //res.render('error', {error:err});
-    res.json({result:"error",
-              error: err.message});
+    res.status(500).json({message:err.message});
   });
 });
 
-router.use('./autoLogin', authMiddle);
-router.post('./autoLogin',(req,res,next) => {
-
+router.post('/autoLogin', authMiddle, (req,res,next) => {
+  console.log(req.decodedToken);
+  const id = req.decodedToken.sub;
+  console.log(id);
+  users.getQueryUser(id)
+  .then((result) => {
+    let user;
+    if(result != null) user = result[0];
+    if(user == undefined){
+      res.status(403).json({
+        message:'undefined user'
+      });
+      return;
+    } else {
+      res.json({
+        data:{
+          id:user.id,
+          name:user.name,
+          birth:user.birth,
+          gender:user.gender,
+          phoneNumber:user.phoneNumber
+        },
+        message: "login"});
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json({ message:err.message});
+  });
 })
 
 router.post('/register',(req, res, next) => {
-  const user = [
-    id = req.body.userId,
-    name = req.body.userName,
-    password = req.body.userPassword,
-    birth = req.body.userBirth,
-    gender = req.body.userGender,
-    phoneNumber = req.body.userPhoneNumber
-  ];
+  const user = {
+    id: req.body.id,
+    name: req.body.userName,
+    password: req.body.userPassword,
+    birth: req.body.userBirth,
+    gender: req.body.userGender,
+    phoneNumber: req.body.userPhoneNumber
+  };
 
   console.log(user.birth);
 
@@ -79,22 +105,23 @@ router.post('/register',(req, res, next) => {
   .then((result) => {
     if(result.affectedRows === 1)
     {
-      res.json({result:"success",
-                message:"회원가입 성공"});
+      res.json({
+                message:"success"});
     }
     else
     {
-      res.json({result:"fail",
-                message:"회원가입 실패"});
+      res.json(
+        {error:{message:"fail"}
+      });
     }
   })
   .catch((err) => {
     res.json({
-      result:"error",
-      error: err.message});
+      error: {message:err.message}});
   });
 });
 
+// 나중에 구현
 router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
   const userId = req.body.userId;
 
@@ -106,8 +133,9 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
     if(result != null) user = result[0];
     
     if(user == undefined){
-      res.json({result:"success",
-                message:"존재하지 않는 아이디입니다."});
+      res.json({
+                error:{ message:"존재하지 않는 아이디입니다."}
+        });
     }
     else if(user.id !== undefined){
       res.json({result:"fail",
@@ -143,9 +171,7 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 //});
 
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
-
-router.use('/addFriend',authMiddle);
-router.post('/addFriend',(req, res, next) => {//userId,friendId
+router.post('/addFriend',authMiddle, (req, res, next) => {//userId,friendId
   const idList = [
     userId = req.body.userId,
     friendId = req.body.friendId,
@@ -261,7 +287,7 @@ router.get('/chattingRooms',(req, res, next) => {//userId
   });
 });//roomNumber,roomName,masterName,roomPassword,roomType
 
-router.post('/dm',(req, res, next) => {//userId
+router.get('/dm',(req, res, next) => {//userId
 //  const userId = req.body.userId;
   const userId = "w";
   let dm;

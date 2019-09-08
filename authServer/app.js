@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
+var feedRouter = require('./routes/feeds');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.set('jwt-secret','dGsWIsVarySiMpLE')
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/feeds', feedRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
