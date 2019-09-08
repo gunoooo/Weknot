@@ -3,25 +3,21 @@ package com.example.weknot_android.model.repository
 import android.app.Application
 import com.example.weknot_android.model.dao.OpenChatDao
 import com.example.weknot_android.model.dao.UserDao
-import com.example.weknot_android.model.dao.VideoCallDao
 
 import com.example.weknot_android.model.database.RoomDatabase
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.model.entity.user.User
-import com.example.weknot_android.model.entity.videocall.VideoCall
 import io.reactivex.Completable
 import io.reactivex.Single
 
 class RoomRepository(application: Application) {
 
     protected var userDao: UserDao
-    protected var videoCallDao: VideoCallDao
     protected var openChatDao: OpenChatDao
 
     init {
         val database = RoomDatabase.getInstance(application)!!
         userDao = database.userDao()
-        videoCallDao = database.videoCallDao()
         openChatDao = database.openChatDao()
     }
 
@@ -31,10 +27,6 @@ class RoomRepository(application: Application) {
     fun getUser(id: String): Single<User> {
         return userDao.getUser(id)
     }
-
-    fun insertVideoCall(entity: VideoCall) { Completable.fromAction { videoCallDao.insert(entity) } }
-    fun insertVideoCall(vararg entity: VideoCall) { Completable.fromAction { videoCallDao.insert(entity) } }
-    fun getVideoCall(idx: Int): Single<VideoCall>? { return videoCallDao.getVideoCall(idx) }
 
     fun insertOpenChat(entity: OpenChatRoom) { Completable.fromAction { openChatDao.insert(entity) }}
     fun insertOpenChat(vararg entity: OpenChatRoom) { Completable.fromAction { openChatDao.insert(entity) } }

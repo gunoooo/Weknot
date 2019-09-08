@@ -8,6 +8,6 @@ import retrofit2.http.POST
 
 interface VideoCallApi {
 
-    @POST("/requestCall")
+    @POST("/matching")
     fun requestCall(@Header("Authorization") token: String): Single<retrofit2.Response<Response<VideoCall>>>
 }

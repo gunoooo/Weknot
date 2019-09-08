@@ -47,7 +47,7 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding>() {
         else {
             Glide.with(this).load(profile.userPicture).into(binding.profileImage)
         }
-        if (profile.userGender == "남성") {
+        if (profile.userGender == "m") {
             Glide.with(this).load(R.drawable.man_icon).into(binding.gender)
         }
         else {
