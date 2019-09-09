@@ -8,6 +8,7 @@
     <string name="open_chat_title">오픈 채팅방</string>
     <string name="social_title">친구목록</string>
     <string name="myinfo_title">마이 페이지</string>
+    <string name="profile_title">프로필</string>
 
     <string name="id_text">아이디</string>
     <string name="pw_text">비밀번호</string>

@@ -20,6 +20,10 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
         initAppbar(R.string.feed_title)
         initViewPager()
         initTabLayout()
@@ -32,22 +36,6 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
         binding.viewPager.adapter = pagerAdapter
 
         setViewPagerListener()
-    }
-
-    private fun initTabLayout() {
-        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tablayout))
-
-        binding.tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.viewPager.currentItem = tab.position
-            }
-        })
     }
 
     private fun setViewPagerListener() {
@@ -66,6 +54,20 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
                     3 -> initAppbar(R.string.social_title)
                     4 -> initAppbar(R.string.myinfo_title)
                 }
+            }
+        })
+    }
+
+    private fun initTabLayout() {
+        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tablayout))
+
+        binding.tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.viewPager.currentItem = tab.position
             }
         })
     }

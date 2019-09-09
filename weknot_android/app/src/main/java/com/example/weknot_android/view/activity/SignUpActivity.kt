@@ -16,10 +16,12 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
-
         observeSignUpViewModel()
-
         clickEvent()
+    }
+
+    private fun initViewModel() {
+        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
     }
 
     private fun observeSignUpViewModel() {
@@ -38,10 +40,6 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding>() {
         signUpViewModel.request.value = SignUpRequest(binding.idText.text.toString(), binding.pwText.text.toString(),
                 binding.nameText.text.toString(), binding.birthText.text.toString(), binding.genderText.text.toString(),
                 binding.phoneNumberText.text.toString())
-    }
-
-    private fun initViewModel() {
-        signUpViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
     }
 
     override fun layoutId(): Int {

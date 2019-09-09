@@ -14,19 +14,17 @@ class SplashActivity : BaseActivity<SplashActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViewModel()
-        initData()
-
+        init()
         observeSplashViewModel()
     }
 
-    private fun observeSplashViewModel() {
-        splashViewModel.getData().observe(this, Observer { user: User ->
-            splashViewModel.initUserId(user.id)
-            startActivityWithFinish(MainActivity::class.java)
-        })
+    private fun init() {
+        initViewModel()
+        initData()
+    }
 
-        splashViewModel.getErrorMessage().observe(this, Observer { startActivityWithFinish(LoginActivity::class.java) })
+    private fun initViewModel() {
+        splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
     }
 
     private fun initData() {
@@ -38,8 +36,13 @@ class SplashActivity : BaseActivity<SplashActivityBinding>() {
         }
     }
 
-    private fun initViewModel() {
-        splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
+    private fun observeSplashViewModel() {
+        splashViewModel.getData().observe(this, Observer { user: User ->
+            splashViewModel.insertUserId(user.id)
+            startActivityWithFinish(MainActivity::class.java)
+        })
+
+        splashViewModel.getErrorMessage().observe(this, Observer { startActivityWithFinish(LoginActivity::class.java) })
     }
 
     override fun layoutId(): Int {

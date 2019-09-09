@@ -30,13 +30,14 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        init()
+        observeFeedViewModel()
+        event()
+    }
+
+    private fun init() {
         initViewModel()
         initData()
-
-        observeFeedViewModel()
-
-        clickEvent()
-        scrollEvent()
     }
 
     private fun observeFeedViewModel() {
@@ -46,6 +47,11 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
         })
 
         feedViewModel.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() })
+    }
+
+    private fun event() {
+        clickEvent()
+        scrollEvent()
     }
 
     private fun initData() {

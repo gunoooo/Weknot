@@ -12,8 +12,8 @@ import io.reactivex.Single
 
 class RoomRepository(application: Application) {
 
-    protected var userDao: UserDao
-    protected var openChatDao: OpenChatDao
+    private var userDao: UserDao
+    private var openChatDao: OpenChatDao
 
     init {
         val database = RoomDatabase.getInstance(application)!!

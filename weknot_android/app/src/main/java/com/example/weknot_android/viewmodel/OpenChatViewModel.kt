@@ -14,8 +14,9 @@ class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatR
 
     val chatRoomUsers = MutableLiveData<List<User>>()
 
-    val chattingRooms: Unit
-        get() = addDisposable(comm.getChattingRooms(token), dataObserver)
+    fun getChattingRooms() {
+        addDisposable(comm.getChattingRooms(token), dataObserver)
+    }
 
     fun createChattingRoom() {
         addDisposable(comm.createChattingRoom(token, request.value!!), baseObserver)

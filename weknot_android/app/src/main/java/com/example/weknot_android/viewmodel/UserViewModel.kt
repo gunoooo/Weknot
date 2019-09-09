@@ -12,8 +12,10 @@ import io.reactivex.observers.DisposableSingleObserver
 
 class UserViewModel(application: Application) : BaseViewModel<Profile, User, UserComm>(application, UserComm()) {
 
-    fun getProfile(userId: String) {
-        addDisposable(comm.getProfile(token, userId), dataObserver)
+    var id: MutableLiveData<String> = MutableLiveData()
+
+    fun getProfile() {
+        addDisposable(comm.getProfile(token, id.value!!), dataObserver)
     }
 
     fun getMyId(): String {

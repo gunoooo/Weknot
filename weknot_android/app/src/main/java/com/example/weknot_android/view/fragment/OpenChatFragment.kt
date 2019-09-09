@@ -28,25 +28,14 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        init()
+        observeOpenChatViewModel()
+        event()
+    }
+
+    private fun init() {
         initViewModel()
         initData()
-
-        var openChatRooms: ArrayList<OpenChatRoom> = ArrayList()
-        openChatRooms.add(OpenChatRoom("131","나랑 놀 시람", "박건우", "", "game"))
-        openChatRooms.add(OpenChatRoom("132","아무나 들어오세요", "박건우", "", "free"))
-        openChatRooms.add(OpenChatRoom("133","게임하자 게임", "오해성", "", "game"))
-        openChatRooms.add(OpenChatRoom("134","내 고민 들어 주실분", "이유승", "", "worry"))
-        openChatRooms.add(OpenChatRoom("135","그냥 자유방", "박건우", "", "free"))
-        openChatRooms.add(OpenChatRoom("136","단둘이 대화할 사람", "박건우", "", "secret"))
-        openChatRooms.add(OpenChatRoom("137","할거 없는 사람 들어 오세요", "박건우", "", "game"))
-
-        openChatAdapter = OpenChatAdapter(context!!, openChatRooms)
-        setRecyclerView()
-
-        observeOpenChatViewModel()
-
-        scrollEvent()
-        clickEvent()
     }
 
     private fun observeOpenChatViewModel() {
@@ -54,6 +43,22 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
             openChatAdapter = OpenChatAdapter(context!!, openChatRooms)
             setRecyclerView()
         })
+    }
+
+    private fun event() {
+        clickEvent()
+        scrollEvent()
+    }
+
+    private fun initViewModel() {
+        openChatViewModel = ViewModelProviders.of(this).get(OpenChatViewModel::class.java)
+    }
+
+    private fun initData() {
+        animAddShow = AnimationUtils.loadAnimation(context, R.anim.animation_add_show)
+        animAddHide = AnimationUtils.loadAnimation(context, R.anim.animation_add_hide)
+
+        openChatViewModel.getChattingRooms()
     }
 
     private fun setRecyclerView() {
@@ -88,18 +93,6 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
                 }
             }
         })
-    }
-
-
-    private fun initData() {
-        animAddShow = AnimationUtils.loadAnimation(context, R.anim.animation_add_show)
-        animAddHide = AnimationUtils.loadAnimation(context, R.anim.animation_add_hide)
-
-        openChatViewModel.chattingRooms
-    }
-
-    private fun initViewModel() {
-        openChatViewModel = ViewModelProviders.of(this).get(OpenChatViewModel::class.java)
     }
 
     override fun layoutId(): Int {

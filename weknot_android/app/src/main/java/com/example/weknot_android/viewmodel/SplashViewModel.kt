@@ -12,7 +12,7 @@ class SplashViewModel(application: Application) : BaseViewModel<User, Void, Sign
         addDisposable(comm.autoLogin(token), dataObserver)
     }
 
-    fun initUserId(id: String) {
+    fun insertUserId(id: String) {
         userId = id
     }
 }

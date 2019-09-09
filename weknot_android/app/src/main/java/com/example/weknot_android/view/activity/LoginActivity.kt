@@ -20,12 +20,14 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init()
+        observeLoginViewModel()
+        clickEvent()
+    }
+
+    private fun init() {
         initViewModel()
         initView()
-
-        observeLoginViewModel()
-
-        clickEvent()
     }
 
     private fun observeLoginViewModel() {
@@ -34,12 +36,6 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
         loginViewModel.getData().observe(this, Observer { loginData: LoginData ->
             loginSuccessEvent(loginData)
         })
-    }
-
-    private fun loginSuccessEvent(loginData: LoginData) {
-        loginViewModel.insertLoginData(loginData)
-        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-        startActivityWithFinish(MainActivity::class.java)
     }
 
     private fun clickEvent() {
@@ -51,16 +47,22 @@ class LoginActivity : BaseActivity<LoginActivityBinding>() {
         binding.signUpButton.setOnClickListener { startActivity(SignUpActivity::class.java) }
     }
 
-    private fun setRequest() {
-        loginViewModel.request.value = LoginRequest(binding.idText.text.toString(), binding.pwText.text.toString())
+
+    private fun initViewModel() {
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
     }
 
     private fun initView() {
         binding.materialCardView.setBackgroundResource(R.drawable.background_login)
     }
+    private fun loginSuccessEvent(loginData: LoginData) {
+        loginViewModel.insertLoginData(loginData)
+        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+        startActivityWithFinish(MainActivity::class.java)
+    }
 
-    private fun initViewModel() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+    private fun setRequest() {
+        loginViewModel.request.value = LoginRequest(binding.idText.text.toString(), binding.pwText.text.toString())
     }
 
     override fun layoutId(): Int {

@@ -20,15 +20,16 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initViewModel()
-        initView()
-        initVideoCall()
-
+        init()
         observeVideoCallViewModel()
-
         clickEvent()
     }
 
+    private fun init() {
+        initViewModel()
+        initVideoCall()
+        initView()
+    }
     private fun observeVideoCallViewModel() {
         videoCallViewModel.getData().observe(this, Observer { videoCall: VideoCall ->
             val options: JitsiMeetConferenceOptions? = Builder()

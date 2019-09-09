@@ -34,11 +34,14 @@ class FeedWriteActivity : BaseActivity<FeedWriteActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init()
+        observeFeedViewModel()
+    }
+
+    private fun init() {
         initAppbar()
         initViewModel()
         initView()
-
-        observeFeedViewModel()
     }
 
     private fun observeFeedViewModel() {

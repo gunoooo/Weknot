@@ -4,11 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.model.repository.RoomRepository
 import com.example.weknot_android.model.repository.TokenRepository
 import com.example.weknot_android.model.repository.UserIdRepository
-import com.example.weknot_android.model.sharedpreference.Token
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +14,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Application, protected var comm: CM) : AndroidViewModel(application) {
     private val disposable: CompositeDisposable = CompositeDisposable()
