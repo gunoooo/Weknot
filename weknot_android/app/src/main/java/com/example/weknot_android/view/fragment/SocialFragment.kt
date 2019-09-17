@@ -1,70 +1,53 @@
 package com.example.weknot_android.view.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.example.weknot_android.R
 import com.example.weknot_android.R.layout
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.SocialFragmentBinding
 import com.example.weknot_android.model.entity.user.Friend
+import com.example.weknot_android.view.navigator.SocialNavigator
 import com.example.weknot_android.viewmodel.SocialViewModel
 import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter
 
-class SocialFragment : BaseFragment<SocialFragmentBinding>() {
-    private lateinit var socialViewModel: SocialViewModel
+class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>(), SocialNavigator {
 
-    private var receiveAdapter: SocialAdapter? = null
-    private var friendAdapter: SocialAdapter? = null
-
-    private val RECEIVE = 1
-    private val FRIEND = 2
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        init()
-        observeSocialViewModel()
+    override fun getLayoutId(): Int {
+        return R.layout.social_fragment
     }
 
-    private fun init() {
-        initViewModel()
-        initData()
+    override fun getViewModel(): Class<SocialViewModel> {
+        return SocialViewModel::class.java
     }
 
-    private fun observeSocialViewModel() {
-        socialViewModel.getData().observe(this, Observer { friends: List<Friend> ->
-            for (friend in friends) {
-                if (friend.friendStatus == RECEIVE) {
-                    socialViewModel.receiveList.add(friend)
-                } else if (friend.friendStatus == FRIEND) {
-                    socialViewModel.friendList.add(friend)
-                }
-            }
-            receiveAdapter = SocialAdapter(context!!, socialViewModel.receiveList, RECEIVE)
-            friendAdapter = SocialAdapter(context!!, socialViewModel.friendList, FRIEND)
-            setRecyclerView()
-        })
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
     }
 
-    private fun initViewModel() {
-        socialViewModel = ViewModelProviders.of(this).get(SocialViewModel::class.java)
+    override fun handleError(throwable: Throwable) {
+        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
     }
 
-    private fun initData() {
-        socialViewModel.friends
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setNavigator(this)
     }
 
-    private fun setRecyclerView() {
-        val receiveLayoutManager: LayoutManager = GridLayoutManager(context, 1)
-        val friendLayoutManager: LayoutManager = GridLayoutManager(context, 1)
-        binding.receiveRecyclerview.adapter = receiveAdapter
-        binding.friendRecyclerview.adapter = friendAdapter
-        binding.receiveRecyclerview.layoutManager = receiveLayoutManager
-        binding.friendRecyclerview.layoutManager = friendLayoutManager
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUp()
     }
 
-    override fun layoutId(): Int {
-        return layout.social_fragment
+    private fun setUp() {
+        viewModel.getFriends()
     }
 }

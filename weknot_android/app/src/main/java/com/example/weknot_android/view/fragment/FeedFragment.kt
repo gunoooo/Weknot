@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,59 +17,53 @@ import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.model.entity.feed.Feed
 import com.example.weknot_android.view.activity.FeedWriteActivity
+import com.example.weknot_android.view.navigator.FeedNavigator
 import com.example.weknot_android.viewmodel.FeedViewModel
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 
-class FeedFragment : BaseFragment<FeedFragmentBinding>() {
-    private lateinit var feedViewModel: FeedViewModel
+class FeedFragment : BaseFragment<FeedFragmentBinding, FeedViewModel>(), FeedNavigator {
 
     private var isOpenWriteBtn : Boolean = true
 
     private lateinit var animAddShow : Animation
     private lateinit var animAddHide : Animation
-    private var feedAdapter: FeedAdapter? = null
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        init()
-        observeFeedViewModel()
-        event()
+    override fun getLayoutId(): Int {
+        return R.layout.feed_fragment
     }
 
-    private fun init() {
-        initViewModel()
-        initData()
+    override fun getViewModel(): Class<FeedViewModel> {
+        return FeedViewModel::class.java
     }
 
-    private fun observeFeedViewModel() {
-        feedViewModel.getData().observe(this, Observer { feeds: List<Feed> ->
-            feedAdapter = FeedAdapter(context!!, feeds)
-            setRecyclerView()
-        })
-
-        feedViewModel.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() })
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
     }
 
-    private fun event() {
-        clickEvent()
-        scrollEvent()
+    override fun handleError(throwable: Throwable) {
+        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
     }
 
-    private fun initData() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setNavigator(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUp()
+    }
+
+    private fun setUp() {
         animAddShow = AnimationUtils.loadAnimation(context, R.anim.animation_add_show)
         animAddHide = AnimationUtils.loadAnimation(context, R.anim.animation_add_hide)
 
-        feedViewModel.getFeeds()
+        viewModel.getFeeds()
+
+        setScrollListener()
     }
 
-    private fun clickEvent() {
-        binding.writeBtn.setOnClickListener {
-            startActivity(Intent(context, FeedWriteActivity::class.java))
-            activity!!.finish()
-        }
-    }
-
-    private fun scrollEvent() {
+    private fun setScrollListener() {
         binding.feedRecyclerview.addOnScrollListener(object : OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -90,19 +85,5 @@ class FeedFragment : BaseFragment<FeedFragmentBinding>() {
                 }
             }
         })
-    }
-
-    private fun setRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(context)
-        binding.feedRecyclerview.adapter = feedAdapter
-        binding.feedRecyclerview.layoutManager = linearLayoutManager
-    }
-
-    private fun initViewModel() {
-        feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
-    }
-
-    override fun layoutId(): Int {
-        return R.layout.feed_fragment
     }
 }

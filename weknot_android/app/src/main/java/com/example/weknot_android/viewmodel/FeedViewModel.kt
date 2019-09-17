@@ -6,24 +6,29 @@ import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.BaseViewModel
 import com.example.weknot_android.model.entity.feed.Feed
 import com.example.weknot_android.network.comm.FeedComm
+import com.example.weknot_android.view.navigator.FeedNavigator
+import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Multipart
 import java.io.File
 
-class FeedViewModel(application: Application) : BaseViewModel<List<Feed>, Void, FeedComm>(application, FeedComm()) {
+class FeedViewModel(application: Application) : BaseViewModel<List<Feed>, FeedNavigator>(application) {
+    private val feedComm = FeedComm()
 
-    var pictureFile: MutableLiveData<File> = MutableLiveData()
-    var pictureUri: MutableLiveData<Uri> = MutableLiveData()
-
-    var picture: MutableLiveData<MultipartBody.Part> = MutableLiveData()
-    var comment: MutableLiveData<RequestBody> = MutableLiveData()
-
-    fun createFeed() {
-        addDisposable(comm.createFeed(token, picture.value!!, comment.value!!), baseObserver)
-    }
+    var feedAdapter = FeedAdapter(application)
 
     fun getFeeds() {
-        addDisposable(comm.getFeeds(token), dataObserver)
+        addDisposable(feedComm.getFeeds(token), dataObserver)
+    }
+
+    override fun onRetrieveDataSuccess(data: List<Feed>) {
+        feedAdapter.updateList(data)
+    }
+
+    override fun onRetrieveBaseSuccess(message: String) { }
+
+    override fun onRetrieveError(throwable: Throwable) {
+        getNavigator().handleError(throwable)
     }
 }

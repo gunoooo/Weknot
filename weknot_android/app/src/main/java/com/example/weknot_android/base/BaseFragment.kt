@@ -8,21 +8,39 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 
-abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*,*>> : Fragment() {
     protected lateinit var binding: VB
     protected lateinit var currentView: View
+    protected lateinit var viewModel: VM
+
+    @LayoutRes
+    protected abstract fun getLayoutId(): Int
+
+    protected abstract fun getViewModel(): Class<VM>
+
+    protected abstract fun getBindingVariable(): Int
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(getViewModel())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(
-                inflater, layoutId(), container, false)!!
+                inflater, getLayoutId(), container, false)!!
         currentView = binding.root
         return currentView
     }
 
-    @LayoutRes
-    protected abstract fun layoutId(): Int
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.setVariable(getBindingVariable(),viewModel)
+        binding.lifecycleOwner = this
+        binding.executePendingBindings()
+    }
 
     companion object {
         fun <T : Fragment?> newInstance(fragment: T): T {

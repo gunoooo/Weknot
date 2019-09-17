@@ -1,6 +1,7 @@
 package com.example.weknot_android.view.activity
 
 import android.os.Bundle
+import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -10,32 +11,46 @@ import com.example.weknot_android.base.BaseActivity
 import com.example.weknot_android.base.BaseViewModel
 import com.example.weknot_android.databinding.MainActivityBinding
 import com.example.weknot_android.view.fragment.*
+import com.example.weknot_android.view.navigator.MainNavigator
+import com.example.weknot_android.viewmodel.MainViewModel
 import com.example.weknot_android.widget.viewpager.MainPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 
-class MainActivity: BaseActivity<MainActivityBinding>() {
+class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>(), MainNavigator {
 
     private var PAGE_COUNT: Int = 5
 
+    override fun getLayoutId(): Int {
+        return R.layout.myinfo_fragment
+    }
+
+    override fun getViewModel(): Class<MainViewModel> {
+        return MainViewModel::class.java
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initView()
+        viewModel.setNavigator(this)
+        setUp()
     }
 
-    private fun initView() {
-        initAppbar(R.string.feed_title)
-        initViewPager()
-        initTabLayout()
+    private fun setUp() {
+        setUpViewPager()
     }
 
-    private fun initViewPager() {
+    private fun setUpViewPager() {
         val pagerAdapter = MainPagerAdapter(supportFragmentManager)
 
         binding.viewPager.offscreenPageLimit = PAGE_COUNT
         binding.viewPager.adapter = pagerAdapter
 
         setViewPagerListener()
+        setTabLayoutListener()
     }
 
     private fun setViewPagerListener() {
@@ -48,19 +63,19 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
             }
             override fun onPageSelected(position: Int) {
                 when (position) {
-                    0 -> initAppbar(R.string.feed_title)
-                    1 -> initAppbar(R.string.video_call_title)
-                    2 -> initAppbar(R.string.open_chat_title)
-                    3 -> initAppbar(R.string.social_title)
-                    4 -> initAppbar(R.string.myinfo_title)
+                    0 -> setTitle(R.string.feed_title)
+                    1 -> setTitle(R.string.video_call_title)
+                    2 -> setTitle(R.string.open_chat_title)
+                    3 -> setTitle(R.string.social_title)
+                    4 -> setTitle(R.string.myinfo_title)
                 }
             }
         })
+
+        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tablayout))
     }
 
-    private fun initTabLayout() {
-        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tablayout))
-
+    private fun setTabLayoutListener() {
         binding.tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {
             }
@@ -70,29 +85,5 @@ class MainActivity: BaseActivity<MainActivityBinding>() {
                 binding.viewPager.currentItem = tab.position
             }
         })
-    }
-
-    private fun initAppbar(title: Int) {
-        val actionBar = supportActionBar
-
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-
-        appBarBinding.textView.setText(title)
-
-        appbarClickEvent()
-    }
-
-    private fun appbarClickEvent() {
-        appBarBinding.back.setOnClickListener {
-            startActivityWithFinish(LoginActivity::class.java)
-        }
-
-        appBarBinding.menu.setOnClickListener {
-            // todo
-        }
-    }
-
-    override fun layoutId(): Int {
-        return R.layout.main_activity
     }
 }

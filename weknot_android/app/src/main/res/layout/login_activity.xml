@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+<data>
+    <variable
+        name="viewModel"
+        type="com.example.weknot_android.viewmodel.LoginViewModel" />
+</data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -61,7 +66,8 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
                         android:inputType="textEmailAddress"
-                        android:privateImeOptions="nm" />
+                        android:privateImeOptions="nm"
+                        android:text="@={viewModel.request.id}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +85,8 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone|flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
                         android:inputType="textPassword"
-                        android:privateImeOptions="nm" />
+                        android:privateImeOptions="nm"
+                        android:text="@={viewModel.request.password}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -98,6 +105,7 @@
                 android:fontFamily="@font/nanum_squareeb"
                 android:padding="15dp"
                 android:textSize="15dp"
+                android:onClick="@{() -> viewModel.onClickLogin()}"
                 app:layout_constraintBottom_toTopOf="@+id/sign_up_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -120,6 +128,7 @@
                 android:layout_marginBottom="80dp"
                 android:fontFamily="@font/nanum_squareeb"
                 android:text="@string/signup_text"
+                android:onClick="@{() -> viewModel.onClickSignUp()}"
                 android:textColor="@android:color/black"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"

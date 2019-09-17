@@ -9,29 +9,51 @@ import com.example.weknot_android.model.repository.UserIdRepository
 import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.response.data.LoginData
+import com.example.weknot_android.view.navigator.LoginNavigator
 
-class LoginViewModel(application: Application) : BaseViewModel<LoginData, Void, SignComm>(application, SignComm()) {
-    var request = MutableLiveData<LoginRequest>()
+class LoginViewModel(application: Application) : BaseViewModel<LoginData, LoginNavigator>(application) {
+    private val signComm = SignComm()
+
+    var request = LoginRequest()
 
     fun login() {
-        addDisposable(comm.login(request.value!!), dataObserver)
+        addDisposable(signComm.login(request), dataObserver)
     }
 
-    fun insertLoginData(loginData: LoginData) {
+    private fun insertLoginData(loginData: LoginData) {
         insertToken(loginData.token)
         insertUser(loginData.user)
         insertId(loginData.user.id)
     }
 
-    fun insertToken(token: String) {
+    private fun insertToken(token: String) {
         this.token = token
     }
 
-    fun insertUser(user: User) {
+    private fun insertUser(user: User) {
         repository.insertUser(user)
     }
 
-    fun insertId(id: String) {
+    private fun insertId(id: String) {
         userId = id
+    }
+
+    fun onClickLogin() {
+        getNavigator().login()
+    }
+
+    fun onClickSignUp() {
+        getNavigator().openSignUpActivity()
+    }
+
+    override fun onRetrieveDataSuccess(data: LoginData) {
+        insertLoginData(data)
+        getNavigator().openMainActivity()
+    }
+
+    override fun onRetrieveBaseSuccess(message: String) { }
+
+    override fun onRetrieveError(throwable: Throwable) {
+        getNavigator().handleError(throwable)
     }
 }

@@ -1,9 +1,13 @@
 package com.example.weknot_android.view.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,65 +17,53 @@ import com.example.weknot_android.R.layout
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.OpenChatFragmentBinding
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
+import com.example.weknot_android.view.navigator.OpenChatNavigator
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 
-class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
-    private lateinit var openChatViewModel: OpenChatViewModel
+class OpenChatFragment : BaseFragment<OpenChatFragmentBinding, OpenChatViewModel>(), OpenChatNavigator {
 
     private var isOpenWriteBtn : Boolean = true
 
     private lateinit var animAddShow : Animation
     private lateinit var animAddHide : Animation
 
-    private var openChatAdapter: OpenChatAdapter? = null
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        init()
-        observeOpenChatViewModel()
-        event()
+    override fun getLayoutId(): Int {
+        return R.layout.open_chat_fragment
     }
 
-    private fun init() {
-        initViewModel()
-        initData()
+    override fun getViewModel(): Class<OpenChatViewModel> {
+        return OpenChatViewModel::class.java
     }
 
-    private fun observeOpenChatViewModel() {
-        openChatViewModel.getData().observe(this, Observer<List<OpenChatRoom>> { openChatRooms: List<OpenChatRoom> ->
-            openChatAdapter = OpenChatAdapter(context!!, openChatRooms)
-            setRecyclerView()
-        })
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
     }
 
-    private fun event() {
-        clickEvent()
-        scrollEvent()
+    override fun handleError(throwable: Throwable) {
+        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
     }
 
-    private fun initViewModel() {
-        openChatViewModel = ViewModelProviders.of(this).get(OpenChatViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setNavigator(this)
     }
 
-    private fun initData() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUp()
+    }
+
+    private fun setUp() {
         animAddShow = AnimationUtils.loadAnimation(context, R.anim.animation_add_show)
         animAddHide = AnimationUtils.loadAnimation(context, R.anim.animation_add_hide)
 
-        openChatViewModel.getChattingRooms()
+        setScrollListener()
+
+        viewModel.getChattingRooms()
     }
 
-    private fun setRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(context)
-        binding.chatRoomRecyclerview.adapter = openChatAdapter
-        binding.chatRoomRecyclerview.layoutManager = linearLayoutManager
-    }
-
-    private fun clickEvent() {
-        binding.createBtn.setOnClickListener {  }
-    }
-
-    private fun scrollEvent() {
+    private fun setScrollListener() {
         binding.chatRoomRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -93,9 +85,5 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding>() {
                 }
             }
         })
-    }
-
-    override fun layoutId(): Int {
-        return layout.open_chat_fragment
     }
 }

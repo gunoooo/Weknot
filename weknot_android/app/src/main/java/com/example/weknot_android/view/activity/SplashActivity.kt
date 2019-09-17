@@ -1,51 +1,52 @@
 package com.example.weknot_android.view.activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.weknot_android.BR
+import com.example.weknot_android.R
 import com.example.weknot_android.R.layout
 import com.example.weknot_android.base.BaseActivity
 import com.example.weknot_android.databinding.SplashActivityBinding
 import com.example.weknot_android.model.entity.user.User
+import com.example.weknot_android.view.navigator.SplashNavigator
 import com.example.weknot_android.viewmodel.SplashViewModel
 
-class SplashActivity : BaseActivity<SplashActivityBinding>() {
-    private lateinit var splashViewModel: SplashViewModel
+class SplashActivity : BaseActivity<SplashActivityBinding, SplashViewModel>(), SplashNavigator {
+
+    override fun getLayoutId(): Int {
+        return R.layout.splash_activity
+    }
+
+    override fun getViewModel(): Class<SplashViewModel> {
+        return SplashViewModel::class.java
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun handleError(throwable: Throwable) {
+        startActivityWithFinish(LoginActivity::class.java)
+    }
+
+    override fun openMainActivity() {
+        startActivityWithFinish(MainActivity::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
-        observeSplashViewModel()
+        viewModel.setNavigator(this)
+        setUp()
     }
 
-    private fun init() {
-        initViewModel()
-        initData()
-    }
-
-    private fun initViewModel() {
-        splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
-    }
-
-    private fun initData() {
-        if (splashViewModel.token == "") {
+    private fun setUp() {
+        if (viewModel.token == "") {
             startActivityWithFinish(LoginActivity::class.java)
         }
         else {
-            splashViewModel.autoLogin()
+            viewModel.autoLogin()
         }
-    }
-
-    private fun observeSplashViewModel() {
-        splashViewModel.getData().observe(this, Observer { user: User ->
-            splashViewModel.insertUserId(user.id)
-            startActivityWithFinish(MainActivity::class.java)
-        })
-
-        splashViewModel.getErrorMessage().observe(this, Observer { startActivityWithFinish(LoginActivity::class.java) })
-    }
-
-    override fun layoutId(): Int {
-        return layout.splash_activity
     }
 }

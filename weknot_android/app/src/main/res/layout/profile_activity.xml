@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.viewmodel.ProfileViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -52,7 +57,7 @@
                     android:id="@+id/birth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2002.8.27"
+                    mutableText="@{viewModel.userBirth}"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/nanum_squarel"
                     android:textColor="@color/colorMainDark"
@@ -68,7 +73,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@drawable/profile" />
+                    app:mutableImageUrl="@{viewModel.userPicture}" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -93,7 +98,7 @@
                     android:fontFamily="@font/nanum_squarel"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
-                    android:text="하하하하ㅏ하하하"
+                    app:mutableText="@{viewModel.userIntro}"
                     android:textColor="@color/colorMainDark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
                     android:fontFamily="@font/nanum_squareeb"
-                    android:text="박건우"
+                    app:mutableText="@{viewModel.userName}"
                     android:textColor="@android:color/black"/>
 
                 <ImageView
@@ -121,7 +126,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/man_icon"/>
+                    app:mutableImageDrawable="@{viewModel.userGender}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -143,7 +148,7 @@
                     android:textSize="25dp"
                     android:fontFamily="@font/nanum_squareb"
                     android:textColor="@color/colorMainDark"
-                    android:text="55점"/>
+                    app:mutableText="@{viewModel.userPoint}"/>
             </LinearLayout>
 
             <TextView
@@ -165,8 +170,10 @@
                 android:nestedScrollingEnabled="false"
                 android:id="@+id/feed_recyclerview"
                 tools:listitem="@layout/feed_item"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:adapter="@{viewModel.feedAdapter}"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

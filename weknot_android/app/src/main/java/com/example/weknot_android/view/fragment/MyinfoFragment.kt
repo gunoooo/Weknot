@@ -1,92 +1,47 @@
 package com.example.weknot_android.view.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
+import android.widget.Toast
+import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseFragment
 import com.example.weknot_android.databinding.MyinfoFragmentBinding
-import com.example.weknot_android.model.entity.feed.Feed
-import com.example.weknot_android.model.entity.user.Profile
-import com.example.weknot_android.model.entity.user.User
-import com.example.weknot_android.viewmodel.FeedViewModel
-import com.example.weknot_android.viewmodel.UserViewModel
-import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
+import com.example.weknot_android.view.navigator.MainNavigator
+import com.example.weknot_android.view.navigator.MyinfoNavigator
+import com.example.weknot_android.view.navigator.ProfileNavigator
+import com.example.weknot_android.viewmodel.MyinfoViewModel
 
-class MyinfoFragment : BaseFragment<MyinfoFragmentBinding>() {
-    private lateinit var userViewModel: UserViewModel
-    private lateinit var feedViewModel: FeedViewModel
+class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>(), MyinfoNavigator {
 
-    private var feedAdapter: FeedAdapter? = null
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        init()
-        observeViewModel()
-    }
-
-    private fun init() {
-        initViewModel()
-        initData()
-    }
-
-    private fun observeViewModel() {
-        observeUserViewModel()
-        observeFeedViewModel()
-    }
-
-    private fun observeUserViewModel() {
-        userViewModel.getData().observe(this, Observer { profile: Profile -> dataIntoView(profile) })
-    }
-
-    private fun observeFeedViewModel() {
-        feedViewModel.getSuccessMessage().observe(this, Observer {  })
-    }
-
-    private fun dataIntoView(profile: Profile) {
-        binding.intro.isSelected = true
-        binding.birth.text = profile.userBirth
-        binding.intro.text = profile.userIntro
-        binding.name.text = profile.userName
-        binding.point.text = profile.userPoint.toString()
-        if (profile.userPicture == null) {
-            //todo
-        }
-        else {
-            Glide.with(this).load(profile.userPicture).into(binding.profileImage)
-        }
-        if (profile.userGender == "m") {
-            Glide.with(this).load(R.drawable.man_icon).into(binding.gender)
-        }
-        else {
-            Glide.with(this).load(R.drawable.woman_icon).into(binding.gender)
-        }
-        feedAdapter = FeedAdapter(context!!, profile.userFeeds!!)
-        setRecyclerView()
-    }
-
-    private fun setRecyclerView() {
-        val linearLayoutManager = LinearLayoutManager(context)
-        binding.feedRecyclerview.adapter = feedAdapter
-        binding.feedRecyclerview.layoutManager = linearLayoutManager
-    }
-
-    private fun initData() {
-        userViewModel.id.value = userViewModel.getMyId()
-        userViewModel.getProfile()
-    }
-
-    private fun initViewModel() {
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-    }
-
-    override fun layoutId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.myinfo_fragment
+    }
+
+    override fun getViewModel(): Class<MyinfoViewModel> {
+        return MyinfoViewModel::class.java
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun handleError(throwable: Throwable) {
+        Toast.makeText(context, throwable.message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setNavigator(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUp()
+    }
+
+    private fun setUp() {
+        viewModel.id.value = viewModel.getMyId()
+        viewModel.getProfile()
     }
 }

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.viewmodel.FeedWriteViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
      android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -17,6 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        app:mutableImageUri="@{viewModel.pictureUri}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_layout" />
@@ -29,6 +35,7 @@
         android:hint="문구 입력 ..."
         android:gravity="start"
         android:padding="20dp"
+        android:text="@={viewModel.commentText}"
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

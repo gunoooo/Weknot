@@ -17,7 +17,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.microedition.khronos.opengles.GL
 
-class FeedAdapter(private val context: Context, private val feeds: List<Feed>) : Adapter<FeedViewHolder>() {
+class FeedAdapter(private val context: Context) : Adapter<FeedViewHolder>() {
+    private lateinit var feeds: List<Feed>
+
     val animLikeOnFirst : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_like_on_first)
     val animLikeOnSecond : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_like_on_second)
     val animLikeOffFirst : Animation = AnimationUtils.loadAnimation(context, R.anim.animation_like_off_first)
@@ -109,6 +111,11 @@ class FeedAdapter(private val context: Context, private val feeds: List<Feed>) :
 //            holder.binding.likeOffBtn.visibility = View.VISIBLE
 //            holder.binding.likeOnBtn.visibility = View.INVISIBLE
 //        }
+    }
+
+    fun updateList(feeds: List<Feed>?) {
+        this.feeds = feeds!!
+        notifyDataSetChanged()
     }
 
 

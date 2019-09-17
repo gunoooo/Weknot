@@ -2,8 +2,6 @@ package com.example.weknot_android.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.model.repository.RoomRepository
 import com.example.weknot_android.model.repository.TokenRepository
 import com.example.weknot_android.model.repository.UserIdRepository
@@ -14,37 +12,28 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import java.lang.ref.WeakReference
 
-abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Application, protected var comm: CM) : AndroidViewModel(application) {
+abstract class BaseViewModel<D, N> protected constructor(application: Application) : AndroidViewModel(application) {
     private val disposable: CompositeDisposable = CompositeDisposable()
     private val tokenManager: TokenRepository = TokenRepository(application)
     private val userIdManager: UserIdRepository = UserIdRepository(application)
     protected val repository: RoomRepository = RoomRepository(application)
 
-    protected val successMessage = MutableLiveData<String>()
-    protected val errorMessage = MutableLiveData<String>()
+    private lateinit var navigator: WeakReference<N>
 
-    internal val data = MutableLiveData<DT>()
-    internal val entity = MutableLiveData<ET>()
-
-    fun getSuccessMessage(): LiveData<String> {
-        return successMessage
-    }
-    fun getErrorMessage(): LiveData<String> {
-        return errorMessage
-    }
-    fun getData(): LiveData<DT> {
-        return data
-    }
-    fun getEntity(): LiveData<ET> {
-        return entity
-    }
     var token: String
         get() = tokenManager.token.token
         set(value) = tokenManager.setToken(value)
     var userId: String
         get() = userIdManager.userId.id
         set(value) = userIdManager.setUserId(value)
+    fun getNavigator(): N {
+        return navigator.get()!!
+    }
+    fun setNavigator(navigator: N) {
+        this.navigator = WeakReference(navigator)
+    }
 
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())
@@ -54,33 +43,26 @@ abstract class BaseViewModel<DT, ET, CM> protected constructor(application: Appl
     val baseObserver: DisposableSingleObserver<String>
         get() = object : DisposableSingleObserver<String>() {
             override fun onSuccess(s: String) {
-                successMessage.value = s
+                onRetrieveBaseSuccess(s)
             }
 
             override fun onError(e: Throwable) {
-                errorMessage.value = e.message
+                onRetrieveError(e)
             }
         }
 
-    val dataObserver: DisposableSingleObserver<DT>
-        get() = object : DisposableSingleObserver<DT>() {
-            override fun onSuccess(t: DT) {
-                data.value = t
+    val dataObserver: DisposableSingleObserver<D>
+        get() = object : DisposableSingleObserver<D>() {
+            override fun onSuccess(t: D) {
+                onRetrieveDataSuccess(t)
             }
 
             override fun onError(e: Throwable) {
-                errorMessage.value = e.message
+                onRetrieveError(e)
             }
         }
 
-    val entityObserver: DisposableSingleObserver<ET>
-        get() = object : DisposableSingleObserver<ET>() {
-            override fun onSuccess(t: ET) {
-                entity.value = t
-            }
-
-            override fun onError(e: Throwable) {
-                errorMessage.value = e.message
-            }
-        }
+    protected abstract fun onRetrieveDataSuccess(data: D)
+    protected abstract fun onRetrieveBaseSuccess(message: String)
+    protected abstract fun onRetrieveError(throwable: Throwable)
 }

@@ -7,31 +7,28 @@ import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.comm.OpenChatComm
 import com.example.weknot_android.network.request.OpenChatRequest
+import com.example.weknot_android.view.navigator.OpenChatNavigator
+import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 import io.reactivex.observers.DisposableSingleObserver
 
-class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatRoom>, Void, OpenChatComm>(application, OpenChatComm()) {
+class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatRoom>, OpenChatNavigator>(application) {
+    private val openChatComm = OpenChatComm()
+
     var request = MutableLiveData<OpenChatRequest>()
 
-    val chatRoomUsers = MutableLiveData<List<User>>()
+    var openChatAdapter = OpenChatAdapter(application)
 
     fun getChattingRooms() {
-        addDisposable(comm.getChattingRooms(token), dataObserver)
+        addDisposable(openChatComm.getChattingRooms(token), dataObserver)
     }
 
-    fun createChattingRoom() {
-        addDisposable(comm.createChattingRoom(token, request.value!!), baseObserver)
+    override fun onRetrieveDataSuccess(data: List<OpenChatRoom>) {
+        openChatAdapter.updateList(data)
     }
 
-    fun getChattingRoomUsers(roomNumber: String) {
-        val observer: DisposableSingleObserver<List<User>> = object : DisposableSingleObserver<List<User>>() {
-            override fun onSuccess(t: List<User>) {
-                chatRoomUsers.value = t
-            }
+    override fun onRetrieveBaseSuccess(message: String) { }
 
-            override fun onError(e: Throwable) {
-                errorMessage.value = e.message
-            }
-        }
-        addDisposable(comm.getChattingRoomUsers(token, roomNumber), observer)
+    override fun onRetrieveError(throwable: Throwable) {
+        getNavigator().handleError(throwable)
     }
 }

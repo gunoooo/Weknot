@@ -1,71 +1,53 @@
 package com.example.weknot_android.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
-import com.example.weknot_android.R.layout
 import com.example.weknot_android.base.BaseActivity
 import com.example.weknot_android.databinding.LoginActivityBinding
-import com.example.weknot_android.model.entity.user.User
-import com.example.weknot_android.network.request.LoginRequest
-import com.example.weknot_android.network.response.data.LoginData
+import com.example.weknot_android.view.navigator.LoginNavigator
 import com.example.weknot_android.viewmodel.LoginViewModel
-import com.example.weknot_android.viewmodel.UserViewModel
 
-class LoginActivity : BaseActivity<LoginActivityBinding>() {
-    private lateinit var loginViewModel: LoginViewModel
+class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>(), LoginNavigator {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        init()
-        observeLoginViewModel()
-        clickEvent()
+    override fun getLayoutId(): Int {
+        return R.layout.login_activity
     }
 
-    private fun init() {
-        initViewModel()
-        initView()
+    override fun getViewModel(): Class<LoginViewModel> {
+        return LoginViewModel::class.java
     }
 
-    private fun observeLoginViewModel() {
-        loginViewModel.getErrorMessage().observe(this, Observer { message: String -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show() })
-
-        loginViewModel.getData().observe(this, Observer { loginData: LoginData ->
-            loginSuccessEvent(loginData)
-        })
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
     }
 
-    private fun clickEvent() {
-        binding.loginBtn.setOnClickListener {
-            setRequest()
-            loginViewModel.login()
+    override fun handleError(throwable: Throwable) {
+        Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun login() {
+        if (isEmpty()) {
+            Toast.makeText(this, R.string.empty_message, Toast.LENGTH_SHORT).show()
         }
-
-        binding.signUpButton.setOnClickListener { startActivity(SignUpActivity::class.java) }
+        viewModel.login()
     }
 
-
-    private fun initViewModel() {
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+    override fun openSignUpActivity() {
+        startActivityWithFinish(SignUpActivity::class.java)
     }
 
-    private fun initView() {
-        binding.materialCardView.setBackgroundResource(R.drawable.background_login)
-    }
-    private fun loginSuccessEvent(loginData: LoginData) {
-        loginViewModel.insertLoginData(loginData)
-        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+    override fun openMainActivity() {
         startActivityWithFinish(MainActivity::class.java)
     }
 
-    private fun setRequest() {
-        loginViewModel.request.value = LoginRequest(binding.idText.text.toString(), binding.pwText.text.toString())
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setNavigator(this)
     }
 
-    override fun layoutId(): Int {
-        return layout.login_activity
+    private fun isEmpty(): Boolean {
+        return viewModel.request.id!!.isEmpty() || viewModel.request.password!!.isEmpty()
     }
 }

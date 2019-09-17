@@ -11,10 +11,13 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseActivity
 import com.example.weknot_android.databinding.FeedWriteActivityBinding
+import com.example.weknot_android.view.navigator.FeedWriteNavigator
 import com.example.weknot_android.viewmodel.FeedViewModel
+import com.example.weknot_android.viewmodel.FeedWriteViewModel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import okhttp3.MediaType
@@ -25,38 +28,35 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class FeedWriteActivity : BaseActivity<FeedWriteActivityBinding>() {
-    private lateinit var feedViewModel: FeedViewModel
+class FeedWriteActivity : BaseActivity<FeedWriteActivityBinding, FeedWriteViewModel>(), FeedWriteNavigator {
 
     private val PICK_FROM_ALBUM = 1
     private val REQUEST_IMAGE_CROP = 2
-    private var photoURI: Uri? = null
+
+    override fun getLayoutId(): Int {
+        return R.layout.feed_write_activity
+    }
+
+    override fun getViewModel(): Class<FeedWriteViewModel> {
+        return FeedWriteViewModel::class.java
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun handleError(throwable: Throwable) {
+        Toast.makeText(this,throwable.message,Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
-        observeFeedViewModel()
+        viewModel.setNavigator(this)
+        setUp()
     }
 
-    private fun init() {
-        initAppbar()
-        initViewModel()
-        initView()
-    }
-
-    private fun observeFeedViewModel() {
-        feedViewModel.getSuccessMessage().observe(this, androidx.lifecycle.Observer { message: String ->
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-            startActivityWithFinish(MainActivity::class.java)
-        })
-    }
-
-    private fun initView() {
+    private fun setUp() {
         goToAlbum()
-    }
-
-    private fun initViewModel() {
-        feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
     }
 
     private fun goToAlbum() {
@@ -73,11 +73,11 @@ class FeedWriteActivity : BaseActivity<FeedWriteActivityBinding>() {
                 if (data == null) {
                     return
                 }
-                photoURI = data.data
+                viewModel.tempPictureUri.value = data.data
                 cropImage()
             }
             REQUEST_IMAGE_CROP -> if (resultCode == Activity.RESULT_OK) {
-                Glide.with(this).load(feedViewModel.pictureUri.value).into(binding.image)
+                Glide.with(this).load(viewModel.pictureUri.value).into(binding.image)
             }
         }
     }
@@ -85,67 +85,21 @@ class FeedWriteActivity : BaseActivity<FeedWriteActivityBinding>() {
     private fun cropImage() {
         val file = File(Environment.getExternalStorageDirectory().toString() + "/Weknot")
         if (!file.exists()) file.mkdirs()
-        feedViewModel.pictureFile.value = File(Environment.getExternalStorageDirectory().toString() + "/Weknot/" + Random().nextInt(100000000).toString() + ".jpg")
+        viewModel.pictureFile.value = File(Environment.getExternalStorageDirectory().toString() + "/Weknot/" + Random().nextInt(100000000).toString() + ".jpg")
         try {
-            feedViewModel.pictureFile.value!!.createNewFile()
+            viewModel.pictureFile.value!!.createNewFile()
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        feedViewModel.pictureUri.setValue(Uri.fromFile(feedViewModel.pictureFile.value))
+        viewModel.pictureUri.setValue(Uri.fromFile(viewModel.pictureFile.value))
         val cropIntent = Intent("com.android.camera.action.CROP")
         cropIntent.flags = Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         cropIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        cropIntent.setDataAndType(photoURI, "image/*")
+        cropIntent.setDataAndType(viewModel.tempPictureUri.value, "image/*")
         cropIntent.putExtra("aspectX", 1)
         cropIntent.putExtra("aspectY", 1)
         cropIntent.putExtra("scale", true)
-        cropIntent.putExtra("output", feedViewModel.pictureUri.value)
+        cropIntent.putExtra("output", viewModel.pictureUri.value)
         startActivityForResult(cropIntent, REQUEST_IMAGE_CROP)
-    }
-
-    private fun tedPermission() {
-        val permissionListener: PermissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {}
-            override fun onPermissionDenied(deniedPermissions: ArrayList<String?>?) {
-                Toast.makeText(applicationContext, "접근을 허용해야 사진을 등록할 수 있습니다", Toast.LENGTH_LONG).show()
-            }
-        }
-        TedPermission.with(this)
-                .setPermissionListener(permissionListener)
-                .setPermissions(permission.WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE, permission.CAMERA)
-                .check()
-    }
-
-    private fun initAppbar() {
-        val actionBar = supportActionBar
-
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-
-        appBarBinding.textView.setText(R.string.feed_write_title)
-        Glide.with(this).load(R.drawable.ic_next).into(appBarBinding.menu)
-
-        appbarClickEvent()
-    }
-
-    private fun appbarClickEvent() {
-        appBarBinding.back.setOnClickListener { startActivityWithFinish(MainActivity::class.java) }
-
-        appBarBinding.menu.setOnClickListener {
-            setRequest()
-            feedViewModel.createFeed()
-        }
-    }
-
-    private fun setRequest() {
-        val requestFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),feedViewModel.pictureFile.value!!)
-
-        feedViewModel.picture.value = Part.createFormData("picture", feedViewModel.pictureFile.value!!.name, requestFile)
-
-        feedViewModel.comment.value = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.commentInput.text.toString())
-
-    }
-
-    override fun layoutId(): Int {
-        return R.layout.feed_write_activity
     }
 }

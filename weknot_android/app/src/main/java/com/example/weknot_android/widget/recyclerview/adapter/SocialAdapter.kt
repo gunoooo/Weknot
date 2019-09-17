@@ -13,7 +13,9 @@ import com.example.weknot_android.model.entity.user.Friend
 import com.example.weknot_android.view.fragment.SocialFragment
 import com.example.weknot_android.widget.recyclerview.holder.SocialViewHolder
 
-class SocialAdapter(private val context: Context, private val friends: List<Friend>, private val friendStatus: Int) : Adapter<SocialViewHolder>() {
+class SocialAdapter(private val context: Context) : Adapter<SocialViewHolder>() {
+    private lateinit var friends: List<Friend>
+    private var friendStatus: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SocialViewHolder {
         return SocialViewHolder(LayoutInflater.from(parent.context).inflate(layout.social_item, parent, false))
@@ -38,6 +40,12 @@ class SocialAdapter(private val context: Context, private val friends: List<Frie
         if (friendStatus == 1) {
             binding.acceptBtn.visibility = View.VISIBLE
         }
+    }
+
+    fun updateList(friends: List<Friend>, friendStatus: Int) {
+        this.friends = friends
+        this.friendStatus = friendStatus
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

@@ -3,182 +3,194 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/input_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_camera"
-        tools:ignore="ContentDescription" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_id"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.viewmodel.SignUpViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/id_text"
-        app:boxBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_image">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/id_text"
+        <ImageView
+            android:id="@+id/input_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_camera"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_id"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
-            android:inputType="textEmailAddress"
-            android:privateImeOptions="nm" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/id_text"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_image">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.request.id}"
+                android:privateImeOptions="nm" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_pw"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/pw_text"
-        app:boxBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_id">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/pw_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_pw"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
-            android:inputType="textEmailAddress"
-            android:privateImeOptions="nm" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/pw_text"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_id">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pw_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.request.pw}"
+                android:privateImeOptions="nm" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:hint="이름"
-        app:boxBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_pw"
-        tools:ignore="HardcodedText">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
-            android:inputType="textEmailAddress"
-            android:privateImeOptions="nm" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/name_text"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_pw"
+            tools:ignore="HardcodedText">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.request.name}"
+                android:privateImeOptions="nm" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_gender"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/pw_text"
-        app:boxBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
-        app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_name">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/gender_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_gender"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
-            android:inputType="textEmailAddress"
-            android:privateImeOptions="nm" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/gender_text"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/gender_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.request.gender}"
+                android:privateImeOptions="nm" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_phone_number"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:hint="전화번호"
-        app:boxBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_name"
-        tools:ignore="HardcodedText">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phone_number_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_phone_number"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
-            android:inputType="textEmailAddress"
-            android:privateImeOptions="nm" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/phone_number_text"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_name"
+            tools:ignore="HardcodedText">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone_number_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.request.phoneNumber}"
+                android:privateImeOptions="nm" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_birth"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:hint="생일"
-        app:boxBackgroundColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
-        tools:ignore="HardcodedText">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/birth_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_birth"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
-            android:inputType="textEmailAddress"
-            android:privateImeOptions="nm" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/birth_text"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
+            tools:ignore="HardcodedText">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/birth_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="textEmailAddress"
+                android:text="@={viewModel.request.birth}"
+                android:privateImeOptions="nm" />
 
-    <Button
-        android:id="@+id/sign_up_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="회원가입"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_layout_birth"
-        tools:ignore="HardcodedText" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text="회원가입"
+            android:onClick="@{() -> viewModel.onClickSignUp()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_birth"
+            tools:ignore="HardcodedText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
