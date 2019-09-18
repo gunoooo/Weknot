@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseActivity
+import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.ProfileActivityBinding
 import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.viewmodel.ProfileViewModel
@@ -29,6 +29,7 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel.setNavigator(this)
         setUp()
     }

@@ -14,7 +14,7 @@ import net.gahfy.mvvmposts.utils.extension.getParentActivity
 
 @BindingAdapter("adapter")
 fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-    view.adapter = adapter
+        view.adapter = adapter
 }
 
 @BindingAdapter("mutableVisibility")

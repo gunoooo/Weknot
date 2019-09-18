@@ -22,6 +22,10 @@ class FeedViewModel(application: Application) : BaseViewModel<List<Feed>, FeedNa
         addDisposable(feedComm.getFeeds(token), dataObserver)
     }
 
+    fun onClickWrite() {
+        getNavigator().openFeedWriteActivity()
+    }
+
     override fun onRetrieveDataSuccess(data: List<Feed>) {
         feedAdapter.updateList(data)
     }

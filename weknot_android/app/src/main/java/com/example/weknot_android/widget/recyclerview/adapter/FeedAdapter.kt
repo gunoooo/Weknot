@@ -120,6 +120,6 @@ class FeedAdapter(private val context: Context) : Adapter<FeedViewHolder>() {
 
 
     override fun getItemCount(): Int {
-        return feeds.size
+        return if(::feeds.isInitialized) feeds.size else 0
     }
 }

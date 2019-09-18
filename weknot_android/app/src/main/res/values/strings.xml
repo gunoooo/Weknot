@@ -9,6 +9,7 @@
     <string name="social_title">친구목록</string>
     <string name="myinfo_title">마이 페이지</string>
     <string name="profile_title">프로필</string>
+    <string name="option_title">설정</string>
 
     <string name="id_text">아이디</string>
     <string name="pw_text">비밀번호</string>
@@ -22,4 +23,5 @@
     <string name="video_call_text">랜덤매칭하기</string>
 
     <string name="empty_message">빈칸 없이 입력해 주세요</string>
+    <string name="exist_message">취소 되었습니다</string>
 </resources>

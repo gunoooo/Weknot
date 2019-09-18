@@ -1,23 +1,14 @@
 package com.example.weknot_android.view.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.weknot_android.R
-import com.example.weknot_android.R.layout
-import com.example.weknot_android.base.BaseFragment
+import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.SocialFragmentBinding
-import com.example.weknot_android.model.entity.user.Friend
 import com.example.weknot_android.view.navigator.SocialNavigator
 import com.example.weknot_android.viewmodel.SocialViewModel
-import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter
 
 class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>(), SocialNavigator {
 

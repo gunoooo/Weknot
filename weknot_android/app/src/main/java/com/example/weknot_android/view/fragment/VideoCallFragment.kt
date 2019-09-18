@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseFragment
+import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.VideoCallFragmentBinding
 import com.example.weknot_android.model.entity.videocall.VideoCall
 import com.example.weknot_android.view.navigator.VideoCallNavigator

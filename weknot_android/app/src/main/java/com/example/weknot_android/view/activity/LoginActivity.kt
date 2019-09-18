@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseActivity
+import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.LoginActivityBinding
 import com.example.weknot_android.view.navigator.LoginNavigator
 import com.example.weknot_android.viewmodel.LoginViewModel
@@ -30,6 +30,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>(), Logi
     override fun login() {
         if (isEmpty()) {
             Toast.makeText(this, R.string.empty_message, Toast.LENGTH_SHORT).show()
+            return
         }
         viewModel.login()
     }

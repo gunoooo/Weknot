@@ -5,14 +5,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseFragment
+import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.MyinfoFragmentBinding
-import com.example.weknot_android.view.navigator.MainNavigator
-import com.example.weknot_android.view.navigator.MyinfoNavigator
 import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.viewmodel.MyinfoViewModel
 
-class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>(), MyinfoNavigator {
+class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>(), ProfileNavigator {
 
     override fun getLayoutId(): Int {
         return R.layout.myinfo_fragment

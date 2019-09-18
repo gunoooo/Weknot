@@ -36,18 +36,28 @@
         app:layout_constraintStart_toStartOf="parent" >
 
         <com.google.android.material.tabs.TabItem
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:icon="@drawable/ic_feed"/>
 
         <com.google.android.material.tabs.TabItem
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:icon="@drawable/ic_video_call"/>
 
         <com.google.android.material.tabs.TabItem
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:icon="@drawable/ic_chat"/>
 
         <com.google.android.material.tabs.TabItem
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:icon="@drawable/ic_friend"/>
 
         <com.google.android.material.tabs.TabItem
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:icon="@drawable/ic_myinfo"/>
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

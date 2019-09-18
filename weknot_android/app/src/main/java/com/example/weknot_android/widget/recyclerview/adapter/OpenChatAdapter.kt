@@ -32,12 +32,12 @@ class OpenChatAdapter(private val context: Context) : Adapter<OpenChatViewHolder
     }
 
     private fun initRoomTypeDrawable(roomType: String) : Int? {
-        when (roomType) {
-            "free" -> return R.drawable.ic_room_type_free
-            "game" -> return R.drawable.ic_room_type_game
-            "worry" -> return R.drawable.ic_room_type_worry
-            "secret" -> return R.drawable.ic_room_type_secret
-            else -> return null
+        return when (roomType) {
+            "free" -> R.drawable.ic_room_type_free
+            "game" -> R.drawable.ic_room_type_game
+            "worry" -> R.drawable.ic_room_type_worry
+            "secret" -> R.drawable.ic_room_type_secret
+            else -> null
         }
     }
 
@@ -47,7 +47,7 @@ class OpenChatAdapter(private val context: Context) : Adapter<OpenChatViewHolder
     }
 
     override fun getItemCount(): Int {
-        return openChatRooms.size
+        return if(::openChatRooms.isInitialized) openChatRooms.size else 0
     }
 
 }

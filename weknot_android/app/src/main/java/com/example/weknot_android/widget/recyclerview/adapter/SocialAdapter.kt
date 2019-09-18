@@ -49,7 +49,7 @@ class SocialAdapter(private val context: Context) : Adapter<SocialViewHolder>() 
     }
 
     override fun getItemCount(): Int {
-        return friends.size
+        return if(::friends.isInitialized) friends.size else 0
     }
 
 }

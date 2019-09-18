@@ -1,32 +1,20 @@
 package com.example.weknot_android.view.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.R
-import com.example.weknot_android.R.layout
-import com.example.weknot_android.base.BaseFragment
+import com.example.weknot_android.base.fragment.BaseFragment
+import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.OpenChatFragmentBinding
-import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.view.navigator.OpenChatNavigator
 import com.example.weknot_android.viewmodel.OpenChatViewModel
-import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 
-class OpenChatFragment : BaseFragment<OpenChatFragmentBinding, OpenChatViewModel>(), OpenChatNavigator {
-
-    private var isOpenWriteBtn : Boolean = true
-
-    private lateinit var animAddShow : Animation
-    private lateinit var animAddHide : Animation
+class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>(), OpenChatNavigator {
 
     override fun getLayoutId(): Int {
         return R.layout.open_chat_fragment
@@ -44,6 +32,16 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding, OpenChatViewModel
         Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
     }
 
+    override fun btnShow() {
+        binding.createBtn.startAnimation(animAddShow)
+        binding.createBtn.visibility = View.VISIBLE
+    }
+
+    override fun btnHide() {
+        binding.createBtn.startAnimation(animAddHide)
+        binding.createBtn.visibility = View.INVISIBLE
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.setNavigator(this)
@@ -55,35 +53,8 @@ class OpenChatFragment : BaseFragment<OpenChatFragmentBinding, OpenChatViewModel
     }
 
     private fun setUp() {
-        animAddShow = AnimationUtils.loadAnimation(context, R.anim.animation_add_show)
-        animAddHide = AnimationUtils.loadAnimation(context, R.anim.animation_add_hide)
-
-        setScrollListener()
+        binding.chatRoomRecyclerview.addOnScrollListener(scrollListener)
 
         viewModel.getChattingRooms()
-    }
-
-    private fun setScrollListener() {
-        binding.chatRoomRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (dy > 20) {
-                    if (isOpenWriteBtn) {
-                        binding.createBtn.startAnimation(animAddHide)
-                        binding.createBtn.visibility = View.INVISIBLE
-                        isOpenWriteBtn = false
-                    }
-                }
-                else if (dy < -20) {
-                    if (!isOpenWriteBtn) {
-                        binding.createBtn.startAnimation(animAddShow)
-                        binding.createBtn.visibility = View.VISIBLE
-                        isOpenWriteBtn = true
-                    }
-                }
-            }
-        })
     }
 }

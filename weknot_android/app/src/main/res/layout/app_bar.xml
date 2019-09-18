@@ -1,69 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_appbar">
-
-            <com.google.android.material.appbar.AppBarLayout
+            android:background="@drawable/background_appbar"
+            android:stateListAnimator="@null"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+            <com.example.weknot_android.widget.WeknotToolbar
+                android:id="@+id/toolbar"
+                app:titleTextColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:stateListAnimator="@null"
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
-                <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp">
-
-                        <ImageView
-                            android:id="@+id/back"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_back_24dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/nanum_squareeb"
-                            android:text="@string/main_title"
-                            android:textColor="@android:color/black"
-                            android:textSize="15dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/menu"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_menu"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.AppBarLayout>
-
-        </LinearLayout>
+                android:theme="@style/ToolbarColoredBackArrow"
+                app:popupTheme="@style/AppTheme"
+                tools:title="@string/main_title" />
+        </com.google.android.material.appbar.AppBarLayout>
 
     </FrameLayout>
 

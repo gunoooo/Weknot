@@ -3,13 +3,9 @@ package com.example.weknot_android.view.activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.weknot_android.R
-import com.example.weknot_android.R.layout
-import com.example.weknot_android.base.BaseActivity
+import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.SignUpActivityBinding
-import com.example.weknot_android.network.request.SignUpRequest
 import com.example.weknot_android.view.navigator.SignUpNavigator
 import com.example.weknot_android.viewmodel.SignUpViewModel
 
@@ -41,7 +37,7 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>(), S
 
     override fun signUp() {
         if (isEmpty()) {
-            Toast.makeText(this,"빈 칸 없이 입력해 주세요.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,R.string.empty_message,Toast.LENGTH_SHORT).show()
             return
         }
         viewModel.signUp()
@@ -49,6 +45,7 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>(), S
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel.setNavigator(this)
     }
 

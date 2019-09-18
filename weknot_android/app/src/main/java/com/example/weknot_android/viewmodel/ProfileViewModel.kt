@@ -10,7 +10,7 @@ import com.example.weknot_android.network.comm.UserComm
 import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 
-class ProfileViewModel(application: Application) : BaseViewModel<Profile, ProfileNavigator>(application) {
+open class ProfileViewModel(application: Application) : BaseViewModel<Profile, ProfileNavigator>(application) {
     private val userComm = UserComm()
 
     var id: MutableLiveData<String> = MutableLiveData()

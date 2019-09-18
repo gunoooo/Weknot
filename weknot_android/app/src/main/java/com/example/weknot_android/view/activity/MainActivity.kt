@@ -1,16 +1,12 @@
 package com.example.weknot_android.view.activity
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.bumptech.glide.Glide
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseActivity
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.MainActivityBinding
-import com.example.weknot_android.view.fragment.*
 import com.example.weknot_android.view.navigator.MainNavigator
 import com.example.weknot_android.viewmodel.MainViewModel
 import com.example.weknot_android.widget.viewpager.MainPagerAdapter
@@ -22,7 +18,7 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>(), MainNavi
     private var PAGE_COUNT: Int = 5
 
     override fun getLayoutId(): Int {
-        return R.layout.myinfo_fragment
+        return R.layout.main_activity
     }
 
     override fun getViewModel(): Class<MainViewModel> {
@@ -35,6 +31,7 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>(), MainNavi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         viewModel.setNavigator(this)
         setUp()
     }
@@ -85,5 +82,10 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>(), MainNavi
                 binding.viewPager.currentItem = tab.position
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }

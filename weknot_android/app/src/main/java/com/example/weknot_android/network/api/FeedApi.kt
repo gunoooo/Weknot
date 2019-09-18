@@ -15,7 +15,7 @@ interface FeedApi {
 
     @Multipart
     @POST("/feeds")
-    fun createFeed(@Header("Authorization") token: String,
+    fun postFeed(@Header("Authorization") token: String,
                   @retrofit2.http.Part picture: Part,
                   @retrofit2.http.Part("comment") name: RequestBody): Single<retrofit2.Response<Response<Any>>>
 

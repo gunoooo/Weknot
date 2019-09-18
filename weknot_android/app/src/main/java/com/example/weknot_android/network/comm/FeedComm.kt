@@ -9,8 +9,8 @@ import okhttp3.RequestBody
 
 class FeedComm : BaseComm<FeedApi>() {
 
-    fun createFeed(token: String, picture: MultipartBody.Part, comment: RequestBody): Single<String> {
-        return api.createFeed(token, picture, comment).map(getResponseMessageFunction())
+    fun postFeed(token: String, picture: MultipartBody.Part, comment: RequestBody): Single<String> {
+        return api.postFeed(token, picture, comment).map(getResponseMessageFunction())
     }
 
     fun getFeeds(token: String): Single<List<Feed>> {
