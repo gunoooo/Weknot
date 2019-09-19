@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.widget.recyclerview.viewmodel.SocialItemViewModel" />
+    </data>
 <com.google.android.material.card.MaterialCardView
     android:layout_width="match_parent"
+    android:id="@+id/root_layout"
     android:layout_height="100dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +20,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/minju"
+            app:mutableImageUrl="@{viewModel.picture}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -26,7 +32,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/nanum_squareeb"
-            android:text="박건우"
+            app:mutableText="@{viewModel.name}"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/profile_image"
@@ -57,7 +63,7 @@
                 android:textSize="20dp"
                 android:fontFamily="@font/nanum_squareb"
                 android:textColor="@color/colorMainDark"
-                android:text="55점"/>
+                app:mutableText="@{viewModel.point}"/>
         </LinearLayout>
 
         <TextView
@@ -70,7 +76,7 @@
             android:padding="10dp"
             android:text="매듭 수락"
             android:layout_marginEnd="20dp"
-            android:visibility="invisible"
+            app:mutableVisibility="@{viewModel.acceptVisibility}"
             android:textColor="@color/colorMainDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

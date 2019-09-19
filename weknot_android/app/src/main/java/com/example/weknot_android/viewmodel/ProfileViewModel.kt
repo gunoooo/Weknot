@@ -2,15 +2,14 @@ package com.example.weknot_android.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.user.Profile
 import com.example.weknot_android.network.comm.UserComm
 import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 
-open class ProfileViewModel(application: Application) : BaseViewModel<Profile, ProfileNavigator>(application) {
+open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(application) {
     private val userComm = UserComm()
 
     var id: MutableLiveData<String> = MutableLiveData()
@@ -21,7 +20,7 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile, P
     var userPoint: MutableLiveData<String> = MutableLiveData()
     var userPicture: MutableLiveData<String> = MutableLiveData()
     var userGender: MutableLiveData<Int> = MutableLiveData()
-    var feedAdapter = FeedAdapter(application)
+    var feedAdapter = FeedAdapter()
 
     fun getProfile() {
         addDisposable(userComm.getProfile(token, id.value!!), dataObserver)
@@ -43,8 +42,4 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile, P
     }
 
     override fun onRetrieveBaseSuccess(message: String) { }
-
-    override fun onRetrieveError(throwable: Throwable) {
-        getNavigator().handleError(throwable)
-    }
 }

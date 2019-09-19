@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.widget.recyclerview.viewmodel.OpenChatItemViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@android:color/white"
+        android:id="@+id/root_layout"
         android:layout_marginTop="3dp">
 
         <TextView
@@ -17,13 +23,13 @@
             android:layout_marginTop="10dp"
             android:textColor="@android:color/black"
             android:fontFamily="@font/nanum_squareeb"
-            android:text="20." />
+            app:mutableText="@{viewModel.number}" />
 
         <TextView
             android:id="@+id/room_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="그냥 이것저것 하는 방"
+            app:mutableText="@{viewModel.name}"
             android:textSize="20dp"
             android:textColor="@color/colorMainDark"
             android:fontFamily="@font/nanum_squareeb"
@@ -43,14 +49,14 @@
             android:textSize="12dp"
             android:textColor="@color/textColor"
             android:fontFamily="@font/nanum_squareb"
-            android:text="박건우" />
+            app:mutableText="@{viewModel.master}" />
 
         <ImageView
             android:id="@+id/room_type"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_room_type_free"
+            app:mutableImageDrawable="@{viewModel.type}"
             app:layout_constraintBottom_toBottomOf="@+id/room_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/room_name" />

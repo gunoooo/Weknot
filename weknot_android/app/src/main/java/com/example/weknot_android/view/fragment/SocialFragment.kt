@@ -10,7 +10,7 @@ import com.example.weknot_android.databinding.SocialFragmentBinding
 import com.example.weknot_android.view.navigator.SocialNavigator
 import com.example.weknot_android.viewmodel.SocialViewModel
 
-class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>(), SocialNavigator {
+class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.social_fragment
@@ -24,13 +24,10 @@ class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>(), S
         return BR.viewModel
     }
 
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
-    }
+    override fun initObserver() {
+        with(viewModel) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.setNavigator(this)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

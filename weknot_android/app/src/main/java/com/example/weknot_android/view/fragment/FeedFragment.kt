@@ -6,6 +6,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.weknot_android.R
@@ -16,7 +17,7 @@ import com.example.weknot_android.view.activity.FeedWriteActivity
 import com.example.weknot_android.view.navigator.FeedNavigator
 import com.example.weknot_android.viewmodel.FeedViewModel
 
-class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>(), FeedNavigator {
+class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.feed_fragment
@@ -30,12 +31,12 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>(), Fee
         return BR.viewModel
     }
 
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun openFeedWriteActivity() {
-        startActivityWithFinish(FeedWriteActivity::class.java)
+    override fun initObserver() {
+        with(viewModel) {
+            openFeedWrite.observe(this@FeedFragment, Observer {
+                startActivityWithFinish(FeedWriteActivity::class.java)
+            })
+        }
     }
 
     override fun btnShow() {
@@ -46,11 +47,6 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>(), Fee
     override fun btnHide() {
         binding.writeBtn.startAnimation(animAddHide)
         binding.writeBtn.visibility = View.INVISIBLE
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.setNavigator(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -2,10 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.widget.recyclerview.viewmodel.FeedItemViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:id="@+id/root_layout"
         android:layout_marginBottom="10dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
@@ -14,18 +20,18 @@
             android:layout_height="35dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            app:mutableImageUrl="@{viewModel.photo}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/writer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="박건우"
             android:textSize="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            app:mutableText="@{viewModel.name}"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="@+id/profile_image"
             android:fontFamily="@font/nanum_squareb"
@@ -35,8 +41,8 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2019-8-30 17:30"
             android:textSize="7dp"
+            app:mutableText="@{viewModel.time}"
             android:textColor="@color/textColor"
             android:fontFamily="@font/nanum_squarel"
             app:layout_constraintTop_toBottomOf="@+id/writer_name"
@@ -48,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="장원영 사진"
+            app:mutableText="@{viewModel.comment}"
             android:textSize="10dp"
             android:textColor="@android:color/black"
             android:fontFamily="@font/nanum_squareb"
@@ -59,16 +65,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            app:mutableImageUrl="@{viewModel.picture}"
             app:layout_constraintTop_toBottomOf="@+id/content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/wonyoung"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
             android:visibility="invisible"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/like_off_btn"
+            android:onClick="@{() -> viewModel.onClickLikeOff()}"
             app:cardCornerRadius="20dp"
             android:elevation="10dp"
             android:layout_marginBottom="10dp"
@@ -114,6 +121,7 @@
             android:layout_marginLeft="10dp"
             android:visibility="invisible"
             android:id="@+id/like_on_btn"
+            android:onClick="@{() -> viewModel.onClickLikeOn()}"
             android:orientation="vertical"
             android:background="@drawable/background_like"
             android:elevation="10dp"

@@ -5,11 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Environment
 import androidx.lifecycle.MutableLiveData
-import com.example.weknot_android.base.BaseViewModel
-import com.example.weknot_android.model.entity.feed.Feed
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.network.comm.FeedComm
-import com.example.weknot_android.view.navigator.FeedNavigator
 import com.example.weknot_android.view.navigator.FeedWriteNavigator
+import com.example.weknot_android.widget.SingleLiveEvent
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,16 +16,21 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-class FeedWriteViewModel(application: Application) : BaseViewModel<Any, FeedWriteNavigator>(application) {
+class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(application) {
     private val feedComm = FeedComm()
 
-    var tempPictureUri: MutableLiveData<Uri> = MutableLiveData()
-    var pictureUri: MutableLiveData<Uri> = MutableLiveData()
-    private var pictureFile: MutableLiveData<File> = MutableLiveData()
-    private var picture: MutableLiveData<MultipartBody.Part> = MutableLiveData()
+    val tempPictureUri: MutableLiveData<Uri> = MutableLiveData()
+    val pictureUri: MutableLiveData<Uri> = MutableLiveData()
+    private val pictureFile: MutableLiveData<File> = MutableLiveData()
+    private val picture: MutableLiveData<MultipartBody.Part> = MutableLiveData()
 
-    var commentText: MutableLiveData<String> = MutableLiveData()
-    private var comment: MutableLiveData<RequestBody> = MutableLiveData()
+    val commentText: MutableLiveData<String> = MutableLiveData()
+    private val comment: MutableLiveData<RequestBody> = MutableLiveData()
+
+    val goToCrop: SingleLiveEvent<Any> = SingleLiveEvent()
+    val backMessageToast: SingleLiveEvent<Any> = SingleLiveEvent()
+    val openMain: SingleLiveEvent<Any> = SingleLiveEvent()
+
 
     fun postFeed() {
         setRequest()
@@ -39,7 +43,7 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any, FeedWrit
 
     fun cropImage() {
         createFile()
-        getNavigator().goToCropPage()
+        goToCrop.call()
     }
 
     private fun createFile() {
@@ -64,16 +68,12 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any, FeedWrit
         tempPictureUri.value = null
         pictureFile.value = null
         pictureUri.value = null
-        getNavigator().toastBackMessage()
+        backMessageToast.call()
     }
 
     override fun onRetrieveDataSuccess(data: Any) { }
 
     override fun onRetrieveBaseSuccess(message: String) {
-        getNavigator().openMainActivity()
-    }
-
-    override fun onRetrieveError(throwable: Throwable) {
-        getNavigator().handleError(throwable)
+        openMain.call()
     }
 }

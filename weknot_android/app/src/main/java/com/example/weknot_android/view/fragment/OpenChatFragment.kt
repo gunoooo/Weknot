@@ -14,7 +14,7 @@ import com.example.weknot_android.databinding.OpenChatFragmentBinding
 import com.example.weknot_android.view.navigator.OpenChatNavigator
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 
-class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>(), OpenChatNavigator {
+class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.open_chat_fragment
@@ -28,8 +28,10 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
         return BR.viewModel
     }
 
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
+    override fun initObserver() {
+        with(viewModel) {
+
+        }
     }
 
     override fun btnShow() {
@@ -40,11 +42,6 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
     override fun btnHide() {
         binding.createBtn.startAnimation(animAddHide)
         binding.createBtn.visibility = View.INVISIBLE
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.setNavigator(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

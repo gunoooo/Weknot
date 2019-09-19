@@ -7,13 +7,12 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
-import com.bumptech.glide.Glide
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import java.util.ArrayList
 
-abstract class BasePictureActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : BaseActivity<VB, VM>() {
+abstract class BasePictureActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : BaseActivity<VB, VM>() {
     private val PICK_FROM_ALBUM = 1
     private val REQUEST_IMAGE_CROP = 2
 

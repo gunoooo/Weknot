@@ -1,10 +1,11 @@
-package com.example.weknot_android.base
+package com.example.weknot_android.base.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.weknot_android.model.repository.RoomRepository
 import com.example.weknot_android.model.repository.TokenRepository
 import com.example.weknot_android.model.repository.UserIdRepository
+import com.example.weknot_android.widget.SingleLiveEvent
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,13 +15,13 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import java.lang.ref.WeakReference
 
-abstract class BaseViewModel<D, N> protected constructor(application: Application) : AndroidViewModel(application) {
+abstract class BaseViewModel<D> protected constructor(application: Application) : AndroidViewModel(application) {
     private val disposable: CompositeDisposable = CompositeDisposable()
     private val tokenManager: TokenRepository = TokenRepository(application)
     private val userIdManager: UserIdRepository = UserIdRepository(application)
     protected val repository: RoomRepository = RoomRepository(application)
 
-    private lateinit var navigator: WeakReference<N>
+    val onErrorEvent: SingleLiveEvent<Throwable> = SingleLiveEvent()
 
     var token: String
         get() = tokenManager.token.token
@@ -28,12 +29,6 @@ abstract class BaseViewModel<D, N> protected constructor(application: Applicatio
     var userId: String
         get() = userIdManager.userId.id
         set(value) = userIdManager.setUserId(value)
-    fun getNavigator(): N {
-        return navigator.get()!!
-    }
-    fun setNavigator(navigator: N) {
-        this.navigator = WeakReference(navigator)
-    }
 
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())
@@ -47,7 +42,7 @@ abstract class BaseViewModel<D, N> protected constructor(application: Applicatio
             }
 
             override fun onError(e: Throwable) {
-                onRetrieveError(e)
+                onErrorEvent.value = e
             }
         }
 
@@ -58,11 +53,10 @@ abstract class BaseViewModel<D, N> protected constructor(application: Applicatio
             }
 
             override fun onError(e: Throwable) {
-                onRetrieveError(e)
+                onErrorEvent.value = e
             }
         }
 
     protected abstract fun onRetrieveDataSuccess(data: D)
     protected abstract fun onRetrieveBaseSuccess(message: String)
-    protected abstract fun onRetrieveError(throwable: Throwable)
 }

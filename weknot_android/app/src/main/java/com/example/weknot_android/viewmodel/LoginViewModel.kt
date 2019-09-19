@@ -1,20 +1,22 @@
 package com.example.weknot_android.viewmodel
 
 import android.app.Application
-import android.service.autofill.UserData
-import androidx.lifecycle.MutableLiveData
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.user.User
-import com.example.weknot_android.model.repository.UserIdRepository
 import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.response.data.LoginData
 import com.example.weknot_android.view.navigator.LoginNavigator
+import com.example.weknot_android.widget.SingleLiveEvent
 
-class LoginViewModel(application: Application) : BaseViewModel<LoginData, LoginNavigator>(application) {
+class LoginViewModel(application: Application) : BaseViewModel<LoginData>(application) {
     private val signComm = SignComm()
 
     var request = LoginRequest()
+
+    val loginEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val openSignUp: SingleLiveEvent<Any> = SingleLiveEvent()
+    val openMain: SingleLiveEvent<Any> = SingleLiveEvent()
 
     fun login() {
         addDisposable(signComm.login(request), dataObserver)
@@ -39,21 +41,17 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData, LoginN
     }
 
     fun onClickLogin() {
-        getNavigator().login()
+        loginEvent.call()
     }
 
     fun onClickSignUp() {
-        getNavigator().openSignUpActivity()
+        openSignUp.call()
     }
 
     override fun onRetrieveDataSuccess(data: LoginData) {
         insertLoginData(data)
-        getNavigator().openMainActivity()
+        openMain.call()
     }
 
     override fun onRetrieveBaseSuccess(message: String) { }
-
-    override fun onRetrieveError(throwable: Throwable) {
-        getNavigator().handleError(throwable)
-    }
 }

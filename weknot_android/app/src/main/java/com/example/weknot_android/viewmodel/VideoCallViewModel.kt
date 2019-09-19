@@ -1,13 +1,16 @@
 package com.example.weknot_android.viewmodel
 
 import android.app.Application
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.videocall.VideoCall
 import com.example.weknot_android.network.comm.VideoCallComm
 import com.example.weknot_android.view.navigator.VideoCallNavigator
+import com.example.weknot_android.widget.SingleLiveEvent
 
-class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall, VideoCallNavigator>(application) {
+class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(application) {
     private val videoCallComm = VideoCallComm()
+
+    val connectVideoCall: SingleLiveEvent<VideoCall> = SingleLiveEvent()
 
     fun requestCall() {
         addDisposable(videoCallComm.requestCall(token), dataObserver)
@@ -18,12 +21,8 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall, Vi
     }
 
     override fun onRetrieveDataSuccess(data: VideoCall) {
-        getNavigator().connectVideoCall(data)
+        connectVideoCall.value = data
     }
 
     override fun onRetrieveBaseSuccess(message: String) { }
-
-    override fun onRetrieveError(throwable: Throwable) {
-        getNavigator().handleError(throwable)
-    }
 }

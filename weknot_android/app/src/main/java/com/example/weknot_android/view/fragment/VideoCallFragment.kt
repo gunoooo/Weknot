@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.VideoCallFragmentBinding
@@ -17,7 +18,7 @@ import org.jitsi.meet.sdk.JitsiMeetConferenceOptions.Builder
 import java.net.MalformedURLException
 import java.net.URL
 
-class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewModel>(), VideoCallNavigator {
+class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.video_call_fragment
@@ -31,20 +32,15 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewMo
         return BR.viewModel
     }
 
-    override fun connectVideoCall(videoCall: VideoCall) {
-        val options: JitsiMeetConferenceOptions? = Builder()
-                .setRoom("channel" + videoCall.channel)
-                .build()
-        JitsiMeetActivity.launch(context, options)
-    }
-
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(context,throwable.message,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.setNavigator(this)
+    override fun initObserver() {
+        with(viewModel) {
+            connectVideoCall.observe(this@VideoCallFragment, Observer {
+                val options: JitsiMeetConferenceOptions? = Builder()
+                        .setRoom("channel" + it.channel)
+                        .build()
+                JitsiMeetActivity.launch(context, options)
+            })
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

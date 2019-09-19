@@ -10,7 +10,7 @@ import com.example.weknot_android.databinding.MyinfoFragmentBinding
 import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.viewmodel.MyinfoViewModel
 
-class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>(), ProfileNavigator {
+class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.myinfo_fragment
@@ -24,13 +24,10 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>(), P
         return BR.viewModel
     }
 
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(context, throwable.message, Toast.LENGTH_SHORT).show()
-    }
+    override fun initObserver() {
+        with(viewModel) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.setNavigator(this)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

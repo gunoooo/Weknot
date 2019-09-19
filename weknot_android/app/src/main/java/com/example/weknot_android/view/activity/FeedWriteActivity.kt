@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BasePictureActivity
@@ -13,7 +14,7 @@ import com.example.weknot_android.databinding.FeedWriteActivityBinding
 import com.example.weknot_android.view.navigator.FeedWriteNavigator
 import com.example.weknot_android.viewmodel.FeedWriteViewModel
 
-class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWriteViewModel>(), FeedWriteNavigator {
+class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWriteViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.feed_write_activity
@@ -27,21 +28,21 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
         return BR.viewModel
     }
 
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(this,throwable.message,Toast.LENGTH_SHORT).show()
-    }
+    override fun initObserver() {
+        with(viewModel) {
+            openMain.observe(this@FeedWriteActivity, Observer {
+                startActivityWithFinish(MainActivity::class.java)
+            })
 
-    override fun goToCropPage() {
-        goToCropPage(viewModel.tempPictureUri.value, viewModel.pictureUri.value)
-    }
+            goToCrop.observe(this@FeedWriteActivity, Observer {
+                goToCropPage(viewModel.tempPictureUri.value, viewModel.pictureUri.value)
+            })
 
-    override fun toastBackMessage() {
-        Toast.makeText(this, R.string.exist_message, Toast.LENGTH_SHORT).show()
-        startActivityWithFinish(MainActivity::class.java)
-    }
-
-    override fun openMainActivity() {
-        startActivityWithFinish(MainActivity::class.java)
+            backMessageToast.observe(this@FeedWriteActivity, Observer {
+                Toast.makeText(this@FeedWriteActivity, R.string.exist_message, Toast.LENGTH_SHORT).show()
+                startActivityWithFinish(MainActivity::class.java)
+            })
+        }
     }
 
     override fun requestNotOkEvent() {
@@ -58,7 +59,6 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel.setNavigator(this)
         setUp()
     }
 

@@ -4,15 +4,17 @@ import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.databinding.AppBarBinding
 
-abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCompatActivity() {
     protected lateinit var binding: VB
     protected lateinit var viewModel: VM
 
@@ -23,10 +25,14 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Ap
 
     protected abstract fun getBindingVariable(): Int
 
+    protected abstract fun initObserver()
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         performDataBinding()
+        initBaseObserver()
+        initObserver()
     }
 
     private fun performDataBinding() {
@@ -36,7 +42,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Ap
 
     private fun performViewDataBinding() {
         binding = DataBindingUtil.setContentView(this, getLayoutId())
-        this.viewModel = if(::viewModel.isInitialized) ViewModelProviders.of(this).get(getViewModel()) else viewModel
+        this.viewModel = if(::viewModel.isInitialized) viewModel else ViewModelProviders.of(this).get(getViewModel())
         binding.setVariable(getBindingVariable(), viewModel)
         binding.executePendingBindings()
     }
@@ -50,6 +56,14 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Ap
         }
         catch (e: NoSuchFieldException) {
 
+        }
+    }
+
+    private fun initBaseObserver() {
+        with(viewModel) {
+            onErrorEvent.observe(this@BaseActivity, Observer {
+                simpleToast(it.message)
+            })
         }
     }
 
@@ -71,5 +85,13 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Ap
     protected fun startActivityWithFinish(activity: Class<*>) {
         startActivity(Intent(this, activity))
         finish()
+    }
+
+    protected fun simpleToast(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    protected fun simpleToast(message: Int) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

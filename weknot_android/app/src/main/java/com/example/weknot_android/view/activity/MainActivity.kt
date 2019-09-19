@@ -13,7 +13,7 @@ import com.example.weknot_android.widget.viewpager.MainPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 
-class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>(), MainNavigator {
+class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     private var PAGE_COUNT: Int = 5
 
@@ -29,10 +29,15 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>(), MainNavi
         return BR.viewModel
     }
 
+    override fun initObserver() {
+        with(viewModel) {
+
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel.setNavigator(this)
         setUp()
     }
 

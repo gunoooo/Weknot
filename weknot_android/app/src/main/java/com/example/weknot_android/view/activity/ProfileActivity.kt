@@ -23,6 +23,12 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
         return BR.viewModel
     }
 
+    override fun initObserver() {
+        with(viewModel) {
+
+        }
+    }
+
     override fun handleError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
     }
@@ -30,7 +36,6 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel.setNavigator(this)
         setUp()
     }
 

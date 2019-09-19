@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Fragment() {
+abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : Fragment() {
     protected lateinit var binding: VB
     protected lateinit var currentView: View
     protected lateinit var viewModel: VM
@@ -24,9 +26,11 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Fr
 
     protected abstract fun getBindingVariable(): Int
 
+    protected abstract fun initObserver()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.viewModel = if(::viewModel.isInitialized) ViewModelProviders.of(this).get(getViewModel()) else viewModel
+        this.viewModel = if(::viewModel.isInitialized) viewModel else ViewModelProviders.of(this).get(getViewModel())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +43,23 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUp()
+        initBaseObserver()
+        initObserver()
+    }
+
+    private fun setUp() {
         binding.setVariable(getBindingVariable(),viewModel)
         binding.lifecycleOwner = this
         binding.executePendingBindings()
+    }
+
+    private fun initBaseObserver() {
+        with(viewModel) {
+            onErrorEvent.observe(this@BaseFragment, Observer {
+                simpleToast(it.message)
+            })
+        }
     }
 
     protected fun startActivity(activity: Class<*>) {
@@ -51,6 +69,14 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : Fr
     protected fun startActivityWithFinish(activity: Class<*>) {
         startActivity(Intent(context, activity))
         getActivity()!!.finish()
+    }
+
+    protected fun simpleToast(message: String?) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    protected fun simpleToast(message: Int) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

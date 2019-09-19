@@ -7,9 +7,9 @@ import android.view.animation.AnimationUtils
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.R
-import com.example.weknot_android.base.BaseViewModel
+import com.example.weknot_android.base.viewmodel.BaseViewModel
 
-abstract class BaseListFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *>> : BaseFragment<VB, VM>() {
+abstract class BaseListFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : BaseFragment<VB, VM>() {
 
     private var isOpenWriteBtn : Boolean = true
 

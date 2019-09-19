@@ -3,13 +3,14 @@ package com.example.weknot_android.view.activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.SignUpActivityBinding
 import com.example.weknot_android.view.navigator.SignUpNavigator
 import com.example.weknot_android.viewmodel.SignUpViewModel
 
-class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>(), SignUpNavigator {
+class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.sign_up_activity
@@ -23,30 +24,29 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>(), S
         return BR.viewModel
     }
 
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(this,throwable.message,Toast.LENGTH_SHORT).show()
-    }
+    override fun initObserver() {
+        with(viewModel) {
+            onSuccessEvent.observe(this@SignUpActivity, Observer {
+                simpleToast(it)
+            })
 
-    override fun handleSuccess(message: String) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-    }
+            signUpEvent.observe(this@SignUpActivity, Observer {
+                if (isEmpty()) {
+                    Toast.makeText(this@SignUpActivity,R.string.empty_message,Toast.LENGTH_SHORT).show()
+                    return@Observer
+                }
+                viewModel.signUp()
+            })
 
-    override fun openLoginActivity() {
-        startActivityWithFinish(LoginActivity::class.java)
-    }
-
-    override fun signUp() {
-        if (isEmpty()) {
-            Toast.makeText(this,R.string.empty_message,Toast.LENGTH_SHORT).show()
-            return
+            openLogin.observe(this@SignUpActivity, Observer {
+                startActivityWithFinish(LoginActivity::class.java)
+            })
         }
-        viewModel.signUp()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        viewModel.setNavigator(this)
     }
 
     private fun isEmpty(): Boolean {
