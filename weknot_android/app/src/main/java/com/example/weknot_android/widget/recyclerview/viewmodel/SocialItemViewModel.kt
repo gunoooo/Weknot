@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseItemViewModel
 import com.example.weknot_android.model.entity.user.Friend
-import com.example.weknot_android.view.navigator.SocialNavigator
 import com.example.weknot_android.widget.recyclerview.navigator.SocialItemNavigator
 
 class SocialItemViewModel : BaseItemViewModel<Friend, SocialItemNavigator>() {

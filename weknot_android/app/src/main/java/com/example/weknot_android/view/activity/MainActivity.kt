@@ -7,7 +7,6 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.MainActivityBinding
-import com.example.weknot_android.view.navigator.MainNavigator
 import com.example.weknot_android.viewmodel.MainViewModel
 import com.example.weknot_android.widget.viewpager.MainPagerAdapter
 import com.google.android.material.tabs.TabLayout

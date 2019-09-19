@@ -6,7 +6,6 @@ import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.response.data.LoginData
-import com.example.weknot_android.view.navigator.LoginNavigator
 import com.example.weknot_android.widget.SingleLiveEvent
 
 class LoginViewModel(application: Application) : BaseViewModel<LoginData>(application) {

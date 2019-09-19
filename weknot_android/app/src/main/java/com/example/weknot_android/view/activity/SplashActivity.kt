@@ -6,7 +6,6 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.SplashActivityBinding
-import com.example.weknot_android.view.navigator.SplashNavigator
 import com.example.weknot_android.viewmodel.SplashViewModel
 
 class SplashActivity : BaseActivity<SplashActivityBinding, SplashViewModel>() {

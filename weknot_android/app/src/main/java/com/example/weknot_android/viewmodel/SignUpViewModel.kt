@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.SignUpRequest
-import com.example.weknot_android.view.navigator.SignUpNavigator
 import com.example.weknot_android.widget.SingleLiveEvent
 
 class SignUpViewModel(application: Application) : BaseViewModel<Any>(application) {

@@ -6,10 +6,9 @@ import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.ProfileActivityBinding
-import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.viewmodel.ProfileViewModel
 
-class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>(), ProfileNavigator {
+class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.profile_activity
@@ -27,10 +26,6 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
         with(viewModel) {
 
         }
-    }
-
-    override fun handleError(throwable: Throwable) {
-        Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

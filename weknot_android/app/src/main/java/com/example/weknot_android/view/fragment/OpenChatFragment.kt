@@ -11,7 +11,6 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.OpenChatFragmentBinding
-import com.example.weknot_android.view.navigator.OpenChatNavigator
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 
 class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>() {

@@ -7,7 +7,6 @@ import android.os.Environment
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.network.comm.FeedComm
-import com.example.weknot_android.view.navigator.FeedWriteNavigator
 import com.example.weknot_android.widget.SingleLiveEvent
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody

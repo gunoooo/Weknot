@@ -4,7 +4,6 @@ import android.app.Application
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.user.Friend
 import com.example.weknot_android.network.comm.SocialComm
-import com.example.weknot_android.view.navigator.SocialNavigator
 import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter
 
 class SocialViewModel(application: Application) : BaseViewModel<List<Friend>>(application) {

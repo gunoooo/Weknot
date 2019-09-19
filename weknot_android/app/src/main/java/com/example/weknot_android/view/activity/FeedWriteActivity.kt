@@ -11,7 +11,6 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BasePictureActivity
 import com.example.weknot_android.databinding.FeedWriteActivityBinding
-import com.example.weknot_android.view.navigator.FeedWriteNavigator
 import com.example.weknot_android.viewmodel.FeedWriteViewModel
 
 class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWriteViewModel>() {

@@ -4,7 +4,6 @@ import android.app.Application
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.videocall.VideoCall
 import com.example.weknot_android.network.comm.VideoCallComm
-import com.example.weknot_android.view.navigator.VideoCallNavigator
 import com.example.weknot_android.widget.SingleLiveEvent
 
 class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(application) {

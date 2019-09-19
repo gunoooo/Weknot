@@ -6,7 +6,6 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.user.Profile
 import com.example.weknot_android.network.comm.UserComm
-import com.example.weknot_android.view.navigator.ProfileNavigator
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
 
 open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(application) {

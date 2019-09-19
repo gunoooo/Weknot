@@ -9,7 +9,6 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.VideoCallFragmentBinding
 import com.example.weknot_android.model.entity.videocall.VideoCall
-import com.example.weknot_android.view.navigator.VideoCallNavigator
 import com.example.weknot_android.viewmodel.VideoCallViewModel
 import org.jitsi.meet.sdk.JitsiMeet
 import org.jitsi.meet.sdk.JitsiMeetActivity

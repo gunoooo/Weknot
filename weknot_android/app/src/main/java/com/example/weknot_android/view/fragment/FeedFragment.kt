@@ -14,7 +14,6 @@ import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.view.activity.FeedWriteActivity
-import com.example.weknot_android.view.navigator.FeedNavigator
 import com.example.weknot_android.viewmodel.FeedViewModel
 
 class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() {

@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.SignUpActivityBinding
-import com.example.weknot_android.view.navigator.SignUpNavigator
 import com.example.weknot_android.viewmodel.SignUpViewModel
 
 class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>() {

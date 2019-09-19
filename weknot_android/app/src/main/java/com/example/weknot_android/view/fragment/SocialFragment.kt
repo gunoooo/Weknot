@@ -7,7 +7,6 @@ import androidx.databinding.library.baseAdapters.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.SocialFragmentBinding
-import com.example.weknot_android.view.navigator.SocialNavigator
 import com.example.weknot_android.viewmodel.SocialViewModel
 
 class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>() {

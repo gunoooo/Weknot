@@ -6,7 +6,6 @@ import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.network.comm.OpenChatComm
 import com.example.weknot_android.network.request.OpenChatRequest
-import com.example.weknot_android.view.navigator.OpenChatNavigator
 import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 
 class OpenChatViewModel(application: Application) : BaseViewModel<List<OpenChatRoom>>(application) {
