@@ -26,7 +26,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
     override fun initObserver() {
         with(viewModel) {
             openMain.observe(this@LoginActivity, Observer {
-                startActivityWithFinish(MainActivity::class.java)
+                startActivityWithFinish(LoginActivity::class.java)
             })
 
             openSignUp.observe(this@LoginActivity, Observer {

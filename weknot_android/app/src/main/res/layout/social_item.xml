@@ -76,7 +76,6 @@
             android:padding="10dp"
             android:text="매듭 수락"
             android:layout_marginEnd="20dp"
-            android:onClick="@{() -> viewModel.onClickAcceptBtn()}"
             app:mutableVisibility="@{viewModel.acceptVisibility}"
             android:textColor="@color/colorMainDark"
             app:layout_constraintBottom_toBottomOf="parent"

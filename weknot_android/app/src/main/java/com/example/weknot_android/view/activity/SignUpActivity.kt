@@ -31,7 +31,7 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>() {
 
             signUpEvent.observe(this@SignUpActivity, Observer {
                 if (isEmpty()) {
-                    simpleToast(R.string.empty_message)
+                    Toast.makeText(this@SignUpActivity,R.string.empty_message,Toast.LENGTH_SHORT).show()
                     return@Observer
                 }
                 viewModel.signUp()
