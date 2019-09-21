@@ -38,7 +38,6 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
   const id = req.decodedToken.sub;
   const fileName = req.files['picture'][0].filename;
   
-  
   const feed = {
     writer: id,
     comment: req.body.comment,
@@ -63,5 +62,9 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
       error: {message:err.message}});
   });
 });
+
+router.post('/:id/like', authMiddle, (req, res, next) => {
+
+})
 
 module.exports = router;
