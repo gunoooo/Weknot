@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authMiddle = require("../middlewares/auth");
-const users = require("../middlewares/users");
-
+const users = require("../models/auth");
 
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
 router.post('/',authMiddle, (req, res, next) => {//userId,friendId
