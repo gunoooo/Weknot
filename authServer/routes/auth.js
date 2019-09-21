@@ -5,7 +5,7 @@ const mariadb = require('mariadb');
 const jwt = require('jsonwebtoken');
 
 const dbcp = require('../models/dbcp');
-const users = require('../models/users');
+const users = require('../modelcs/users');
 const authMiddle = require("../middlewares/auth");
 
 const fs = require('fs');
@@ -131,13 +131,11 @@ router.post('/register', upload, (req, res, next) => {
     }
     else
     {
-      res.json(
-        {error:{message:"fail"}
-      });
+      res.status(500).json({message: 'fail'})
     }
   })
   .catch((err) => {
-    res.json({
+    res.status(500).json({
       error: {message:err.message}});
   });
 });
@@ -192,30 +190,7 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 //});
 
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
-router.post('/addFriend',authMiddle, (req, res, next) => {//userId,friendId
-  const idList = [
-    requester = req.decodedToken.sub,
-    receiver = req.body.receiver,
-    state = 0
-  ];
 
-  users.addFriend(idList)
-  .then((result) => {
-    if(result)
-    {
-      res.json({result:"success",
-                message:"친구 요청 성공했습니다."});
-    }
-    else
-    {
-      res.json({result:"fail",
-                message:"친구 요청 실패했습니다."});
-    }
-  })
-  .catch((err) => {
-    res.status(500).json({ message:err.message});
-  });
-});
 
 router.get('/profile/:userId',(req, res, next) => {
   const userId = req.params.userId;
@@ -225,7 +200,7 @@ router.get('/profile/:userId',(req, res, next) => {
     if(result)
     {
       console.log(result);
-      res.json(result);
+      res.json({message: 'ok', data: result});
     }
     else
     {
@@ -238,56 +213,7 @@ router.get('/profile/:userId',(req, res, next) => {
       error:err.message});
   });
 });//userId,userName,userBirth,userScope,userIntro,userPicture,userPoint,userGender
-//userFeeds:feddId,feddPicture
-
-//친구 요청 수락 또는 거절하는 api, 수락이면 friend 테이블에 1, 거절이면 딜리트.
-router.post('/manageKnot',(req, res, next) => {//userId,friend,decision
-  const knotArr = [
-    userId = req.body.userId,
-    friend = req.body.friend,
-    decision = req.body.decision
-  ];
-
-  if(decision == "yes")
-  {
-
-    users.acceptFriend(knotArr)
-      .then((result) => {
-      if(result)
-      {
-        res.json({result:"success"});
-      }
-      else
-      {
-        res.json({result:"fail"})
-      }
-      })
-      .catch((err) => {
-        res.json({
-          result:"error",
-          error:err.message});
-      });
-  }else if(decision == "no")
-  {
-
-    users.refuseFriend(knotArr)
-    .then((result) => {
-      if(result)
-      {
-        res.json({result:"success"});
-      }
-      else
-      {
-        res.json({result:"fail"})
-      }
-      })
-      .catch((err) => {
-        res.json({
-          result:"error",
-          error:err.message});
-      });
- }
-});
+//userFeeds:feddId,feddPicture.
 
 router.get('/chattingRooms',(req, res, next) => {//userId
   const userId = req.body.userId;
@@ -333,30 +259,6 @@ router.get('/dm',(req, res, next) => {//userId
 router.get('/dm/:dmId',(req, res, next) => {
   const dmId = req.params.dmId;
 });//friendId,friendPicture,message,date,dmId,files
-
-router.get('/friends', (req,res,next) => {//friend에서 state가 2인 사람들을 불러와야함.
-  const friends = [
-    {
-      friendId: "wowjd",
-      friendPicture: "google",
-      friendPoint: 3
-    },
-    {
-      friendId: "wowjdd",
-      friendPicture: "googlde",
-      friendPoint: 4
-    },
-    {
-      friendId: "wowjdz",
-      friendPicture: "googlee",
-      friendPoint: 5
-    }
-  ]
-  res.json({
-    result: friends,
-    message: "ok"
-  });
-})
 
 router.post('/requestFriend', (req,res,next) => {
   const userId = "wowjddl";

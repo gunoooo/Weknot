@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var feedRouter = require('./routes/feeds');
 var randomRounter = require('./routes/random');
+var friendRouter = require('./routes/friend');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/feeds', feedRouter);
 app.use('/matching', randomRounter);
+app.use('/friend', friendRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
