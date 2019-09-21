@@ -64,7 +64,43 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
 });
 
 router.post('/:id/like', authMiddle, (req, res, next) => {
+  const userId = req.decodedToken.sub;
+  const feedId = req.params.id;
 
-})
+  feedModel.getLike(userId, feedId)
+  .then((result) => {
+    console.log(result.length);
+    if(result.length == 1){
+      const likeId = result[0].id
+      // 삭제
+      feedModel.deleteLike(likeId)
+      .then(()=>{
+        res.json({
+          message: "ok"
+        })
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: {message:err.message}});
+      })
+    } else {
+      feedModel.addLike(userId, feedId)
+      .then(()=>{
+        res.json({
+          message: "ok"
+        })
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: {message:err.message}});
+      })
+    }
+
+  })
+  .catch((err) => {
+    res.status(500).json({
+      error: {message:err.message}});
+  });
+});
 
 module.exports = router;

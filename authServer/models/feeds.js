@@ -63,5 +63,50 @@ exports.getFeeds = async (id) => {
 }
 
 exports.getOnlyFriends = async (id) => {
-  
+
+}
+
+exports.getLike = async (userId, feedId) => {
+  let conn;
+  const sql = "select * from `like` join feed on like.receiver = feed.writer where sender=? and feed.id=?";
+  let result;
+  try{
+    conn = await dbcp.getConnection();
+    result = await conn.query(sql, [userId, feedId]);
+  }catch (error){
+    throw error;
+  }finally{
+    if(conn) await conn.end();
+    return result
+  }
+}
+
+exports.addLike = async (userId, feedId) => {
+  let conn;
+  const sql = "insert into `like` (sender, feedId, receiver) select ? as sender, ? as feedId, writer as receiver from feed where id=?";
+  let result;
+  try{
+    conn = await dbcp.getConnection();
+    result = await conn.query(sql, [userId, feedId, feedId]);
+  }catch (error){
+    throw error;
+  }finally{
+    if(conn) await conn.end();
+    return result
+  }
+}
+
+exports.deleteLike = async (likeId) => {
+  let conn;
+  const sql = "delete * from `like` where id=?";
+  let result;
+  try{
+    conn = await dbcp.getConnection();
+    result = await conn.query(sql, likeId);
+  }catch (error){
+    throw error;
+  }finally{
+    if(conn) await conn.end();
+    return result
+  }
 }
