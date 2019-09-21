@@ -17,7 +17,7 @@ CREATE DATABASE IF NOT EXISTS `ryan` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE
 USE `ryan`;
 
 -- 테이블 ryan.chatmember 구조 내보내기
-CREATE TABLE IF NOT EXISTS `chatmember` (
+CREATE TABLE IF NOT EXISTS `chatmember`user (
   `chatRoomId` int(11) NOT NULL,
   `userId` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `joinTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

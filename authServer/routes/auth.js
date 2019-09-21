@@ -5,7 +5,7 @@ const mariadb = require('mariadb');
 const jwt = require('jsonwebtoken');
 
 const dbcp = require('../models/dbcp');
-const users = require('../modelcs/users');
+const users = require('../models/users');
 const authMiddle = require("../middlewares/auth");
 
 const fs = require('fs');

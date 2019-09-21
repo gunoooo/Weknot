@@ -61,3 +61,7 @@ exports.getFeeds = async (id) => {
     return result
   }
 }
+
+exports.getOnlyFriends = async (id) => {
+  
+}
