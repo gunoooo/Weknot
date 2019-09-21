@@ -1,4 +1,4 @@
-const dbcp = require ('./dbcp');
+const dbcp = require('./dbcp');
 const jwt = require('jsonwebtoken');
 
 /*exports.getQueryUser = async (cid) => {
@@ -17,12 +17,12 @@ const jwt = require('jsonwebtoken');
 };//일단 전체적으로 리턴하고 전체적으로 할 수 없다 한다면 auth.js에서 queryUser을 두번 쓴 것을 
 //나누어서 사용할것.
 */
-exports.loginUser = (req,res,user) => {
+exports.loginUser = (req, res, user) => {
   const secret = req.app.get('jwt-secret');
 
   const sign = (user) => {
     const p = new Promise((resolve, reject) => {
-      let exptime = Math.floor(Date.now() / 1000) + (60*60*24); // 24 hour
+      let exptime = Math.floor(Date.now() / 1000) + (60 * 60 * 24); // 24 hour
       jwt.sign(
         {
           userName: user.name,
@@ -37,22 +37,23 @@ exports.loginUser = (req,res,user) => {
           if (err) reject(err)
           resolve(token)
         })
-      })
-      return p;
+    })
+    return p;
   }
-   return sign(user);
+  return sign(user);
 }
 exports.getQueryUser = (cid) => {
-  const query = (conn)=>{
-    const p = new Promise((resolve, reject)=> {
+  const query = (conn) => {
+    const p = new Promise((resolve, reject) => {
       conn
         .query('SELECT * FROM user WHERE id=?', [cid])
-        .then((result)=> {
+        .then((result) => {
           conn.end()
           resolve(result)
         })
-        .catch((err) =>{
-          reject(err)})
+        .catch((err) => {
+          reject(err)
+        })
     })
     return p;
   }
@@ -60,10 +61,10 @@ exports.getQueryUser = (cid) => {
   const p = new Promise((resolve, reject) => {
     dbcp.getConnection()
       .then(query)
-      .then((result=> {
+      .then((result => {
         resolve(result)
       }))
-      .catch((err) => {reject(err)})
+      .catch((err) => { reject(err) })
   })
   return p;
 };
@@ -71,13 +72,13 @@ exports.getQueryUser = (cid) => {
 exports.allUsers = async () => {
   let conn;
   let result;
-  try{
+  try {
     conn = await dbcp.getConnection();
     result = await conn.query("select * from user ");
-  }catch(err){
+  } catch (err) {
     throw err;
-  }finally{
-    if(conn) await conn.end();
+  } finally {
+    if (conn) await conn.end();
     return result;
   }
 };
@@ -101,18 +102,19 @@ exports.allUsers = async () => {
 
 exports.registerUser = (user) => {
   const sql = 'INSERT INTO user(id,name,password,birth,gender,phoneNumber) VALUES (?,?,?,?,?,?)';
-  const query = (conn)=>{
-    const p = new Promise((resolve, reject)=> {
+  const query = (conn) => {
+    const p = new Promise((resolve, reject) => {
       conn
-        .query(sql,[user.id, user.name, user.password, user.birth, user.gender, user.phoneNumber])
-        .then((result)=> {
+        .query(sql, [user.id, user.name, user.password, user.birth, user.gender, user.phoneNumber])
+        .then((result) => {
           conn.end()
           console.log(result)
           resolve(result)
         })
-        .catch((err) =>{
+        .catch((err) => {
           console.log(err);
-          reject(err)})
+          reject(err)
+        })
     })
     return p;
   }
@@ -120,10 +122,10 @@ exports.registerUser = (user) => {
   const p = new Promise((resolve, reject) => {
     dbcp.getConnection()
       .then(query)
-      .then((result=> {
+      .then((result => {
         resolve(result)
       }))
-      .catch((err) => {reject(err)})
+      .catch((err) => { reject(err) })
   })
   return p;
 };
@@ -194,16 +196,16 @@ exports.registerUser = (user) => {
 
 exports.addFriend = (idList) => {
   const sql = 'INSERT INTO friends(requester,receiver,state) VALUES (?,?,?)';
-  const query = (conn)=>{
-    const p = new Promise((resolve, reject)=> {
+  const query = (conn) => {
+    const p = new Promise((resolve, reject) => {
       conn
-        .query(sql,idList)
-        .then((result)=> {
+        .query(sql, idList)
+        .then((result) => {
           conn.end()
           console.log(result)
           resolve(result)
         })
-        .catch((err) =>{reject(err)})
+        .catch((err) => { reject(err) })
     })
     return p;
   }
@@ -211,71 +213,83 @@ exports.addFriend = (idList) => {
   const p = new Promise((resolve, reject) => {
     dbcp.getConnection()
       .then(query)
-      .then((result=> {
+      .then((result => {
         resolve(result)
       }))
-      .catch((err) => {reject(err)})
+      .catch((err) => { reject(err) })
   })
   return p;
 };
 
-exports.acceptFriend = async (knotArr) => {//update 영향 받은 행이 없다면?
-  let conn;
-  const sql = "UPDATE friend SET state = 1 WHERE receiver = ? and requester = ? "
-  let isSuccess = true;
-  try{
-    conn = await dbcp.getConnection();
-    await conn.query(sql,knotArr,(err,result,field) => {
-        if(err){
-          throw new err;
-        } else if(result.affectedRows === 0){
-          isSuccess = !isSuccess;
-        }
-      });
-  }catch (error){
-    isSuccess = !isSuccess;
-    throw new error;
-  }finally{
-    if(conn) await conn.end();
-    return isSuccess;
-  }
-}
+// exports.acceptFriend = (knot) => {
+//   const sql = "UPDATE friends SET state = 1 WHERE requester = ? and receiver = ?"
+//   const query = (conn)=> {
+//     const p = new Promise((resolve, reject) => {
+//       conn
+//         .query(sql,[knot.userId,knot.friend])
+//         .then((result) => {
+//           conn.end()
+//           console.log(result)
+//           resolve(result)
+//         })
+//         .catch((err) =>{reject(err)})
+//     })
+//   }
+//   const p = new Promise((resolve, reject) => {
+//     dbcp.getConnection()
+//       .then(query)
+//       .then((result=> {
+//         resolve(result)
+//       }))
+//       .catch((err) => {reject(err)})
+//   })
+//   return p;
+// }
 
-exports.refuseFriend = async (knotArr) => {
-  let conn;
-  const sql = "DELETE FROM friend WHERE receiver = ? and requester = ? "
-  let isSuccess = true;
-  try{
-    conn = await dbcp.getConnection();
-    await conn.query(sql,knotArr,(err,result,field) => {
-        if(err){
-          throw new err;
-        } else if(result.affectedRows === 0){
-          isSuccess = !isSuccess;
-        }
-      });
-  }catch (error){
-    isSuccess = !isSuccess;
-    throw new error;
-  }finally{
-    if(conn) await conn.end();
-    return isSuccess;
-  }
-}
-
-exports.getChattingRooms = async () => {
-  let conn;
-  const sql = "SELECT id,roomName,master,password,type FROM chatroom "
+exports.acceptFriend = async (knot) => {
+  //조회해서 이미 state=1인지 알아봐야함.
+  const sql = "UPDATE friends SET state = 1 WHERE requester = ? and receiver = ?"
+  console.log(knot);
   let result;
-  try{
-    conn = await dbcp.getConnection();
-    const [rows, fields] = await conn.query(sql,cid);
-    result = rows;
-  }catch (error){
-    throw error;
-  }finally{
-    if(conn) await conn.end();
-    return result
+  try {
+    let conn = await dbcp.getConnection();
+    result = await conn.query(sql, [knot.userId, knot.friend]);
+  }catch (error) {
+    throw new error;
+  } finally {
+    if (conn) await conn.end();
+    return result;
+  }
+}
+
+exports.refuseFriend = async (knot) => {
+  let conn;
+  const sql = "DELETE FROM friends WHERE requester = ? and receiver = ?"
+  let result;
+  try {
+    let conn = await dbcp.getConnection();
+    result = await conn.query(sql, [knot.userId, knot.friend]);
+  }catch (error) {
+    console.log(error);
+    throw new error;
+  } finally {
+    if (conn) await conn.end();
+    return result;
+  }
+}
+
+exports.getFriends = async (requester) => {
+  let conn;
+  const sql = "SELECT receiver FROM friends WHERE requester = ? and state = 1"
+  let result;
+  try {
+    let conn = await dbcp.getConnection();
+    result = await conn.query(sql, requester);
+  }catch (error) {
+    throw new error;
+  } finally {
+    if (conn) await conn.end();
+    return result;
   }
 }
 
@@ -283,14 +297,14 @@ exports.getDms = async (cid) => {
   let conn;
   const sql = "SELECT id,sender,message,time,isRead FROM dm WHERE receiver = ? "
   let dmResult;
-  try{
+  try {
     conn = await dbcp.getConnection();
-    const [rows, fields] = await conn.query(sql,cid);
+    const [rows, fields] = await conn.query(sql, cid);
     dmResult = rows;
-  }catch (error){
+  } catch (error) {
     throw error;
-  }finally{
-    if(conn) await conn.end();
+  } finally {
+    if (conn) await conn.end();
     return dmResult;
   }
 }
@@ -299,18 +313,18 @@ exports.getPicture = async (cid) => {
   let conn;
   const sql = "SELECT picture FROM user WHERE id = ? "
   let pictureResult;
-  try{
+  try {
     conn = await dbcp.getConnection();
-    await conn.query(sql , cid, (err,result,fields) => {
+    await conn.query(sql, cid, (err, result, fields) => {
       if (err) throw err;
       console.log(result);
       pictureResult = result;
     });
- //   console.log(rows);
-  }catch (error){
+    //   console.log(rows);
+  } catch (error) {
     throw error;
-  }finally{
-    if(conn) await conn.end();
+  } finally {
+    if (conn) await conn.end();
     return pictureResult;
   }
 } 
