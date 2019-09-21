@@ -52,23 +52,23 @@ router.get('/', authMiddle, (req,res,next) => {//friend에서 state가 1인 사�
       res.status(500).json({
         error: {message:err.message}});
     });
-  const friends = [
-    {
-      friendId: "wowjd",
-      friendPicture: "google",
-      friendPoint: 3
-    },
-    {
-      friendId: "wowjdd",
-      friendPicture: "googlde",
-      friendPoint: 4
-    },
-    {
-      friendId: "wowjdz",
-      friendPicture: "googlee",
-      friendPoint: 5
-    }
-  ]
+  // const friends = [
+  //   {
+  //     friendId: "wowjd",
+  //     friendPicture: "google",
+  //     friendPoint: 3
+  //   },
+  //   {
+  //     friendId: "wowjdd",
+  //     friendPicture: "googlde",
+  //     friendPoint: 4
+  //   },
+  //   {
+  //     friendId: "wowjdz",
+  //     friendPicture: "googlee",
+  //     friendPoint: 5
+  //   }
+  // ]
 });
 
 //친구 요청 수락 또는 거절하는 api, 수락이면 friend 테이블에 1, 거절이면 딜리트
