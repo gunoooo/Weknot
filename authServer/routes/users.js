@@ -89,8 +89,28 @@ router.post('/like', (req, res, next) => {
   });
 });
 
+router.get('/profile/:userId',authMiddle,(req, res, next) => {
+  const userId = req.params.userId;
 
-// router.
+  users.showUserProfile(userId)
+  .then((result) =>{
+    if(result)
+    {
+      console.log(result);
+      res.json({message: 'ok', data: result});
+    }
+    else
+    {
+      res.json({result:"fail"})
+    }
+  })
+  .catch((err) => {
+    res.json({
+      result:"error",
+      error:err.message});
+  });
+});//userId,userName,userBirth,userScope,userIntro,userPicture,userPoint,userGender
+//userFeeds:feddId,feddPicture.
 
 /*router.get('/:id/log/:category', function(req, res, next) {
   const pool = mariadb.createPool(dbcp);

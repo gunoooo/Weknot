@@ -186,29 +186,6 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 
 //});
 
-router.get('/profile/:userId',(req, res, next) => {
-  const userId = req.params.userId;
-
-  users.showUserProfile(userId)
-  .then((result) =>{
-    if(result)
-    {
-      console.log(result);
-      res.json({message: 'ok', data: result});
-    }
-    else
-    {
-      res.json({result:"fail"})
-    }
-  })
-  .catch((err) => {
-    res.json({
-      result:"error",
-      error:err.message});
-  });
-});//userId,userName,userBirth,userScope,userIntro,userPicture,userPoint,userGender
-//userFeeds:feddId,feddPicture.
-
 // router.get('/chattingRooms',(req, res, next) => {//userId
 //   const userId = req.body.userId;
 

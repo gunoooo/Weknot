@@ -152,31 +152,32 @@ exports.registerUser = (user) => {
 }*/
 
 
-// exports.showUserProfile = (cid) => {
-//   const query = (conn)=>{
-//     const p = new Promise((resolve, reject)=> {
-//       conn
-//         .query('SELECT id,name,birth,gender,picture,intro,scope,point FROM user WHERE id = ?', [cid])
-//         .then((result)=> {
-//           conn.end()
-//           resolve(result)
-//         })
-//         .catch((err) =>{
-//           reject(err)})
-//     })
-//     return p;
-//   }
+exports.showUserProfile = (cid) => {
+  const sql = 'SELECT id,name,birth,gender,photo,intro,scope,point FROM user WHERE id = ?';
+  const query = (conn)=>{
+    const p = new Promise((resolve, reject)=> {
+      conn
+        .query(sql, cid)
+        .then((result)=> {
+          conn.end()
+          resolve(result)
+        })
+        .catch((err) =>{
+          reject(err)})
+    })
+    return p;
+  }
 
-//   const p = new Promise((resolve, reject) => {
-//     dbcp.getConnection()
-//       .then(query)
-//       .then((result=> {
-//         resolve(result)
-//       }))
-//       .catch((err) => {reject(err)})
-//   })
-//   return p;
-// };
+  const p = new Promise((resolve, reject) => {
+    dbcp.getConnection()
+      .then(query)
+      .then((result=> {
+        resolve(result)
+      }))
+      .catch((err) => {reject(err)})
+  })
+  return p;
+};
 
 /*exports.addFriend = async (idList) => {//requester랑receiver가 db값과 둘다 같다면?  
   let conn;
