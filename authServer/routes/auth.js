@@ -110,11 +110,11 @@ let upload = multer({ storage: stroage }).fields([{ name: 'photo', maxCount: 1 }
 router.post('/register', upload, (req, res, next) => {
   const user = {
     id: req.body.id,
-    name: req.body.userName,
-    password: req.body.userPassword,
-    birth: req.body.userBirth,
-    gender: req.body.userGender,
-    phoneNumber: req.body.userPhoneNumber,
+    name: req.body.name,
+    password: req.body.password,
+    birth: req.body.birth,
+    gender: req.body.gender,
+    phoneNumber: req.body.phoneNumber,
     photo: 'default.jpg'
   };
 

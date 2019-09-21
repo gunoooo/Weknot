@@ -36,7 +36,7 @@ router.post('/',authMiddle, (req, res, next) => {//userId,friendId
 router.get('/', authMiddle, (req,res,next) => {//friend에서 state가 1인 사람들을 불러와야함.
   const requester = req.decodedToken.sub;
 
-  users.getFriends(requester)
+  users.getFriend(requester)
     .then((result) => {
     if(result)
     {

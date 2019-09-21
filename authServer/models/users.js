@@ -101,6 +101,7 @@ exports.allUsers = async () => {
 };*/
 
 exports.registerUser = (user) => {
+  console.log(user);
   const sql = 'INSERT INTO user(id,name,password,birth,gender,phoneNumber) VALUES (?,?,?,?,?,?)';
   const query = (conn) => {
     const p = new Promise((resolve, reject) => {
@@ -249,7 +250,7 @@ exports.addFriend = (idList) => {
 
 exports.acceptFriend = async (knot) => {
   //조회해서 이미 state=1인지 알아봐야함.
-  const sql = "UPDATE friends SET state = 1 WHERE requester = ? and receiver = ?"
+  const sql = "UPDATE friends SET state = 1 WHERE receiver = ? and requester = ?"
   console.log(knot);
   let result;
   try {
@@ -265,7 +266,7 @@ exports.acceptFriend = async (knot) => {
 
 exports.refuseFriend = async (knot) => {
   let conn;
-  const sql = "DELETE FROM friends WHERE requester = ? and receiver = ?"
+  const sql = "DELETE FROM friends WHERE receiver = ? and requester = ?"
   let result;
   try {
     let conn = await dbcp.getConnection();
@@ -279,7 +280,32 @@ exports.refuseFriend = async (knot) => {
   }
 }
 
-exports.getFriends = async (requester) => {
+exports.getFriend = async (requester) => {
+  const sql = 'SELECT user.id, user.name, user.point, user.photo from user '+
+  'JOIN friends '+
+  'ON user.id = friends.receiver '+
+  'WHERE requester = ? '+
+  'Union '+
+  'SELECT user.id, user.name, user.point, user.photo from user '+
+  'JOIN friends '+
+  'ON user.id = friends.requester '+
+  'WHERE receiver = ? ';
+  console.log(requester);
+  console.log(sql);
+  let result;
+  try {
+    let conn = await dbcp.getConnection();
+    result = await conn.query(sql, [requester, requester]);
+  }catch (error) {
+    throw new error;
+  } finally {
+    if (conn) await conn.end();
+    return result;
+  }
+}
+
+//검사할때 쓸 함수
+getFriends = async (requester) => {
   let conn;
   const sql = "SELECT receiver FROM friends WHERE requester = ? and state = 1"
   let result;
