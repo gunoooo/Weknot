@@ -102,11 +102,11 @@ exports.allUsers = async () => {
 
 exports.registerUser = (user) => {
   console.log(user);
-  const sql = 'INSERT INTO user(id,name,password,birth,gender,phoneNumber) VALUES (?,?,?,?,?,?)';
+  const sql = 'INSERT INTO user(id,name,password,birth,gender,phoneNumber, photo, intro) VALUES (?,?,?,?,?,?,?,?)';
   const query = (conn) => {
     const p = new Promise((resolve, reject) => {
       conn
-        .query(sql, [user.id, user.name, user.password, user.birth, user.gender, user.phoneNumber])
+        .query(sql, [user.id, user.name, user.password, user.birth, user.gender, user.phoneNumber, user.photo, user.intro])
         .then((result) => {
           conn.end()
           console.log(result)
