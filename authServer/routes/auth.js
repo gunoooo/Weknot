@@ -5,7 +5,7 @@ const mariadb = require('mariadb');
 const jwt = require('jsonwebtoken');
 
 const dbcp = require('../models/dbcp');
-const users = require('../modelcs/users');
+const users = require('../models/users');
 const authMiddle = require("../middlewares/auth");
 
 const fs = require('fs');
@@ -188,9 +188,6 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 
 
 //});
-
-//친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
-
 
 router.get('/profile/:userId',(req, res, next) => {
   const userId = req.params.userId;

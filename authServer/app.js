@@ -30,7 +30,7 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/feeds', feedRouter);
 app.use('/matching', randomRounter);
-app.use('/friend', friendRouter);
+app.use('/friends', friendRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

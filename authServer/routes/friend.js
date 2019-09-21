@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authMiddle = require("../middlewares/auth");
-const users = require("../models/auth");
+const users = require("../models/users");
 
 //친구 요청 하는 api friend 테이블에 state를 0으로 집어넣음.
 router.post('/',authMiddle, (req, res, next) => {//userId,friendId
@@ -52,7 +52,7 @@ router.get('/', (req,res,next) => {//friend에서 state가 1인 사람들을 불
     result: friends,
     message: "ok"
   });
-})
+});
 
 //친구 요청 수락 또는 거절하는 api, 수락이면 friend 테이블에 1, 거절이면 딜리트
 router.put('/',(req, res, next) => {//userId,friend,decision
@@ -73,7 +73,7 @@ router.put('/',(req, res, next) => {//userId,friend,decision
       }
       else
       {
-        res.json({result:"fail"})
+        res.status(500).json({message: 'fail'})
       }
       })
       .catch((err) => {
@@ -92,7 +92,7 @@ router.put('/',(req, res, next) => {//userId,friend,decision
       }
       else
       {
-        res.json({result:"fail"})
+        res.status(500).json({message: 'fail'})
       }
       })
       .catch((err) => {
@@ -102,3 +102,5 @@ router.put('/',(req, res, next) => {//userId,friend,decision
       });
  }
 });
+
+module.exports = router;
