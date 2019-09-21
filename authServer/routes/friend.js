@@ -107,7 +107,7 @@ router.put('/', authMiddle, (req, res, next) => {//userId,friend,decision
     .then((result) => {
       if(result)
       {
-        res.json({result:"success"});
+        res.json({message:"ok"});
       }
       else
       {
