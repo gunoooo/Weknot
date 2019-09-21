@@ -78,11 +78,11 @@ exports.getFeeds = async (id) => {
 
 exports.getFeed = async (id) => {
   let conn;
-  const sql = "SELECT ";
+  const sql = "SELECT feed.* FROM feed WHERE writer= ? ";
   let result;
   try{
     conn = await dbcp.getConnection();
-    result = await conn.query(sql, [userId, feedId]);
+    result = await conn.query(sql, id);
   }catch (error){
     throw error;
   }finally{

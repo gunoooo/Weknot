@@ -39,6 +39,25 @@ router.get('/', authMiddle, function(req, res, next) {
   //res.render('feedTest');
 });
 
+router.get('/writer/:id', (req,res,next) => {
+  const id = req.params.id;
+
+  feedModel.getFeed(id)
+  .then((result) => {
+    console.log(result);
+    if(result){
+      res.json({message: 'ok', data: result});
+    }else{
+      res.status(500).json({
+        error: {message:'fail'}});
+    }
+  })
+  .catch((err) => {
+    res.status(500).json({
+      error: {message:err.message}});
+    })
+})
+
 router.post('/', [authMiddle, upload], (req, res, next) => {
   const id = req.decodedToken.sub;
   const fileName = req.files['picture'][0].filename;
