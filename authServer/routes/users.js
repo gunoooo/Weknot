@@ -89,18 +89,35 @@ router.post('/like', (req, res, next) => {
   });
 });
 
+// state:0 아무 관계 아님
+// state:1 내가 받은 요청
+// state:2 내가 보낸 상태
+// state:10 친구
+// state: 100 자기자신
 router.get('/profile/:userId',authMiddle,(req, res, next) => {
   const userId = req.params.userId;
+  const myId = req.decodedToken.sub;
 
   users.showUserProfile(userId)
   .then((result) =>{
-    if(result)
-    {
-      console.log(result);
-      res.json({message: 'ok', data: result});
+    if (result){
+      if (userId === myId) {
+        result[0].state = 100;
+        res.json({message: 'ok', data: result[0]});
+      } else {
+        users.getFriendState(userId, myId)
+        .then((state)=>{
+          result[0].state = state;
+          res.json({message: 'ok', data: result[0]});
+        })
+        .catch((err)=>{
+          res.json({
+            result:"error",
+            error:err.message});
+        })
+      }
     }
-    else
-    {
+    else{
       res.json({result:"fail"})
     }
   })

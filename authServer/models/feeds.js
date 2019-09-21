@@ -48,8 +48,8 @@ exports.showUserProfile = async (cid) => {
 exports.getFeeds = async (id) => {
   let conn;
   // 내꺼랑 친구꺼 피드만 보내기 (현재는 모든사용자 피드)
-  // 필요한거 user.photo 좋아요 갯수, 내가 좋아요했는지 or 안했는지
-  const sql = "SELECT user.id, user.name,  feed.picture, feed.comment, feed.time FROM user INNER JOIN feed ON feed.writer=user.id order by feed.time desc";
+  // 필요한거 좋아요 갯수(likeCount), 내가 좋아요했는지 or 안했는지(like)
+  const sql = "SELECT user.photo, user.id, user.name,  feed.picture, feed.comment, feed.time FROM user INNER JOIN feed ON feed.writer=user.id order by feed.time desc";
   let result;
   try{
     conn = await dbcp.getConnection();
@@ -60,10 +60,6 @@ exports.getFeeds = async (id) => {
     if(conn) await conn.end();
     return result
   }
-}
-
-exports.getOnlyFriends = async (id) => {
-
 }
 
 exports.getLike = async (userId, feedId) => {

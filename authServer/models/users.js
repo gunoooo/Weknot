@@ -280,6 +280,30 @@ exports.refuseFriend = async (knot) => {
   }
 }
 
+exports.getFriendState = async(userId, myId) =>{
+  let conn;
+  const sql = "select * from friends where (requester=? and receiver=?) or (requester=? and receiver=?)"
+  let result;
+  try {
+    let conn = await dbcp.getConnection();
+    result = await conn.query(sql, [userId, myId, myId, userId]);
+    console.log(result);
+    if(result.length == 0)
+      result= 0;
+    else if(result[0].state == 1)
+      result =10;
+    else if(result[0].requester == myId)
+      result= 2;
+    else
+      result= 1;
+  }catch (error) {
+    throw new error;
+  } finally {
+    if (conn) await conn.end();
+    return result;
+  }
+}
+
 exports.getFriend = async (requester) => {
   const sql = 'SELECT user.id, user.name, user.point, user.photo from user '+
   'JOIN friends '+
