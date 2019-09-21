@@ -305,15 +305,16 @@ exports.getFriendState = async(userId, myId) =>{
 }
 
 exports.getFriend = async (requester) => {
-  const sql = 'SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user '+
+  const sql = '(SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user '+
   'JOIN friends '+
   'ON user.id = friends.receiver '+
-  'WHERE requester = ? '+
+  'WHERE requester = ? AND state = 1) '+
   'Union '+
-  'SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user '+
+  '(SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user '+
   'JOIN friends '+
   'ON user.id = friends.requester '+
-  'WHERE receiver = ? ';
+  'WHERE receiver = ?) '
+  'ORDER BY name ASC' +
   console.log(requester);
   console.log(sql);
   let result;

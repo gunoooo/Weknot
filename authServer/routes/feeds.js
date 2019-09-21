@@ -25,7 +25,12 @@ router.get('/', authMiddle, function(req, res, next) {
   feedModel.getFeeds(id)
   .then((result) => {
     console.log(result);
-    res.json({message: 'ok', data: result});
+    if(result){
+      res.json({message: 'ok', data: result});
+    }else{
+      res.status(500).json({
+        error: {message:'fail'}});
+    }
   })
   .catch((err) => {
     res.status(500).json({

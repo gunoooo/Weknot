@@ -49,11 +49,40 @@ exports.getFeeds = async (id) => {
   let conn;
   // 내꺼랑 친구꺼 피드만 보내기 (현재는 모든사용자 피드)
   // 필요한거 좋아요 갯수(likeCount), 내가 좋아요했는지 or 안했는지(like)
-  const sql = "SELECT user.photo, user.id, user.name,  feed.picture, feed.comment, feed.time FROM user INNER JOIN feed ON feed.writer=user.id order by feed.time desc";
+  const sql = '(SELECT feed.writer, feed.time, feed.picture, feed.comment FROM feed '+
+              'JOIN friends '+
+              'ON feed.writer = friends.receiver '+
+              'WHERE friends.state = 1 AND friends.requester = ?) '+
+              'UNION '+
+              '(SELECT feed.writer, feed.time, feed.picture, feed.comment FROM feed '+
+              'JOIN friends '+
+              'ON feed.writer = friends.requester '+
+              'WHERE friends.state = 1 AND friends.receiver = ?) '+
+              'UNION '+
+              '(SELECT feed.writer, feed.time, feed.picture, feed.comment FROM feed '+
+              'WHERE feed.writer = ?) '+
+              'ORDER BY time DESC; ';
+  console.log(sql);
+  console.log(id);
   let result;
   try{
     conn = await dbcp.getConnection();
-    result = await conn.query(sql);
+    result = await conn.query(sql,[id, id, id]);
+  }catch (error){
+    throw error;
+  }finally{
+    if(conn) await conn.end();
+    return result
+  }
+}
+
+exports.getFeed = async (id) => {
+  let conn;
+  const sql = "SELECT ";
+  let result;
+  try{
+    conn = await dbcp.getConnection();
+    result = await conn.query(sql, [userId, feedId]);
   }catch (error){
     throw error;
   }finally{
