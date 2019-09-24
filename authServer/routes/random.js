@@ -6,13 +6,11 @@ let channels = [];
 
 /* GET home page. */
 router.post('/', authMiddle, function(req, res, next) {
-  console.log(channels);
   
   const id = req.decodedToken.sub;
 
   const newChannel = (id) => {
     const c={channel:Date.now().toString(), users:[id]}
-    console.log(channels);
     
     if(channels==null) channels=[]
     channels.push(c)
