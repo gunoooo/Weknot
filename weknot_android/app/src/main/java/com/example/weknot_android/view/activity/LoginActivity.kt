@@ -2,11 +2,12 @@ package com.example.weknot_android.view.activity
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
+import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.LoginActivityBinding
+import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
@@ -25,25 +26,29 @@ class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
 
     override fun initObserver() {
         with(viewModel) {
-            openMain.observe(this@LoginActivity, Observer {
-                startActivityWithFinish(MainActivity::class.java)
-            })
-
             openSignUp.observe(this@LoginActivity, Observer {
                 startActivityWithFinish(SignUpActivity::class.java)
             })
 
             loginEvent.observe(this@LoginActivity, Observer {
                 if (isEmpty()) {
-                    Toast.makeText(this@LoginActivity, R.string.empty_message, Toast.LENGTH_SHORT).show()
+                    simpleToast(R.string.empty_message)
                     return@Observer
                 }
                 viewModel.login()
+            })
+
+            onErrorEvent.observe(this@LoginActivity, Observer {
+                simpleToast(it.message)
+            })
+
+            onSuccessEvent.observe(this@LoginActivity, Observer {
+                startActivityWithFinish(MainActivity::class.java)
             })
         }
     }
 
     private fun isEmpty(): Boolean {
-        return viewModel.request.id!!.isEmpty() || viewModel.request.password!!.isEmpty()
+        return viewModel.request.id == null || viewModel.request.password == null
     }
 }

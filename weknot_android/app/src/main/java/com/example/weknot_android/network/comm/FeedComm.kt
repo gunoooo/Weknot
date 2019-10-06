@@ -17,6 +17,14 @@ class FeedComm : BaseComm<FeedApi>() {
         return api.getFeeds(token).map(getResponseObjectsFunction())
     }
 
+    fun getUserFeeds(token: String, userId: String): Single<List<Feed>> {
+        return api.getUserFeeds(token, userId).map(getResponseObjectsFunction())
+    }
+
+    fun postFeedLike(token: String, feedId: Int): Single<String> {
+        return api.postFeedLike(token, feedId).map(getResponseMessageFunction())
+    }
+
     override fun type(): Class<FeedApi> {
         return FeedApi::class.java
     }

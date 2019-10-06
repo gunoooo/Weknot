@@ -5,10 +5,10 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.base.fragment.BaseListFragment
@@ -34,6 +34,15 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() {
         with(viewModel) {
             openFeedWrite.observe(this@FeedFragment, Observer {
                 startActivityWithFinish(FeedWriteActivity::class.java)
+            })
+
+            onErrorEvent.observe(this@FeedFragment, Observer {
+                simpleToast(it.message)
+            })
+
+            feedAdapter.likeEvent.observe(this@FeedFragment, Observer {
+                feedId.value = it
+                postFeedLike()
             })
         }
     }

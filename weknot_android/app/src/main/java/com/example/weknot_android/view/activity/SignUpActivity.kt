@@ -2,8 +2,8 @@ package com.example.weknot_android.view.activity
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
+import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.SignUpActivityBinding
@@ -39,6 +39,10 @@ class SignUpActivity : BaseActivity<SignUpActivityBinding, SignUpViewModel>() {
 
             openLogin.observe(this@SignUpActivity, Observer {
                 startActivityWithFinish(LoginActivity::class.java)
+            })
+
+            onErrorEvent.observe(this@SignUpActivity, Observer {
+                simpleToast(it.message)
             })
         }
     }

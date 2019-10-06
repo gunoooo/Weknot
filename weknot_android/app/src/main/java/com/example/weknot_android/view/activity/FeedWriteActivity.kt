@@ -38,8 +38,12 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
             })
 
             backMessageToast.observe(this@FeedWriteActivity, Observer {
-                Toast.makeText(this@FeedWriteActivity, R.string.exist_message, Toast.LENGTH_SHORT).show()
+                simpleToast(R.string.exist_message)
                 startActivityWithFinish(MainActivity::class.java)
+            })
+
+            onErrorEvent.observe(this@FeedWriteActivity, Observer {
+                simpleToast(it.message)
             })
         }
     }

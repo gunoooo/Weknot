@@ -1,9 +1,11 @@
 package com.example.weknot_android.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.user.Friend
 import com.example.weknot_android.network.comm.SocialComm
+import com.example.weknot_android.network.request.FriendRequest
 import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter
 
 class SocialViewModel(application: Application) : BaseViewModel<List<Friend>>(application) {
@@ -15,18 +17,31 @@ class SocialViewModel(application: Application) : BaseViewModel<List<Friend>>(ap
     var receiveAdapter: SocialAdapter = SocialAdapter()
     var friendAdapter: SocialAdapter = SocialAdapter()
 
-    private val RECEIVE = 1
-    private val FRIEND = 2
+    val friendRequest = MutableLiveData<FriendRequest>()
 
-    fun getFriends() {
-        addDisposable(socialComm.getFriends(token), dataObserver)
+    private val RECEIVE = 0
+    private val FRIEND = 1
+
+    fun setUp() {
+        getFriends()
+    }
+
+    private fun getFriends() {
+        addDisposableLoading(socialComm.getFriends(token), dataObserver)
+    }
+
+    fun putFriend() {
+        addDisposable(socialComm.putFriend(token, friendRequest.value!!), baseObserver)
     }
 
     override fun onRetrieveDataSuccess(data: List<Friend>) {
+        receiveList.clear()
+        friendList.clear()
+
         for (friend in data) {
-            if (friend.friendStatus == RECEIVE) {
+            if (friend.friendState == RECEIVE) {
                 receiveList.add(friend)
-            } else if (friend.friendStatus == FRIEND) {
+            } else if (friend.friendState == FRIEND) {
                 friendList.add(friend)
             }
         }
@@ -34,5 +49,7 @@ class SocialViewModel(application: Application) : BaseViewModel<List<Friend>>(ap
         friendAdapter.updateList(friendList)
     }
 
-    override fun onRetrieveBaseSuccess(message: String) { }
+    override fun onRetrieveBaseSuccess(message: String) {
+        setUp()
+    }
 }

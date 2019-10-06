@@ -3,21 +3,20 @@ package com.example.weknot_android.widget.recyclerview.holder
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.recyclerview.widget.RecyclerView
-import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseViewHolder
 import com.example.weknot_android.databinding.FeedItemBinding
 import com.example.weknot_android.model.entity.feed.Feed
-import com.example.weknot_android.widget.recyclerview.navigator.FeedItemNavigator
+import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedAdapterNavigator
+import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedItemNavigator
 import com.example.weknot_android.widget.recyclerview.viewmodel.FeedItemViewModel
 
-class FeedViewHolder(val binding: FeedItemBinding) : RecyclerView.ViewHolder(binding.root), FeedItemNavigator {
+class FeedViewHolder(val binding: FeedItemBinding) : BaseViewHolder<FeedAdapterNavigator>(binding.root), FeedItemNavigator {
 
     private val viewModel = FeedItemViewModel()
 
     override fun likeOnEvent() {
-        binding.likeOnAnimation.startAnimation(animLikeOnFirst)
+        binding.likeOnAnimation.startAnimation(animLikeOffFirst)
     }
 
     override fun likeOffEvent() {
@@ -55,6 +54,7 @@ class FeedViewHolder(val binding: FeedItemBinding) : RecyclerView.ViewHolder(bin
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
                 binding.likeOnBtn.visibility = View.VISIBLE
+                getNavigator().like(viewModel.feed.value!!)
             }
             override fun onAnimationStart(p0: Animation?) {}
         })
@@ -75,6 +75,7 @@ class FeedViewHolder(val binding: FeedItemBinding) : RecyclerView.ViewHolder(bin
             override fun onAnimationRepeat(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
                 binding.likeOffBtn.visibility = View.VISIBLE
+                getNavigator().like(viewModel.feed.value!!)
             }
 
             override fun onAnimationStart(p0: Animation?) {}

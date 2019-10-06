@@ -4,9 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseItemViewModel
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
-import com.example.weknot_android.model.entity.feed.Feed
-import com.example.weknot_android.util.Strings
-import com.example.weknot_android.widget.recyclerview.navigator.FeedItemNavigator
 
 class OpenChatItemViewModel : BaseItemViewModel<OpenChatRoom, Any>() {
     val name = MutableLiveData<String>()

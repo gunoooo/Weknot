@@ -7,6 +7,9 @@ import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.response.data.LoginData
 import com.example.weknot_android.widget.SingleLiveEvent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class LoginViewModel(application: Application) : BaseViewModel<LoginData>(application) {
     private val signComm = SignComm()
@@ -15,7 +18,7 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
 
     val loginEvent: SingleLiveEvent<Any> = SingleLiveEvent()
     val openSignUp: SingleLiveEvent<Any> = SingleLiveEvent()
-    val openMain: SingleLiveEvent<Any> = SingleLiveEvent()
+    val onSuccessEvent: SingleLiveEvent<Any> = SingleLiveEvent()
 
     fun login() {
         addDisposable(signComm.login(request), dataObserver)
@@ -23,8 +26,8 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
 
     private fun insertLoginData(loginData: LoginData) {
         insertToken(loginData.token)
-        insertUser(loginData.user)
         insertId(loginData.user.id)
+        insertUser(loginData.user)
     }
 
     private fun insertToken(token: String) {
@@ -32,7 +35,12 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
     }
 
     private fun insertUser(user: User) {
-        repository.insertUser(user)
+        CompositeDisposable().add(repository.insertUser(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { onSuccessEvent.call() },
+                        { error -> onErrorEvent.value = error }))
     }
 
     private fun insertId(id: String) {
@@ -49,7 +57,6 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
 
     override fun onRetrieveDataSuccess(data: LoginData) {
         insertLoginData(data)
-        openMain.call()
     }
 
     override fun onRetrieveBaseSuccess(message: String) { }

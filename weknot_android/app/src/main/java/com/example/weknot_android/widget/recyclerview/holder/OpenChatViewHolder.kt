@@ -11,10 +11,11 @@ import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 import com.example.weknot_android.widget.recyclerview.viewmodel.OpenChatItemViewModel
 
-class OpenChatViewHolder(val binding: OpenChatItemBinding) : BaseViewHolder<OpenChatRoom, OpenChatItemViewModel>(binding.root) {
+class OpenChatViewHolder(val binding: OpenChatItemBinding) : BaseViewHolder<Any>(binding.root) {
 
-    override fun bind(data: OpenChatRoom) {
-        viewModel = OpenChatItemViewModel()
+    private val viewModel = OpenChatItemViewModel()
+
+    fun bind(data: OpenChatRoom) {
         viewModel.bind(data)
         binding.viewModel = viewModel
     }

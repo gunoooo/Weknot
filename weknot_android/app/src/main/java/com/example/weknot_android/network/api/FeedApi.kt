@@ -6,10 +6,7 @@ import io.reactivex.Single
 import okhttp3.MultipartBody.Part
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Multipart
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface FeedApi {
 
@@ -21,4 +18,12 @@ interface FeedApi {
 
     @GET("/feeds")
     fun getFeeds(@Header("Authorization") token: String): Single<retrofit2.Response<Response<List<Feed>>>>
+
+    @GET("/feeds/writer/{userId}")
+    fun getUserFeeds(@Header("Authorization") token: String,
+                     @Path("userId") userId: String): Single<retrofit2.Response<Response<List<Feed>>>>
+
+    @POST("/feeds/{id}/like")
+    fun postFeedLike(@Header("Authorization") token: String,
+                     @Path("id") feedId: Int): Single<retrofit2.Response<Response<Any>>>
 }

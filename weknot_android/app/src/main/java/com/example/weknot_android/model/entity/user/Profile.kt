@@ -2,12 +2,13 @@ package com.example.weknot_android.model.entity.user
 
 import com.example.weknot_android.model.entity.feed.Feed
 
-class Profile(var userId: String,
-              var userName: String,
-              var userBirth: String,
-              var userScope: String,
-              var userIntro: String,
-              var userPicture: String?,
-              var userPoint: Int,
-              var userFeeds: List<Feed>?,
-              var userGender: String)
+class Profile(var id: String,
+              var name: String,
+              var birth: String,
+              var scope: String,
+              var intro: String,
+              var photo: String?,
+              var point: Int,
+              var feeds: List<Feed>?,
+              var gender: String,
+              var staus: Int)

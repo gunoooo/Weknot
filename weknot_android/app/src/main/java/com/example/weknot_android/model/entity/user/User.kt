@@ -6,11 +6,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "user_table")
 class User(@field:PrimaryKey
            var id: String,
-           var name: String,
-           var birth: String,
-           var gender: String,
-           var phoneNumber: String,
+           var name: String?,
+           var birth: String?,
+           var gender: String?,
+           var phoneNumber: String?,
            var picture: String?,
            var intro: String?,
-           var scope: String,
+           var scope: String?,
            var point: Int)

@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.weknot_android.widget.recyclerview.viewmodel.FeedItemViewModel" />
@@ -65,13 +67,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:src="@drawable/white"
             app:mutableImageUrl="@{viewModel.picture}"
             app:layout_constraintTop_toBottomOf="@+id/content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
-            android:visibility="invisible"
+            android:visibility="@{viewModel.isLike() ? View.GONE : View.VISIBLE}"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/like_off_btn"
@@ -99,7 +102,7 @@
                 android:id="@+id/like_right_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200개"
+                app:mutableText="@{viewModel.likeCount}"
                 android:textSize="7dp"/>
         </LinearLayout>
 
@@ -119,8 +122,8 @@
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:visibility="invisible"
             android:id="@+id/like_on_btn"
+            android:visibility="@{viewModel.isLike() ? View.VISIBLE : View.GONE}"
             android:onClick="@{() -> viewModel.onClickLikeOn()}"
             android:orientation="vertical"
             android:background="@drawable/background_like"
@@ -140,7 +143,7 @@
                 android:id="@+id/like_left_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200개"
+                app:mutableText="@{viewModel.likeCount}"
                 android:textSize="7dp"/>
         </LinearLayout>
 

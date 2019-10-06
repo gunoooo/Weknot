@@ -39,8 +39,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -49,39 +49,63 @@
             app:layout_constraintTop_toBottomOf="@+id/name">
 
             <ImageView
-                android:layout_gravity="center"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_point"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_point" />
 
             <TextView
                 android:id="@+id/point"
-                android:layout_marginStart="5dp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
                 android:fontFamily="@font/nanum_squareb"
                 android:textColor="@color/colorMainDark"
-                app:mutableText="@{viewModel.point}"/>
+                android:textSize="20dp"
+                app:mutableText="@{viewModel.point}" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/accept_btn"
-            android:layout_width="80dp"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_accept_btn"
-            android:fontFamily="@font/nanum_squareeb"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="매듭 수락"
-            android:layout_marginEnd="20dp"
-            android:onClick="@{() -> viewModel.onClickAcceptBtn()}"
-            app:mutableVisibility="@{viewModel.acceptVisibility}"
-            android:textColor="@color/colorMainDark"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@+id/profile_image"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="60dp"
+            app:mutableVisibility="@{viewModel.acceptVisibility}" >
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="80dp"
+                android:layout_marginEnd="5dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_accept_btn"
+                android:fontFamily="@font/nanum_squareeb"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="10dp"
+                android:text="매듭 거절"
+                android:onClick="@{() -> viewModel.onClickRejectBtn()}"
+                android:textColor="@color/colorMainDark" />
+
+            <TextView
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_accept_btn"
+                android:fontFamily="@font/nanum_squareeb"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="10dp"
+                android:text="매듭 수락"
+                android:onClick="@{() -> viewModel.onClickAcceptBtn()}"
+                android:textColor="@color/colorMainDark" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

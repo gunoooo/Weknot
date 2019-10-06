@@ -5,8 +5,9 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.base.fragment.BaseListFragment
@@ -29,7 +30,9 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
 
     override fun initObserver() {
         with(viewModel) {
-
+            onErrorEvent.observe(this@OpenChatFragment, Observer {
+                simpleToast(it.message)
+            })
         }
     }
 

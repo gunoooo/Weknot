@@ -48,7 +48,7 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(applicat
     private fun createFile() {
         val file = File(Environment.getExternalStorageDirectory().toString() + "/Weknot")
         if (!file.exists()) file.mkdirs()
-        pictureFile.value = File(Environment.getExternalStorageDirectory().toString() + "/Weknot/" + Date(System.currentTimeMillis()) + ".jpg")
+        pictureFile.value = File(Environment.getExternalStorageDirectory().toString() + "/Weknot/" + Random().nextInt(999999999).toString() + ".jpg")
         try {
             pictureFile.value!!.createNewFile()
         } catch (e: IOException) {

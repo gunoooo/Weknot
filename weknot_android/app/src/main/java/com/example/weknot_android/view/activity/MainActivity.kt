@@ -2,8 +2,9 @@ package com.example.weknot_android.view.activity
 
 import android.os.Bundle
 import android.view.Menu
-import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.MainActivityBinding
@@ -30,7 +31,9 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     override fun initObserver() {
         with(viewModel) {
-
+            onErrorEvent.observe(this@MainActivity, Observer {
+                simpleToast(it.message)
+            })
         }
     }
 

@@ -8,6 +8,6 @@ import retrofit2.http.*
 
 interface UserApi {
 
-    @GET("/profile/{userId}")
+    @GET("users/profile/{userId}")
     fun getProfile(@Header("Authorization") token: String, @Path("userId") userId: String): Single<retrofit2.Response<Response<Profile>>>
 }

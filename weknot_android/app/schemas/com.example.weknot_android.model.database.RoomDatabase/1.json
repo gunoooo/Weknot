@@ -1,0 +1,126 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "f68e6ece6669d7d9ca44285a3efa7398",
+    "entities": [
+      {
+        "tableName": "user_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `birth` TEXT NOT NULL, `gender` TEXT NOT NULL, `phoneNumber` TEXT NOT NULL, `picture` TEXT, `intro` TEXT, `scope` TEXT NOT NULL, `point` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birth",
+            "columnName": "birth",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phoneNumber",
+            "columnName": "phoneNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "picture",
+            "columnName": "picture",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intro",
+            "columnName": "intro",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "scope",
+            "columnName": "scope",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "point",
+            "columnName": "point",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "openchat_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`roomNumber` TEXT NOT NULL, `roomName` TEXT NOT NULL, `masterName` TEXT NOT NULL, `roomPassword` TEXT, `roomType` TEXT NOT NULL, PRIMARY KEY(`roomNumber`))",
+        "fields": [
+          {
+            "fieldPath": "roomNumber",
+            "columnName": "roomNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "roomName",
+            "columnName": "roomName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "masterName",
+            "columnName": "masterName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "roomPassword",
+            "columnName": "roomPassword",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "roomType",
+            "columnName": "roomType",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "roomNumber"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f68e6ece6669d7d9ca44285a3efa7398')"
+    ]
+  }
+}

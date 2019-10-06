@@ -31,7 +31,6 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
         super.onCreate(savedInstanceState)
 
         performDataBinding()
-        initBaseObserver()
         initObserver()
     }
 
@@ -56,14 +55,6 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
         }
         catch (e: NoSuchFieldException) {
 
-        }
-    }
-
-    private fun initBaseObserver() {
-        with(viewModel) {
-            onErrorEvent.observe(this@BaseActivity, Observer {
-                simpleToast(it.message)
-            })
         }
     }
 

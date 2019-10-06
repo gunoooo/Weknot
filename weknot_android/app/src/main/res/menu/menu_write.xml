@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_write"
-        android:icon="@drawable/ic_write"
+        android:icon="@drawable/ic_write_black"
         android:title="@string/feed_write_title"
         app:showAsAction="ifRoom" />
 </menu>

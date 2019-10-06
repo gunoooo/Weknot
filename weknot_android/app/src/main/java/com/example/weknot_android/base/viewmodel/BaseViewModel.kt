@@ -1,7 +1,9 @@
 package com.example.weknot_android.base.viewmodel
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.model.repository.RoomRepository
 import com.example.weknot_android.model.repository.TokenRepository
 import com.example.weknot_android.model.repository.UserIdRepository
@@ -22,6 +24,7 @@ abstract class BaseViewModel<D> protected constructor(application: Application) 
     protected val repository: RoomRepository = RoomRepository(application)
 
     val onErrorEvent: SingleLiveEvent<Throwable> = SingleLiveEvent()
+    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     var token: String
         get() = tokenManager.token.token
@@ -30,19 +33,30 @@ abstract class BaseViewModel<D> protected constructor(application: Application) 
         get() = userIdManager.userId.id
         set(value) = userIdManager.setUserId(value)
 
+    fun addDisposableLoading(single: Single<*>, observer: DisposableSingleObserver<*>) {
+        isLoading.value = true
+
+        disposable.add(single.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(observer as SingleObserver<Any>) as Disposable)
+    }
+
     fun addDisposable(single: Single<*>, observer: DisposableSingleObserver<*>) {
         disposable.add(single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribeWith(observer as SingleObserver<Any>) as Disposable)
     }
 
+
     val baseObserver: DisposableSingleObserver<String>
         get() = object : DisposableSingleObserver<String>() {
             override fun onSuccess(s: String) {
                 onRetrieveBaseSuccess(s)
+                isLoading.value = false
+
             }
 
             override fun onError(e: Throwable) {
                 onErrorEvent.value = e
+                isLoading.value = false
             }
         }
 
@@ -50,10 +64,12 @@ abstract class BaseViewModel<D> protected constructor(application: Application) 
         get() = object : DisposableSingleObserver<D>() {
             override fun onSuccess(t: D) {
                 onRetrieveDataSuccess(t)
+                isLoading.value = false
             }
 
             override fun onError(e: Throwable) {
                 onErrorEvent.value = e
+                isLoading.value = false
             }
         }
 

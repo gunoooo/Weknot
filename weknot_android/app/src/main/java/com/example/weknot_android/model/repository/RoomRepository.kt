@@ -21,7 +21,7 @@ class RoomRepository(application: Application) {
         openChatDao = database.openChatDao()
     }
 
-    fun insertUser(entity: User) { Completable.fromAction { userDao.insert(entity) } }
+    fun insertUser(entity: User): Completable { return userDao.insert(entity) }
     fun updateUser(entity: User) { Completable.fromAction { userDao.update(entity) } }
     fun deletUser(entity: User) { Completable.fromAction { userDao.delete(entity) } }
     fun getUser(id: String): Single<User> {
