@@ -94,13 +94,15 @@ router.post('/:id/like', authMiddle, (req, res, next) => {
   feedModel.getLike(userId, feedId)
   .then((result) => {
     console.log(result.length);
+    console.log(result);
     if(result.length == 1){
       const likeId = result[0].id
+      
       // 삭제
       feedModel.deleteLike(likeId)
       .then(()=>{
         res.json({
-          message: "ok"
+          message: "ok, like canceled"
         })
       })
       .catch((err) => {

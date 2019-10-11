@@ -93,7 +93,7 @@ exports.getFeed = async (id) => {
 
 exports.getLike = async (userId, feedId) => {
   let conn;
-  const sql = "select * from `like` join feed on like.receiver = feed.writer where sender=? and feed.id=?";
+  const sql = "select `like`.id from `like` join feed on like.receiver = feed.writer where sender=? and feed.id=?";
   let result;
   try{
     conn = await dbcp.getConnection();
@@ -122,8 +122,10 @@ exports.addLike = async (userId, feedId) => {
 }
 
 exports.deleteLike = async (likeId) => {
+  console.log(likeId);
+  
   let conn;
-  const sql = "delete * from `like` where id=?";
+  const sql = "delete from `like` where id=?";
   let result;
   try{
     conn = await dbcp.getConnection();
