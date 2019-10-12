@@ -5,21 +5,21 @@ const authMiddle = require("../middlewares/auth");
 let channels = [];
 
 /* GET home page. */
-router.post('/', authMiddle, function(req, res, next) {
-  
+router.post('/', authMiddle, function (req, res, next) {
+
   const id = req.decodedToken.sub;
 
   const newChannel = (id) => {
-    const c={channel:Date.now().toString(), users:[id]}
-    
-    if(channels==null) channels=[]
+    const c = { channel: Date.now().toString(), users: [id] }
+
+    if (channels == null) channels = []
     channels.push(c)
     console.log(channels)
     return res.json({
       message: "ok",
       data: {
-        channel:c.channel,
-        users:c.users
+        channel: c.channel,
+        users: c.users
       }
     });
   }
@@ -36,30 +36,30 @@ router.post('/', authMiddle, function(req, res, next) {
         return res.json({
           message: "ok",
           data: {
-            channel:c.channel,
-            users:c.users
+            channel: c.channel,
+            users: c.users
           }
         });
-      } 
+      }
     }
     newChannel(id);
   }
 });
 
 //  할것 : 채널(영통방)에서 나가기
-router.delete('/:channel', (req, res, next)=>{
+router.delete('/:channel', (req, res, next) => {
   const cid = req.params.channel;
   // channels 배열에서 channel 값 비교해서 (유저) 삭제
   for (let i = 0; i < channels.length; i++) {
     console.log(channels[i].channel);
-    if(cid === channels[i].channel) {
+    if (cid === channels[i].channel) {
       channels[i].users = [];
       break;
     }
   }
-  res.json({message:"ok"});
+  res.json({ message: "ok" });
   console.log(channels);
-  
+
 });
 
 module.exports = router;

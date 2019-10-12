@@ -19,64 +19,64 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.post('/login', (req,res,next) => {
+router.post('/login', (req, res, next) => {
   let userId = req.body.id;
   let password = req.body.password;
 
   users.queryUser(userId)
-  .then((result) => {
-    if(result.password === password){
-      res.json({result:"success"});
-    }
-    else
-      res.json({result:"fail"});
-  })
-  .catch((err) => {
-    res.render('error', {error:err});
-  });
+    .then((result) => {
+      if (result.password === password) {
+        res.json({ result: "success" });
+      }
+      else
+        res.json({ result: "fail" });
+    })
+    .catch((err) => {
+      res.render('error', { error: err });
+    });
 });
 
 
-router.post('/register',(req,res,next) => {
+router.post('/register', (req, res, next) => {
   let user = {
-    id : req.body.id,
-    name : req.body.name,
-    password : req.body.password,
-    birth : req.body.birth,
-    gender : req.body.gender,
-    phoneNumber : req.body.phoneNumber
+    id: req.body.id,
+    name: req.body.name,
+    password: req.body.password,
+    birth: req.body.birth,
+    gender: req.body.gender,
+    phoneNumber: req.body.phoneNumber
   };
 
   users.registerUser(user)
-  .then((result)=>{
-    if(result.affectedRows === 1){
-      res.json({result:"success"});
-    }else{
+    .then((result) => {
+      if (result.affectedRows === 1) {
+        res.json({ result: "success" });
+      } else {
+        res.status(403).json({
+          message: 'omg'
+        })
+      }
+
+    })
+    .catch((err) => {
       res.status(403).json({
-        message:'omg'
-      })
-    }
-    
-  })
-  .catch((err) => {
-    res.status(403).json({
-      message:err.message,
-    });
-  })
+        message: err.message,
+      });
+    })
 });
 
-router.post('/changePassword',authMiddle, (req,res,next) => {
+router.post('/changePassword', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
   const newPassword = req.body.newPassword;
 
   users.changePassword(userId, newPassword)
-  .then((result) => {
-    res.json({
-      result:"success",
-      message: "ok"
-    });
-  })
-  
+    .then((result) => {
+      res.json({
+        result: "success",
+        message: "ok"
+      });
+    })
+
 });
 
 router.post('/like', (req, res, next) => {
@@ -94,38 +94,40 @@ router.post('/like', (req, res, next) => {
 // state:2 내가 보낸 상태
 // state:10 친구
 // state: 100 자기자신
-router.get('/profile/:userId',authMiddle,(req, res, next) => {
+router.get('/profile/:userId', authMiddle, (req, res, next) => {
   const userId = req.params.userId;
   const myId = req.decodedToken.sub;
 
   users.showUserProfile(userId)
-  .then((result) =>{
-    if (result){
-      if (userId === myId) {
-        result[0].state = 100;
-        res.json({message: 'ok', data: result[0]});
-      } else {
-        users.getFriendState(userId, myId)
-        .then((state)=>{
-          result[0].state = state;
-          res.json({message: 'ok', data: result[0]});
-        })
-        .catch((err)=>{
-          res.json({
-            result:"error",
-            error:err.message});
-        })
+    .then((result) => {
+      if (result) {
+        if (userId === myId) {
+          result[0].state = 100;
+          res.json({ message: 'ok', data: result[0] });
+        } else {
+          users.getFriendState(userId, myId)
+            .then((state) => {
+              result[0].state = state;
+              res.json({ message: 'ok', data: result[0] });
+            })
+            .catch((err) => {
+              res.json({
+                result: "error",
+                error: err.message
+              });
+            })
+        }
       }
-    }
-    else{
-      res.json({result:"fail"})
-    }
-  })
-  .catch((err) => {
-    res.json({
-      result:"error",
-      error:err.message});
-  });
+      else {
+        res.json({ result: "fail" })
+      }
+    })
+    .catch((err) => {
+      res.json({
+        result: "error",
+        error: err.message
+      });
+    });
 });//userId,userName,userBirth,userScope,userIntro,userPicture,userPoint,userGender
 //userFeeds:feddId,feddPicture.
 
