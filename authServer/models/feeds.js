@@ -113,6 +113,7 @@ exports.addLike = async (userId, feedId) => {
   try {
     conn = await dbcp.getConnection();
     result = await conn.query(sql, [userId, feedId, feedId]);
+    console.log('result: ', result);
   } catch (error) {
     throw error;
   } finally {
