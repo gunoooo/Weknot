@@ -112,8 +112,7 @@ router.post('/register', upload, (req, res, next) => {
     birth: req.body.birth,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
-    intro: req.body.intro,
-    photo: 'default.jpg'
+    intro: req.body.intro
   };
 
   if (req.files != null && req.files['photo'] != null && req.files['photo'][0] != null) {
