@@ -137,3 +137,20 @@ exports.deleteLike = async (likeId) => {
     return result
   }
 }
+
+exports.deleteFeed = async (userId, feedId) => {
+  console.log("피드아이디:" + feedId + "\n현사용자: " + userId);
+  
+  let conn;
+  const sql = "delete from feed where id = ? and writer = ?";
+  let result;
+  try {
+    conn = await dbcp.getConnection();
+    result = await conn.query(sql, [feedId, userId]);
+  } catch (error) {
+    throw error;
+  } finally {
+    if(conn) await conn.end();
+    return result
+  }
+}

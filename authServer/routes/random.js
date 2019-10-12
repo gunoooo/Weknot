@@ -49,7 +49,7 @@ router.post('/', authMiddle, function(req, res, next) {
 //  할것 : 채널(영통방)에서 나가기
 router.delete('/:channel', (req, res, next)=>{
   const cid = req.params.channel;
-  // channels 배열에서 channel 값 비교해서 삭제
+  // channels 배열에서 channel 값 비교해서 (유저) 삭제
   for (let i = 0; i < channels.length; i++) {
     console.log(channels[i].channel);
     if(cid === channels[i].channel) {
@@ -58,6 +58,8 @@ router.delete('/:channel', (req, res, next)=>{
     }
   }
   res.json({message:"ok"});
+  console.log(channels);
+  
 });
 
 module.exports = router;

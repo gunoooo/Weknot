@@ -90,7 +90,7 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
 router.post('/:id/like', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
   const feedId = req.params.id;
-
+  
   feedModel.getLike(userId, feedId)
   .then((result) => {
     console.log(result.length);
@@ -128,5 +128,21 @@ router.post('/:id/like', authMiddle, (req, res, next) => {
       error: {message:err.message}});
   });
 });
+
+router.delete('/:id', authMiddle, (req, res, next) => {
+  const userId = req.decodedToken.sub;
+  const FeedId = req.params.id;
+
+  feedModel.deleteFeed(userId, FeedId)
+  .then(()=>{
+    res.json({
+      message: "ok, feed deleted"
+    })
+  })
+  .catch((err) => {
+    res.status(500).json({
+      error: {message:err.message}})
+  })
+})
 
 module.exports = router;
