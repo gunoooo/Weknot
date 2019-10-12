@@ -54,24 +54,43 @@ router.post('/:channel', authMiddle, (req, res, next)=>{
   for (let i = 0; i < channels.length; i++) {
     console.log(channels[i].channel);
     if (cid === channels[i].channel) {
-      if (userId == channels[i].users[0]) {
-        channels[i].status[0] = 0;
-        otherId = channels[i].users[1];
+      if(channels[i].users.length<2){
+        channels[i].users=[]; 
+        channels[i].status=[];    
+      } else{
+        if (userId == channels[i].users[0]) {
+          channels[i].status[0] = 0;
+          otherId = channels[i].users[1];
+        }
+        else {
+          channels[i].status[1] = 0;
+          otherId = channels[i].users[0];
+        }
+        if (channels[i].status.length == 2 && 
+          channels[i].status[0] == 0 && 
+          channels[i].status[1]==0){
+            
+          channels[i].users = [];
+          channels[i].status = [];
+        }
       }
-      else {
-        channels[i].status[1] = 0;
-        otherId = channels[i].users[0];
-      }
-      if (channels[i].status[0] == 0 && channels[i].status[1]==0)
-        channels[i].users = [];
       break;
     }
   }
-  res.json({
-    message:"ok",
-    data: otherId
-  });
+
   console.log(channels);
+
+  result = {
+    message:"ok"
+  };
+
+  if(otherId != '') {
+    result.data = otherId;
+  }
+
+  res.json(result);
+
+  
 
 });
 
