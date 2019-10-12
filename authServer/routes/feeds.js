@@ -19,114 +19,121 @@ let stroage = multer.diskStorage({
 let upload = multer({ storage: stroage }).fields([{ name: 'picture', maxCount: 1 }]);
 
 // 전체 피드 조회 (내꺼 + 친구꺼)
-router.get('/', authMiddle, function(req, res, next) {
+router.get('/', authMiddle, function (req, res, next) {
   const id = req.decodedToken.sub;
 
   feedModel.getFeeds(id)
-  .then((result) => {
-    console.log(result);
-    if(result){
-      res.json({message: 'ok', data: result});
-    }else{
+    .then((result) => {
+      console.log(result);
+      if (result) {
+        res.json({ message: 'ok', data: result });
+      } else {
+        res.status(500).json({
+          error: { message: 'fail' }
+        });
+      }
+    })
+    .catch((err) => {
       res.status(500).json({
-        error: {message:'fail'}});
-    }
-  })
-  .catch((err) => {
-    res.status(500).json({
-      error: {message:err.message}});
-  })
+        error: { message: err.message }
+      });
+    })
   //res.render('feedTest');
 });
 
-router.get('/writer/:id', (req,res,next) => {
+router.get('/writer/:id', (req, res, next) => {
   const id = req.params.id;
 
   feedModel.getFeed(id)
-  .then((result) => {
-    console.log(result);
-    if(result){
-      res.json({message: 'ok', data: result});
-    }else{
+    .then((result) => {
+      console.log(result);
+      if (result) {
+        res.json({ message: 'ok', data: result });
+      } else {
+        res.status(500).json({
+          error: { message: 'fail' }
+        });
+      }
+    })
+    .catch((err) => {
       res.status(500).json({
-        error: {message:'fail'}});
-    }
-  })
-  .catch((err) => {
-    res.status(500).json({
-      error: {message:err.message}});
+        error: { message: err.message }
+      });
     })
 })
 
 router.post('/', [authMiddle, upload], (req, res, next) => {
   const id = req.decodedToken.sub;
   const fileName = req.files['picture'][0].filename;
-  
+
   const feed = {
     writer: id,
     comment: req.body.comment,
     picture: fileName
   };
   console.log(feed);
-  
+
   feedModel.addFeed(feed)
-  .then((result) => {
-    if(result.affectedRows === 1)
-    {
-      res.json({
-        message: "ok"
-      })
-    }
-    else {
-      res.status(500).json({message: 'fail'})
-    }
-  })
-  .catch((err) => {
-    res.status(500).json({
-      error: {message:err.message}});
-  });
+    .then((result) => {
+      if (result.affectedRows === 1) {
+        res.json({
+          message: "ok"
+        })
+      }
+      else {
+        res.status(500).json({ message: 'fail' })
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: { message: err.message }
+      });
+    });
 });
 
 router.post('/:id/like', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
   const feedId = req.params.id;
-  
-  feedModel.getLike(userId, feedId)
-  .then((result) => {
-    console.log(result.length);
-    console.log(result);
-    if(result.length == 1){
-      const likeId = result[0].id
-      
-      // 삭제
-      feedModel.deleteLike(likeId)
-      .then(()=>{
-        res.json({
-          message: "ok, like canceled"
-        })
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: {message:err.message}});
-      })
-    } else {
-      feedModel.addLike(userId, feedId)
-      .then(()=>{
-        res.json({
-          message: "ok"
-        })
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: {message:err.message}});
-      })
-    }
 
-  })
-  .catch((err) => {
-    res.status(500).json({
-      error: {message:err.message}});
-  });
+  feedModel.getLike(userId, feedId)
+    .then((result) => {
+      console.log(result.length);
+      console.log(result);
+      if (result.length == 1) {
+        const likeId = result[0].id
+
+        // 삭제
+        feedModel.deleteLike(likeId)
+          .then(() => {
+            res.json({
+              message: "ok, like canceled"
+            })
+          })
+          .catch((err) => {
+            res.status(500).json({
+              error: { message: err.message }
+            });
+          })
+      } else {
+        feedModel.addLike(userId, feedId)
+          .then(() => {
+            res.json({
+              message: "ok"
+            })
+          })
+          .catch((err) => {
+            res.status(500).json({
+              error: { message: err.message }
+            });
+          })
+      }
+
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: { message: err.message }
+      });
+    });
 });
 
 router.delete('/:id', authMiddle, (req, res, next) => {
@@ -134,15 +141,16 @@ router.delete('/:id', authMiddle, (req, res, next) => {
   const FeedId = req.params.id;
 
   feedModel.deleteFeed(userId, FeedId)
-  .then(()=>{
-    res.json({
-      message: "ok, feed deleted"
+    .then(() => {
+      res.json({
+        message: "ok, feed deleted"
+      })
     })
-  })
-  .catch((err) => {
-    res.status(500).json({
-      error: {message:err.message}})
-  })
+    .catch((err) => {
+      res.status(500).json({
+        error: { message: err.message }
+      })
+    })
 })
 
 module.exports = router;

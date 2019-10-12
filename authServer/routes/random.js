@@ -17,8 +17,8 @@ router.post('/', authMiddle, (req, res, next) => {
     return res.json({
       message: "ok",
       data: {
-        channel:c.channel,
-        users:c.users
+        channel: c.channel,
+        users: c.users
       }
     });
   }
@@ -35,11 +35,11 @@ router.post('/', authMiddle, (req, res, next) => {
         return res.json({
           message: "ok",
           data: {
-            channel:c.channel,
-            users:c.users
+            channel: c.channel,
+            users: c.users
           }
         });
-      } 
+      }
     }
     newChannel(id);
   }
@@ -72,7 +72,7 @@ router.post('/:channel', authMiddle, (req, res, next)=>{
     data: otherId
   });
   console.log(channels);
-  
+
 });
 
 module.exports = router;

@@ -155,16 +155,17 @@ exports.registerUser = (user) => {
 
 exports.showUserProfile = (cid) => {
   const sql = 'SELECT id,name,birth,gender,photo,intro,scope,point FROM user WHERE id = ?';
-  const query = (conn)=>{
-    const p = new Promise((resolve, reject)=> {
+  const query = (conn) => {
+    const p = new Promise((resolve, reject) => {
       conn
         .query(sql, cid)
-        .then((result)=> {
+        .then((result) => {
           conn.end()
           resolve(result)
         })
-        .catch((err) =>{
-          reject(err)})
+        .catch((err) => {
+          reject(err)
+        })
     })
     return p;
   }
@@ -172,10 +173,10 @@ exports.showUserProfile = (cid) => {
   const p = new Promise((resolve, reject) => {
     dbcp.getConnection()
       .then(query)
-      .then((result=> {
+      .then((result => {
         resolve(result)
       }))
-      .catch((err) => {reject(err)})
+      .catch((err) => { reject(err) })
   })
   return p;
 };
@@ -256,7 +257,7 @@ exports.acceptFriend = async (knot) => {
   try {
     let conn = await dbcp.getConnection();
     result = await conn.query(sql, [knot.userId, knot.friend]);
-  }catch (error) {
+  } catch (error) {
     throw new error;
   } finally {
     if (conn) await conn.end();
@@ -271,7 +272,7 @@ exports.refuseFriend = async (knot) => {
   try {
     let conn = await dbcp.getConnection();
     result = await conn.query(sql, [knot.userId, knot.friend]);
-  }catch (error) {
+  } catch (error) {
     console.log(error);
     throw new error;
   } finally {
@@ -280,7 +281,7 @@ exports.refuseFriend = async (knot) => {
   }
 }
 
-exports.getFriendState = async(userId, myId) =>{
+exports.getFriendState = async (userId, myId) => {
   let conn;
   const sql = "select * from friends where (requester=? and receiver=?) or (requester=? and receiver=?)"
   let result;
@@ -288,15 +289,15 @@ exports.getFriendState = async(userId, myId) =>{
     let conn = await dbcp.getConnection();
     result = await conn.query(sql, [userId, myId, myId, userId]);
     console.log(result);
-    if(result.length == 0)
-      result= 0;
-    else if(result[0].state == 1)
-      result =10;
-    else if(result[0].requester == myId)
-      result= 2;
+    if (result.length == 0)
+      result = 0;
+    else if (result[0].state == 1)
+      result = 10;
+    else if (result[0].requester == myId)
+      result = 2;
     else
-      result= 1;
-  }catch (error) {
+      result = 1;
+  } catch (error) {
     throw new error;
   } finally {
     if (conn) await conn.end();
@@ -305,23 +306,23 @@ exports.getFriendState = async(userId, myId) =>{
 }
 
 exports.getFriend = async (requester) => {
-  const sql = '(SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user '+
-  'JOIN friends '+
-  'ON user.id = friends.receiver '+
-  'WHERE requester = ? AND state = 1) '+
-  'Union '+
-  '(SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user '+
-  'JOIN friends '+
-  'ON user.id = friends.requester '+
-  'WHERE receiver = ?) '
+  const sql = '(SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user ' +
+    'JOIN friends ' +
+    'ON user.id = friends.receiver ' +
+    'WHERE requester = ? AND state = 1) ' +
+    'Union ' +
+    '(SELECT user.id as friendId, user.name as friendName, user.point as friendPoint, user.photo as friendPhoto, friends.state as friendState from user ' +
+    'JOIN friends ' +
+    'ON user.id = friends.requester ' +
+    'WHERE receiver = ?) '
   'ORDER BY name ASC' +
-  console.log(requester);
+    console.log(requester);
   console.log(sql);
   let result;
   try {
     let conn = await dbcp.getConnection();
     result = await conn.query(sql, [requester, requester]);
-  }catch (error) {
+  } catch (error) {
     throw new error;
   } finally {
     if (conn) await conn.end();
@@ -337,7 +338,7 @@ getFriends = async (requester) => {
   try {
     let conn = await dbcp.getConnection();
     result = await conn.query(sql, requester);
-  }catch (error) {
+  } catch (error) {
     throw new error;
   } finally {
     if (conn) await conn.end();
