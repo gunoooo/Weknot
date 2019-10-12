@@ -7,16 +7,16 @@ module.exports = function () {
     database: 'ryan',
     user: 'ryan',
     password: 'ryanryan',
-    connectionLimit:50,
+    connectionLimit: 50,
   });
 
   return {
-    getConnection: async function (){
+    getConnection: async function () {
       conn = await pool.getConnection();
       return conn;
     },
-    release: async function(conn){
-      if(conn) conn.end();
+    release: async function (conn) {
+      if (conn) conn.end();
     }
   }
 }();

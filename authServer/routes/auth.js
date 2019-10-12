@@ -18,79 +18,76 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.post('/login',(req, res, next) => {//userId,userPassword
+router.post('/login', (req, res, next) => {//userId,userPassword
   // const userId = req.body.userId;
   // const password = req.body.userPassword;
 
-  const {id, password} = req.body;
-  if(!id || !password){
+  const { id, password } = req.body;
+  if (!id || !password) {
     res.status(403).json({
-      message:"invalid parameter"
+      message: "invalid parameter"
     });
     return;
   }
 
   users.getQueryUser(id)
-  .then((result) => {
-    let user;
-    if(result != null) user = result[0];
-    if(user == undefined){
-      res.status(403).json({
-        message:"undefined user"
-      });
-      return;
-    }
-    if(user.password == password){
-      users.loginUser(req,res,user)
-      .then((token) => {
-        res.json({
-          data:{token,user:user},
-          message: "login"
+    .then((result) => {
+      let user;
+      if (result != null) user = result[0];
+      if (user == undefined) {
+        res.status(403).json({
+          message: "undefined user"
         });
-      })
-      
-    }
-    else
-      res.status(403).json({
-        message:"invalid password"
+        return;
+      }
+      if (user.password == password) {
+        users.loginUser(req, res, user)
+          .then((token) => {
+            res.json({
+              data: { token, user: user },
+              message: "login"
+            });
+          })
+
+      }
+      else
+        res.status(403).json({
+          message: "invalid password"
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
     });
-  })
-  .catch((err) => {
-    console.log(err);
-    //res.render('error', {error:err});
-    res.status(500).json({message:err.message});
-  });
 });
 
-router.post('/autoLogin', authMiddle, (req,res,next) => {
-  console.log(req.decodedToken);
+router.post('/autoLogin', authMiddle, (req, res, next) => {
   const id = req.decodedToken.sub;
-  console.log(id);
   users.getQueryUser(id)
-  .then((result) => {
-    let user;
-    if(result != null) user = result[0];
-    if(user == undefined){
-      res.status(403).json({
-        message:'undefined user'
-      });
-      return;
-    } else {
-      res.json({
-        data:{
-          id:user.id,
-          name:user.name,
-          birth:user.birth,
-          gender:user.gender,
-          phoneNumber:user.phoneNumber
-        },
-        message: "login"});
-    }
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json({ message:err.message});
-  });
+    .then((result) => {
+      let user;
+      if (result != null) user = result[0];
+      if (user == undefined) {
+        res.status(403).json({
+          message: 'undefined user'
+        });
+        return;
+      } else {
+        res.json({
+          data: {
+            id: user.id,
+            name: user.name,
+            birth: user.birth,
+            gender: user.gender,
+            phoneNumber: user.phoneNumber
+          },
+          message: "login"
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: err.message });
+    });
 })
 
 
@@ -115,59 +112,58 @@ router.post('/register', upload, (req, res, next) => {
     birth: req.body.birth,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
-    intro:req.body.intro,
-    photo: 'default.jpg'
+    intro: req.body.intro
   };
 
-  if(req.files!=null && req.files['photo']!=null&& req.files['photo'][0] != null){
+  if (req.files != null && req.files['photo'] != null && req.files['photo'][0] != null) {
     user.photo = req.files['photo'][0].filename;
   }
 
   users.registerUser(user)
-  .then((result) => {
-    if(result.affectedRows === 1)
-    {
-      res.json({
-        message:"success"});
-    }
-    else
-    {
-      res.status(500).json({message: 'fail'})
-    }
-  })
-  .catch((err) => {
-    res.status(500).json({
-      error: {message:err.message}});
-  });
+    .then((result) => {
+      if (result.affectedRows === 1) {
+        res.json({
+          message: "success"
+        });
+      }
+      else {
+        res.status(500).json({ message: 'fail' })
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: { message: err.message }
+      });
+    });
 });
 
 // 나중에 구현
-router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
+router.post('/checkUserId', (req, res, next) => {//userName,userPhoneNumber
   const userId = req.body.userId;
 
   console.log(userId);
 
   users.getQueryUser(userId)
-  .then((result) => {
-    let user;
-    if(result != null) user = result[0];
-    
-    if(user == undefined){
-      res.status(403).json({
-          message:"존재하지 않는 아이디입니다."
-      });
-    }
-    else if(user.id !== undefined){
-      res.status(403).json({
-        message:"이미 존재하는 아이디입니다."
-      });
-    }
-    else
-      res.status(500).json({error: err.message});
-  })
-  .catch((err) => {
-    res.status(500).json({error: err.message});
-  });
+    .then((result) => {
+      let user;
+      if (result != null) user = result[0];
+
+      if (user == undefined) {
+        res.status(403).json({
+          message: "존재하지 않는 아이디입니다."
+        });
+      }
+      else if (user.id !== undefined) {
+        res.status(403).json({
+          message: "이미 존재하는 아이디입니다."
+        });
+      }
+      else
+        res.status(500).json({ error: err.message });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
 });
 
 /*router.get('/allUser',(req,res,next) => {
@@ -181,7 +177,7 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 });*/
 
 //router.post('/addLike',(req, res, next) => {//friendId
- // const friendId = req.body.friendId;
+// const friendId = req.body.friendId;
 
 
 
@@ -232,7 +228,7 @@ router.post('/checkUserId',(req, res, next) => {//userName,userPhoneNumber
 //   const dmId = req.params.dmId;
 // });//friendId,friendPicture,message,date,dmId,files
 
-router.post('/requestFriend', (req,res,next) => {
+router.post('/requestFriend', (req, res, next) => {
   const userId = "wowjddl";
   const friendId = "Ryu";
 
@@ -248,7 +244,7 @@ router.post('/requestFriend', (req,res,next) => {
   */
 });
 
-router.get('/myResponseList', (req,res,next) => {// 내가 리시버이고 state가 1인 애들을 가져옴
+router.get('/myResponseList', (req, res, next) => {// 내가 리시버이고 state가 1인 애들을 가져옴
   const userId = "wowjddl";
 
   const requesters = [
@@ -362,7 +358,7 @@ router.get('/myResponseList', (req,res,next) => {// 내가 리시버이고 state
 //     result: otherUser,
 //     message: "ok"
 //   })
-  
+
 //   /*
 //   res.json({
 //     result: "fail",
