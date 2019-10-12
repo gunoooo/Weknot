@@ -11,7 +11,7 @@ router.post('/', authMiddle, (req, res, next) => {
 
   const newChannel = (id) => {
     const c = { channel: Date.now().toString(), users: [id], status: [1] }
-
+    
     if (channels == null) channels = []
     channels.push(c)
     return res.json({
@@ -90,7 +90,7 @@ router.post('/:channel', authMiddle, (req, res, next) => {
         }
         if (channels[i].status.length == 2 && 
           channels[i].status[0] == 0 && 
-          channels[i].status[1]==0){   
+          channels[i].status[1]==0){
           channels[i].users = [];
           channels[i].status = [];
         }
@@ -98,12 +98,7 @@ router.post('/:channel', authMiddle, (req, res, next) => {
       break;
     }
   }
-  res.json({
-    message: "ok",
-    data: otherId
-  });
-  console.log(channels);
-
+  
   result = {
     message:"ok"
   };
