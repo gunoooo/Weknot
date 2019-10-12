@@ -28,6 +28,10 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
             onErrorEvent.observe(this@ProfileActivity, Observer {
                 simpleToast(it.message)
             })
+
+            onRefreshEvent.observe(this@ProfileActivity, Observer {
+                setUp()
+            })
         }
     }
 

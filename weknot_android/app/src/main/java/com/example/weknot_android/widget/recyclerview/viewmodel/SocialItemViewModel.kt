@@ -27,4 +27,8 @@ class SocialItemViewModel : BaseItemViewModel<Friend, SocialItemNavigator>() {
     fun onClickRejectBtn() {
         getNavigator().rejectFriend()
     }
+
+    fun onClickItem() {
+        getNavigator().openProfile()
+    }
 }

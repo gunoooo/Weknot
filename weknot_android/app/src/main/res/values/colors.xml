@@ -4,12 +4,11 @@
     <color name="colorPrimaryDark">#FF574C</color>
     <color name="colorDart">#AD3B35</color>
     <color name="colorAccent">#FD3E35</color>
-    <color name="colorBackgound">#F5F5F5</color>
+    <color name="colorBackground">#F5F5F5</color>
     <color name="colorLine">#A5A5A5</color>
     <color name="colorMainDark">#424242</color>
 
     <color name="textColor">#B4B4B4</color>
     <color name="textColorDark">#868686</color>
     <color name="textColorAccent">#682725</color>
-    <color name="dd">#FF2121</color>
 </resources>

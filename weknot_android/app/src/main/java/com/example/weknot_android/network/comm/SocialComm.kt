@@ -16,6 +16,10 @@ class SocialComm : BaseComm<SocialApi>() {
         return api.putFriend(token, friendRequest).map(getResponseMessageFunction())
     }
 
+    fun addFriend(token: String, receiver: String): Single<String> {
+        return api.addFriend(token, receiver).map(getResponseMessageFunction())
+    }
+
     override fun type(): Class<SocialApi> {
         return SocialApi::class.java
     }

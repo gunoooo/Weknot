@@ -13,8 +13,8 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
     var request = MutableLiveData<SignUpRequest>()
 
     val onSuccessEvent: SingleLiveEvent<String> = SingleLiveEvent()
-    val signUpEvent: SingleLiveEvent<Any> = SingleLiveEvent()
-    val openLogin: SingleLiveEvent<Any> = SingleLiveEvent()
+    val signUpEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val openLogin: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     fun signUp() {
         addDisposable(signComm.signUp(request.value!!), baseObserver)
@@ -27,7 +27,7 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
     override fun onRetrieveDataSuccess(data: Any) { }
 
     override fun onRetrieveBaseSuccess(message: String) {
-        onSuccessEvent.call()
+        onSuccessEvent.value = message
         openLogin.call()
     }
 }

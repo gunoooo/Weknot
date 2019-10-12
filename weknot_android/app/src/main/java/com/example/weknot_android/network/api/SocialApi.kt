@@ -15,6 +15,7 @@ interface SocialApi {
     fun putFriend(@Header("Authorization") token: String,
                   @Body friendRequest: FriendRequest): Single<retrofit2.Response<Response<Any>>>
 
-    @POST("/addFriend")
-    fun addFriend(@Header("Authorization") token: String): Single<retrofit2.Response<Response<Any>>>
+    @POST("/friends")
+    fun addFriend(@Header("Authorization") token: String,
+                  @Body receiver: String): Single<retrofit2.Response<Response<Any>>>
 }

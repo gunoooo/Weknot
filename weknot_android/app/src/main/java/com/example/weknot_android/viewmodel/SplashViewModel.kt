@@ -9,7 +9,7 @@ import com.example.weknot_android.widget.SingleLiveEvent
 class SplashViewModel(application: Application) : BaseViewModel<User>(application) {
     private val signComm = SignComm()
 
-    val openMain: SingleLiveEvent<Any> = SingleLiveEvent()
+    val openMain: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     fun autoLogin() {
         addDisposable(signComm.autoLogin(token), dataObserver)

@@ -11,9 +11,11 @@ interface VideoCallApi {
     @POST("/matching")
     fun requestCall(@Header("Authorization") token: String): Single<retrofit2.Response<Response<VideoCall>>>
 
-    @GET("")
-    fun completeMatching(@Header("Authorization") token: String): Single<retrofit2.Response<Response<Friend>>>
+    @POST("/matching/{channel}")
+    fun finishRoom(@Header("Authorization") token: String,
+                   @Path("channel") channel: String): Single<retrofit2.Response<Response<String>>>
 
-    @DELETE("/matching/{channel}")
-    fun deleteRoom(@Path("channel") channel: String): Single<retrofit2.Response<Response<Any>>>
+    @POST("/matching/addPoint/{id}")
+    fun addPoint(@Header("Authorization") toekn: String,
+                 @Path("id") id: String): Single<retrofit2.Response<Response<Any>>>
 }

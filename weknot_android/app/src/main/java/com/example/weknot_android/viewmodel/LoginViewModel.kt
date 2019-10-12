@@ -16,9 +16,9 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
 
     var request = LoginRequest()
 
-    val loginEvent: SingleLiveEvent<Any> = SingleLiveEvent()
-    val openSignUp: SingleLiveEvent<Any> = SingleLiveEvent()
-    val onSuccessEvent: SingleLiveEvent<Any> = SingleLiveEvent()
+    val loginEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val openSignUp: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val onSuccessEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     fun login() {
         addDisposable(signComm.login(request), dataObserver)

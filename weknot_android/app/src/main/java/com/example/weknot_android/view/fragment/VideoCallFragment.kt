@@ -1,5 +1,6 @@
 package com.example.weknot_android.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -7,6 +8,7 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.VideoCallFragmentBinding
+import com.example.weknot_android.view.activity.ProfileActivity
 import com.example.weknot_android.view.activity.VideoCallActivity
 import com.example.weknot_android.view.navigator.VideoCallNavigator
 import com.example.weknot_android.viewmodel.VideoCallViewModel
@@ -31,7 +33,7 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewMo
     }
 
     override fun finishEvent() {
-        viewModel.deleteRoom()
+        viewModel.finishRoom()
     }
 
     override fun initObserver() {
@@ -47,8 +49,10 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewMo
                 VideoCallActivity.videoLaunch(context!!, options!!, it.channel)
             })
 
-            onErrorEvent.observe(this@VideoCallFragment, Observer {
-                simpleToast(it.message)
+            openProfile.observe(this@VideoCallFragment, Observer {
+                var intent = Intent(context, ProfileActivity::class.java)
+                intent.putExtra("id", it)
+                startActivity(intent)
             })
         }
     }

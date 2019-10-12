@@ -30,7 +30,7 @@
             android:id="@+id/writer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             app:mutableText="@{viewModel.name}"
@@ -43,7 +43,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="7dp"
+            android:textSize="7sp"
             app:mutableText="@{viewModel.time}"
             android:textColor="@color/textColor"
             android:fontFamily="@font/nanum_squarel"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             app:mutableText="@{viewModel.comment}"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:textColor="@android:color/black"
             android:fontFamily="@font/nanum_squareb"
             app:layout_constraintTop_toBottomOf="@+id/profile_image"/>
@@ -82,7 +82,7 @@
             app:cardCornerRadius="20dp"
             android:elevation="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/background_like"
             android:gravity="center"
             android:orientation="vertical"
@@ -91,7 +91,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="7dp"
+                android:textSize="7sp"
                 android:fontFamily="@font/nanum_squareb"
                 android:textColor="@android:color/black"/>
             <ImageView
@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:mutableText="@{viewModel.likeCount}"
-                android:textSize="7dp"/>
+                android:textSize="7sp"/>
         </LinearLayout>
 
         <ImageView
@@ -113,7 +113,7 @@
             android:layout_height="40dp"
             android:src="@drawable/like_off"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/image"
             app:layout_constraintEnd_toEndOf="@+id/image" />
 
@@ -121,7 +121,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:id="@+id/like_on_btn"
             android:visibility="@{viewModel.isLike() ? View.VISIBLE : View.GONE}"
             android:onClick="@{() -> viewModel.onClickLikeOn()}"
@@ -134,7 +134,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="7dp"/>
+                android:textSize="7sp"/>
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:mutableText="@{viewModel.likeCount}"
-                android:textSize="7dp"/>
+                android:textSize="7sp"/>
         </LinearLayout>
 
         <ImageView
@@ -154,7 +154,7 @@
             android:layout_height="40dp"
             android:src="@drawable/like_on"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintStart_toStartOf="@id/image"
             app:layout_constraintBottom_toBottomOf="@+id/image"/>
 

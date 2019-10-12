@@ -27,4 +27,8 @@ class SocialViewHolder(val binding: SocialItemBinding) : BaseViewHolder<SocialAd
     override fun rejectFriend() {
         getNavigator().checkFriend("no" , friend)
     }
+
+    override fun openProfile() {
+        getNavigator().openProfile(friend.friendId)
+    }
 }

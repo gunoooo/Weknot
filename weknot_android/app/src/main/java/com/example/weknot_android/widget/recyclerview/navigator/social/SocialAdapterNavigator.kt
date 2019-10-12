@@ -4,4 +4,5 @@ import com.example.weknot_android.model.entity.user.Friend
 
 interface SocialAdapterNavigator {
     fun checkFriend(message: String, friend: Friend)
+    fun openProfile(id: String)
 }

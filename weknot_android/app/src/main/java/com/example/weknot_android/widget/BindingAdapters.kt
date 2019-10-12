@@ -17,65 +17,73 @@ import net.gahfy.mvvmposts.utils.extension.getParentActivity
 
 @BindingAdapter("adapter")
 fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-        view.adapter = adapter
+    view.adapter = adapter
 }
 
 @BindingAdapter("mutableVisibility")
 fun setMutableVisibility(view: View,  visibility: MutableLiveData<Int>?) {
-    val parentActivity: AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && visibility != null) {
-        visibility.observe(parentActivity, Observer { value -> view.visibility = value?:View.VISIBLE})
-    }
+    val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
+
+    visibility?.observe(parentActivity, Observer { value -> view.visibility = value?:View.VISIBLE})
 }
 
 @BindingAdapter("mutableText")
 fun setMutableText(view: TextView,  text: MutableLiveData<String>?) {
-    val parentActivity:AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && text != null) {
-        text.observe(parentActivity, Observer { value -> view.text = value?:""})
-    }
+    val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
+
+    text?.observe(parentActivity, Observer { value -> view.text = value?:""})
 }
 
 @BindingAdapter("mutableImageDrawable")
 fun setMutableImageDrawable(view: ImageView, resid: MutableLiveData<Int>?) {
-    val parentActivity:AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && resid != null) {
+    val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
+
+    if(resid != null) {
         resid.observe(parentActivity, Observer { value -> view.setImageResource(value)})
+    }
+    else {
+        Glide.with(view.context)
+                .load(R.drawable.ic_profile)
+                .into(view)
     }
 }
 
 @BindingAdapter("mutableImageUrl")
 fun setMutableImageUrl(view: ImageView, url: MutableLiveData<String>?) {
+    val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
+
     val requestOptions: RequestOptions by lazy {
         RequestOptions()
-                .error(R.drawable.profile)
+                .error(R.drawable.ic_profile)
                 .placeholder(R.drawable.loading)
                 .transforms(CenterCrop())
     }
 
-    val parentActivity:AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && url != null) {
+    if(url != null) {
         url.observe(parentActivity, Observer { value -> Glide.with(view.context)
                 .load(value)
                 .apply(requestOptions)
                 .into(view)})
     }
+    else {
+        Glide.with(view.context)
+                .load(R.drawable.ic_profile)
+                .into(view)
+    }
 }
 
 @BindingAdapter("mutableImageUri")
 fun setMutableImageUri(view: ImageView, uri: MutableLiveData<Uri>?) {
-    val requestOptions: RequestOptions by lazy {
-        RequestOptions()
-                .error(R.drawable.profile)
-                .placeholder(R.drawable.loading)
-                .transforms(CenterCrop())
-    }
+    val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
 
-    val parentActivity:AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && uri != null) {
+    if(uri != null) {
         uri.observe(parentActivity, Observer { value -> Glide.with(view.context)
                 .load(value)
-                .apply(requestOptions)
                 .into(view)})
+    }
+    else {
+        Glide.with(view.context)
+                .load(R.drawable.ic_profile)
+                .into(view)
     }
 }

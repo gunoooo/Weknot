@@ -9,6 +9,7 @@
 <com.google.android.material.card.MaterialCardView
     android:layout_width="match_parent"
     android:id="@+id/root_layout"
+    android:onClick="@{() -> viewModel.onClickItem()}"
     android:layout_height="100dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +63,7 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/nanum_squareb"
                 android:textColor="@color/colorMainDark"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:mutableText="@{viewModel.point}" />
         </LinearLayout>
 

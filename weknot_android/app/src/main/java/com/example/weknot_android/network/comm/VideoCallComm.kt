@@ -12,12 +12,12 @@ class VideoCallComm : BaseComm<VideoCallApi>() {
         return api.requestCall(token).map(getResponseObjectsFunction())
     }
 
-    fun completeMatching(token: String): Single<Friend> {
-        return api.completeMatching(token).map(getResponseObjectsFunction())
+    fun finishRoom(token: String, channel: String): Single<String> {
+        return api.finishRoom(token, channel).map(getResponseObjectsFunction())
     }
 
-    fun deleteRoom(channel: String): Single<String> {
-        return api.deleteRoom(channel).map(getResponseMessageFunction())
+    fun addPoint(token: String, id: String): Single<String> {
+        return api.addPoint(token, id).map(getResponseMessageFunction())
     }
 
     override fun type(): Class<VideoCallApi> {

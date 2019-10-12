@@ -26,9 +26,9 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(applicat
     val commentText: MutableLiveData<String> = MutableLiveData()
     private val comment: MutableLiveData<RequestBody> = MutableLiveData()
 
-    val goToCrop: SingleLiveEvent<Any> = SingleLiveEvent()
-    val backMessageToast: SingleLiveEvent<Any> = SingleLiveEvent()
-    val openMain: SingleLiveEvent<Any> = SingleLiveEvent()
+    val goToCrop: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val backMessageToast: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val openMain: SingleLiveEvent<Unit> = SingleLiveEvent()
 
 
     fun postFeed() {

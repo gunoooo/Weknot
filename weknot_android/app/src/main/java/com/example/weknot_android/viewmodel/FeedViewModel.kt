@@ -15,7 +15,7 @@ class FeedViewModel(application: Application) : BaseViewModel<List<Feed>>(applic
 
     var feedAdapter = FeedAdapter()
 
-    val openFeedWrite: SingleLiveEvent<Any> = SingleLiveEvent()
+    val openFeedWrite: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     fun getFeeds() {
         addDisposableLoading(feedComm.getFeeds(token), dataObserver)

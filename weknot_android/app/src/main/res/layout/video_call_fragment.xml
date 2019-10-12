@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.weknot_android.viewmodel.VideoCallViewModel" />
@@ -18,6 +20,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
+            android:visibility="@{viewModel.isFinish() ? View.INVISIBLE : View.VISIBLE}"
             android:background="@drawable/background_video_call"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,12 +28,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/profile_image"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:src="@drawable/profile"
+                app:mutableImageUrl="@{viewModel.myPhoto}"
                 app:layout_constraintBottom_toTopOf="@+id/video_call_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,11 +51,98 @@
                 android:padding="10dp"
                 android:text="@string/video_call_text"
                 android:textColor="@android:color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:onClick="@{() -> viewModel.onClickMatching()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:visibility="@{viewModel.isFinish() ? View.VISIBLE : View.INVISIBLE}"
+            android:background="@drawable/background_video_call"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_back"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:onClick="@{() -> viewModel.onClickBack()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/circularImageView"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mutableImageUrl="@{viewModel.otherPhoto}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:fontFamily="@font/nanum_squareeb"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/circularImageView"
+                app:layout_constraintStart_toStartOf="@+id/circularImageView"
+                app:layout_constraintTop_toBottomOf="@+id/circularImageView"
+                app:mutableText="@{viewModel.otherName}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/background_video_call_button"
+                android:fontFamily="@font/nanum_squareeb"
+                android:gravity="center"
+                android:onClick="@{() -> viewModel.onClickProfile()}"
+                android:padding="10dp"
+                android:text="@string/profile_title"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/background_like"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:visibility="@{viewModel.isLike() ? View.INVISIBLE : View.VISIBLE}"
+                android:onClick="@{() -> viewModel.onClickLike()}"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/like_on" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

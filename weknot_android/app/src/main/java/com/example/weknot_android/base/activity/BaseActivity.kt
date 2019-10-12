@@ -53,7 +53,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
             appBarBinding = appBarField.get(binding) as AppBarBinding
             setSupportActionBar(appBarBinding.toolbar)
         }
-        catch (e: NoSuchFieldException) {
+        catch (e: Exception) {
 
         }
     }

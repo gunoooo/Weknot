@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="viewModel"
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:mutableText="@{viewModel.name}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="@color/colorMainDark"
             android:fontFamily="@font/nanum_squareeb"
             android:layout_marginStart="20dp"
@@ -46,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textColor="@color/textColor"
             android:fontFamily="@font/nanum_squareb"
             app:mutableText="@{viewModel.master}" />

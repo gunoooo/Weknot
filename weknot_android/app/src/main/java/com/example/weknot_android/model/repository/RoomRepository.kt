@@ -22,13 +22,13 @@ class RoomRepository(application: Application) {
     }
 
     fun insertUser(entity: User): Completable { return userDao.insert(entity) }
-    fun updateUser(entity: User) { Completable.fromAction { userDao.update(entity) } }
-    fun deletUser(entity: User) { Completable.fromAction { userDao.delete(entity) } }
+    fun updateUser(entity: User): Completable { return userDao.update(entity) }
+    fun deletUser(entity: User): Completable { return userDao.delete(entity) }
     fun getUser(id: String): Single<User> {
         return userDao.getUser(id)
     }
 
-    fun insertOpenChat(entity: OpenChatRoom) { Completable.fromAction { openChatDao.insert(entity) }}
-    fun insertOpenChat(vararg entity: OpenChatRoom) { Completable.fromAction { openChatDao.insert(entity) } }
+    fun insertOpenChat(entity: OpenChatRoom): Completable { return openChatDao.insert(entity) }
+    fun insertOpenChat(vararg entity: OpenChatRoom): Completable { return openChatDao.insert(entity) }
     fun getOpenChat(roomNumber: String): Single<OpenChatRoom>? { return openChatDao.getOpenChat(roomNumber) }
 }

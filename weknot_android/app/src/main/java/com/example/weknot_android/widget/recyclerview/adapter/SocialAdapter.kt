@@ -22,6 +22,7 @@ class SocialAdapter : Adapter<SocialViewHolder>(), SocialAdapterNavigator {
     private lateinit var friends: List<Friend>
 
     val checkFriendEvent = SingleLiveEvent<FriendRequest>()
+    val openProfile = SingleLiveEvent<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SocialViewHolder {
         return SocialViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.social_item, parent, false))
@@ -34,6 +35,10 @@ class SocialAdapter : Adapter<SocialViewHolder>(), SocialAdapterNavigator {
 
     override fun checkFriend(message: String, friend: Friend) {
         checkFriendEvent.value = FriendRequest(friend.friendId, message)
+    }
+
+    override fun openProfile(id: String) {
+        openProfile.value = id
     }
 
     fun updateList(friends: List<Friend>) {
