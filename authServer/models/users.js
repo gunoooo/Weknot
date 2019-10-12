@@ -380,4 +380,32 @@ exports.getPicture = async (cid) => {
     if (conn) await conn.end();
     return pictureResult;
   }
-} 
+}
+
+//feed에서 like했을 경우만 가능하다.
+exports.modifyFeedPoint = async (datas) => {
+  let conn, sql;
+  if (datas.modify === '+') {
+    //sender: userId, feedId = feedId
+    sql = 'UPDATE user A INNER JOIN `like` B ON A.id = B.receiver SET A.point = A.point+1 WHERE B.sender = ? AND B.feedId = ?;';
+  } else {
+    //likeId = likeId;
+    sql = 'SELECT user.point FROM user JOIN `like` ON user.id = like.receiver WHERE like.id= ?';
+  }
+}
+
+exports.modifyUserPoint = async (cid) => {
+  let conn;
+  let result;
+  const sql = 'UPDATE user SET user.point= user.point+1 WHERE user.id= ?';
+  try {
+    conn = await dbcp.getConnection();
+    result = await conn.query(sql, cid)
+  }
+  catch (error) {
+    throw new error;
+  } finally {
+    if (conn) await conn.end();
+    return result;
+  }
+}

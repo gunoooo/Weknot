@@ -94,11 +94,13 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
 router.post('/:id/like', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
   const feedId = req.params.id;
+  console.log('userId: ',userId);
+  console.log('feedId: ',feedId);
+  //getFeedId 해서 feedId가 있는지 없는지 판단해야함.
 
   feedModel.getLike(userId, feedId)
     .then((result) => {
-      console.log(result.length);
-      console.log(result);
+      console.log('result.length',result.length);
       if (result.length == 1) {
         const likeId = result[0].id
 
