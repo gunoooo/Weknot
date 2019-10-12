@@ -22,7 +22,7 @@ exports.loginUser = (req, res, user) => {
 
   const sign = (user) => {
     const p = new Promise((resolve, reject) => {
-      let exptime = Math.floor(Date.now() / 1000) + (60 * 60 * 24); // 24 hour
+      let exptime = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 30); // 1달
       jwt.sign(
         {
           userName: user.name,
