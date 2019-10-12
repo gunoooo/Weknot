@@ -92,6 +92,17 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
     });
 });
 
+router.get('/:id/like', authMiddle,(req,res,next)=>{
+  const feedId = req.params.id;
+  feedModel.getLikeCount(feedId)
+  .then((result)=>{
+    
+  })
+  .catch((err) => {
+
+  })
+})
+
 router.post('/:id/like', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
   const feedId = req.params.id;
