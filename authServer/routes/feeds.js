@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const authMiddle = require("../middlewares/auth");
-const feedModel = require('../models/feeds')
+const feedModel = require('../models/feeds');
+const userModel = require('../models/users');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
@@ -91,6 +92,17 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
     });
 });
 
+router.get('/:id/like', authMiddle,(req,res,next)=>{
+  const feedId = req.params.id;
+  feedModel.getLikeCount(feedId)
+  .then((result)=>{
+    
+  })
+  .catch((err) => {
+
+  })
+})
+
 router.post('/:id/like', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
   const feedId = req.params.id;
@@ -103,24 +115,62 @@ router.post('/:id/like', authMiddle, (req, res, next) => {
       console.log('result.length',result.length);
       if (result.length == 1) {
         const likeId = result[0].id
+        let datas = {
+          likeId : likeId,
+          modify : '-'
+        }
 
-        // 삭제
-        feedModel.deleteLike(likeId)
-          .then(() => {
-            res.json({
-              message: "ok, like canceled"
+        userModel.modifyFeedPoint(datas)
+        .then((result) => {
+          if(result.affectedRows > 0)
+          {
+            feedModel.deleteLike(likeId)
+              .then((result) => {
+                if(result){
+                  res.json({
+                    message: "ok, like canceled"
+                  })
+                }else{
+                  res.status(403).json({ 
+                    message: "error",
+                  })
+                }
+              })
+          }
+          else{
+            res.status(403).json({ 
+              message: "likeId is not defined",
             })
-          })
-          .catch((err) => {
-            res.status(500).json({
-              error: { message: err.message }
-            });
-          })
+          }
+        }).catch((err) => {
+          res.status(500).json({
+            error: { message: err.message }
+          });
+        })    
+        
+
       } else {
         feedModel.addLike(userId, feedId)
           .then(() => {
-            res.json({
-              message: "ok"
+            let datas = {
+              sender: userId,
+              feedId: feedId,
+              modify: '+',
+            }
+            console.log('datas: ',datas);
+            userModel.modifyFeedPoint(datas)
+            .then((result) => {
+              if(result.affectedRows > 0)
+              {
+                res.json({
+                  message: "ok, like"
+                })
+              }
+              else{
+                res.status(403).json({ 
+                  message: "feedId is not defined",
+                })
+              }
             })
           })
           .catch((err) => {

@@ -49,18 +49,21 @@ exports.getFeeds = async (id) => {
   let conn;
   // 내꺼랑 친구꺼 피드만 보내기 (현재는 모든사용자 피드)
   // 필요한거 좋아요 갯수(likeCount), 내가 좋아요했는지 or 안했는지(like)
-  const sql = '(SELECT feed.writer,feed.time, feed.picture, feed.comment, user.photo, user.id, user.name FROM feed ' +
+  const sql = '(SELECT count(`like`.id) as likeCount, feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS feedCount FROM feed ' +
     'JOIN user ON feed.writer = user.id ' +
     'JOIN friends ON feed.writer = friends.receiver ' +
+    'JOIN `like` ON feedId = `like`.feedId' +
     'WHERE friends.state = 1 AND friends.requester = ?) ' +
     'UNION ' +
-    '(SELECT feed.writer,feed.time, feed.picture, feed.comment, user.photo, user.id, user.name FROM feed ' +
+    '(SELECT count(`like`.id) as likeCount, feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name,(SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS feedCount FROM feed ' +
     'JOIN user ON feed.writer = user.id ' +
     'JOIN friends ON feed.writer = friends.requester ' +
+    'JOIN `like` ON feedId = `like`.feedId' +
     'WHERE friends.state = 1 AND friends.receiver = ?) ' +
     'UNION ' +
-    '(SELECT feed.writer,feed.time, feed.picture, feed.comment, user.photo, user.id, user.name FROM feed ' +
+    '(SELECT count(`like`.id) as likeCount, feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name,(SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS feedCount FROM feed ' +
     'JOIN user ON feed.writer = user.id ' +
+    'JOIN `like` ON feedId = `like`.feedId' +
     'WHERE feed.writer = ?) ' +
     'ORDER BY time DESC; ';
 
@@ -78,11 +81,11 @@ exports.getFeeds = async (id) => {
 
 exports.getFeed = async (id) => {
   let conn;
-  const sql = "SELECT feed.* FROM feed WHERE writer= ? ";
+  const sql = "SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name FROM feed JOIN user ON user.id = ? WHERE writer= ? ";
   let result;
   try {
     conn = await dbcp.getConnection();
-    result = await conn.query(sql, id);
+    result = await conn.query(sql, [id,id]);
   } catch (error) {
     throw error;
   } finally {
@@ -113,6 +116,7 @@ exports.addLike = async (userId, feedId) => {
   try {
     conn = await dbcp.getConnection();
     result = await conn.query(sql, [userId, feedId, feedId]);
+    console.log('result: ', result);
   } catch (error) {
     throw error;
   } finally {
