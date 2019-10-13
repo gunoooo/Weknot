@@ -1,22 +1,19 @@
 package com.example.weknot_android.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
-import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.view.activity.FeedWriteActivity
+import com.example.weknot_android.view.activity.ProfileActivity
 import com.example.weknot_android.viewmodel.FeedViewModel
 
-class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() {
+class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() ,SwipeRefreshLayout.OnRefreshListener {
 
     override fun getLayoutId(): Int {
         return R.layout.feed_fragment
@@ -40,10 +37,18 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() {
                 simpleToast(it.message)
             })
 
-            feedAdapter.likeEvent.observe(this@FeedFragment, Observer {
-                feedId.value = it
-                postFeedLike()
-            })
+            with(feedAdapter) {
+                likeEvent.observe(this@FeedFragment, Observer {
+                    feedId.value = it
+                    postFeedLike()
+                })
+
+                openProfile.observe(this@FeedFragment, Observer {
+                    val intent = Intent(context, ProfileActivity::class.java)
+                    intent.putExtra("id", it)
+                    startActivity(intent)
+                })
+            }
         }
     }
 
@@ -62,9 +67,21 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() {
         setUp()
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.getFeeds()
+    }
+
+    override fun onRefresh() {
+        viewModel.getFeeds()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
+
     private fun setUp() {
         binding.feedRecyclerview.addOnScrollListener(scrollListener)
 
-        viewModel.getFeeds()
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
 }

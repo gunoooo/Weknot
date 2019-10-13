@@ -76,7 +76,7 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.home) {
+        if (item.itemId == android.R.id.home) {
             finish()
             return true
         }

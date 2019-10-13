@@ -16,6 +16,6 @@ interface VideoCallApi {
                    @Path("channel") channel: String): Single<retrofit2.Response<Response<String>>>
 
     @POST("/matching/addPoint/{id}")
-    fun addPoint(@Header("Authorization") toekn: String,
+    fun addPoint(@Header("Authorization") token: String,
                  @Path("id") id: String): Single<retrofit2.Response<Response<Any>>>
 }

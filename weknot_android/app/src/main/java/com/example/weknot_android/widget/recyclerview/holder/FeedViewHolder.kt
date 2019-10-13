@@ -14,6 +14,7 @@ import com.example.weknot_android.widget.recyclerview.viewmodel.FeedItemViewMode
 class FeedViewHolder(val binding: FeedItemBinding) : BaseViewHolder<FeedAdapterNavigator>(binding.root), FeedItemNavigator {
 
     private val viewModel = FeedItemViewModel()
+    private lateinit var id: String
 
     override fun likeOnEvent() {
         binding.likeOnAnimation.startAnimation(animLikeOffFirst)
@@ -23,8 +24,13 @@ class FeedViewHolder(val binding: FeedItemBinding) : BaseViewHolder<FeedAdapterN
         binding.likeOffAnimation.startAnimation(animLikeOnFirst)
     }
 
+    override fun openProfile() {
+        getNavigator().openProfile(id)
+    }
+
     fun bind(data: Feed) {
         viewModel.bind(data)
+        id = data.writer
         viewModel.setNavigator(this)
         setUp()
         binding.viewModel = viewModel

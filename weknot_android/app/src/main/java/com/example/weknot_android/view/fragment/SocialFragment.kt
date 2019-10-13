@@ -32,11 +32,6 @@ class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>() {
                 simpleToast(it.message)
             })
 
-            receiveAdapter.checkFriendEvent.observe(this@SocialFragment, Observer {
-                friendRequest.value = it
-                putFriend()
-            })
-
             with(receiveAdapter) {
                 checkFriendEvent.observe(this@SocialFragment, Observer {
                     friendRequest.value = it
@@ -49,11 +44,17 @@ class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>() {
                     startActivity(intent)
                 })
             }
+
+            friendAdapter.openProfile.observe(this@SocialFragment, Observer {
+                val intent = Intent(context, ProfileActivity::class.java)
+                intent.putExtra("id", it)
+                startActivity(intent)
+            })
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
         viewModel.setUp()
     }
 }

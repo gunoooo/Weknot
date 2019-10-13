@@ -9,12 +9,12 @@
 <com.google.android.material.card.MaterialCardView
     android:layout_width="match_parent"
     android:id="@+id/root_layout"
-    android:onClick="@{() -> viewModel.onClickItem()}"
     android:layout_height="100dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="@{() -> viewModel.onClickItem()}" >
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_image"
@@ -87,7 +87,7 @@
                 android:fontFamily="@font/nanum_squareeb"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="10dp"
+                android:textSize="10sp"
                 android:text="매듭 거절"
                 android:onClick="@{() -> viewModel.onClickRejectBtn()}"
                 android:textColor="@color/colorMainDark" />
@@ -101,7 +101,7 @@
                 android:fontFamily="@font/nanum_squareeb"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="10dp"
+                android:textSize="10sp"
                 android:text="매듭 수락"
                 android:onClick="@{() -> viewModel.onClickAcceptBtn()}"
                 android:textColor="@color/colorMainDark" />

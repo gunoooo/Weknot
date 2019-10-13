@@ -51,9 +51,12 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
         setUp()
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.getChattingRooms()
+    }
+
     private fun setUp() {
         binding.chatRoomRecyclerview.addOnScrollListener(scrollListener)
-
-        viewModel.getChattingRooms()
     }
 }

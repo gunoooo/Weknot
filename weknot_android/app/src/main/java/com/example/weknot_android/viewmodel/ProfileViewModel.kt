@@ -97,7 +97,7 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
         else {
             userGender.value = R.drawable.woman_icon
         }
-        when (data.staus) {
+        when (data.state) {
             0 -> userStatus.value = "친구 요청"
             10 -> userStatus.value = "친구"
             1 -> userStatus.value = "친구 수락"

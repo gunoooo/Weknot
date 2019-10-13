@@ -34,4 +34,8 @@ class FeedItemViewModel : BaseItemViewModel<Feed, FeedItemNavigator>() {
     fun onClickLikeOff() {
         getNavigator().likeOffEvent()
     }
+
+    fun onClickProfile() {
+        getNavigator().openProfile()
+    }
 }

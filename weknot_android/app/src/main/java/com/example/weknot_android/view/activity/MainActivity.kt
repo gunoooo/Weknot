@@ -1,7 +1,11 @@
 package com.example.weknot_android.view.activity
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.weknot_android.BR
@@ -91,8 +95,22 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            alert()
+            return true
+        }
+        return false
+    }
+
+    private fun alert() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("정말로 로그아웃 하시겠습니까?")
+        builder.setPositiveButton("예 ") { dialog, which ->
+            viewModel.logout()
+            startActivityWithFinish(LoginActivity::class.java)
+        }
+        builder.setNegativeButton(" 아니오") { dialog, which -> return@setNegativeButton}
+        builder.show()
     }
 }

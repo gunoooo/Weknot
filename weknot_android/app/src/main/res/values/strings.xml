@@ -25,4 +25,5 @@
 
     <string name="empty_message">빈칸 없이 입력해 주세요</string>
     <string name="exist_message">취소 되었습니다</string>
+    <string name="text_video_call_history">방금 통화한 사람</string>
 </resources>

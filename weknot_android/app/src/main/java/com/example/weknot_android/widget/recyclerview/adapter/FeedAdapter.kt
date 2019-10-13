@@ -12,9 +12,11 @@ import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedAdapter
 import kotlin.collections.ArrayList
 
 class FeedAdapter : Adapter<FeedViewHolder>(), FeedAdapterNavigator {
+
     private lateinit var feeds: List<Feed>
 
     val likeEvent = SingleLiveEvent<Int>()
+    val openProfile = SingleLiveEvent<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         return FeedViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.feed_item, parent, false))
@@ -33,7 +35,11 @@ class FeedAdapter : Adapter<FeedViewHolder>(), FeedAdapterNavigator {
         (feeds as ArrayList<Feed>)[position] = feed
         notifyItemChanged(position)
 
-        likeEvent.value = feed.id
+        likeEvent.value = feed.feedId
+    }
+
+    override fun openProfile(id: String) {
+        openProfile.value = id
     }
 
     fun updateList(feeds: List<Feed>?) {

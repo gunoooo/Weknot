@@ -1,6 +1,7 @@
 package com.example.weknot_android.network.api
 
 import com.example.weknot_android.model.entity.user.Friend
+import com.example.weknot_android.network.request.FriendAddRequest
 import com.example.weknot_android.network.request.FriendRequest
 import com.example.weknot_android.network.response.Response
 import io.reactivex.Single
@@ -17,5 +18,5 @@ interface SocialApi {
 
     @POST("/friends")
     fun addFriend(@Header("Authorization") token: String,
-                  @Body receiver: String): Single<retrofit2.Response<Response<Any>>>
+                  @Body friendAddRequest: FriendAddRequest): Single<retrofit2.Response<Response<Any>>>
 }

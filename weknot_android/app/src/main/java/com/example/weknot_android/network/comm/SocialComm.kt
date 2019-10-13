@@ -3,6 +3,7 @@ package com.example.weknot_android.network.comm
 import com.example.weknot_android.base.BaseComm
 import com.example.weknot_android.model.entity.user.Friend
 import com.example.weknot_android.network.api.SocialApi
+import com.example.weknot_android.network.request.FriendAddRequest
 import com.example.weknot_android.network.request.FriendRequest
 import io.reactivex.Single
 
@@ -17,7 +18,7 @@ class SocialComm : BaseComm<SocialApi>() {
     }
 
     fun addFriend(token: String, receiver: String): Single<String> {
-        return api.addFriend(token, receiver).map(getResponseMessageFunction())
+        return api.addFriend(token, FriendAddRequest(receiver)).map(getResponseMessageFunction())
     }
 
     override fun type(): Class<SocialApi> {

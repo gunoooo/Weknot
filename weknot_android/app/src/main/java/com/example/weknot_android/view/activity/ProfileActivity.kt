@@ -1,6 +1,7 @@
 package com.example.weknot_android.view.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.weknot_android.BR
@@ -44,5 +45,13 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
     private fun setUp() {
         viewModel.id.value = intent.getStringExtra("id")
         viewModel.setUp()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return false
     }
 }

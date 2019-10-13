@@ -37,8 +37,12 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>() {
         setUp()
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.setUp()
+    }
+
     private fun setUp() {
         viewModel.id.value = viewModel.getMyId()
-        viewModel.setUp()
     }
 }

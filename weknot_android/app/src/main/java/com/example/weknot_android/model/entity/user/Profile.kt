@@ -11,4 +11,4 @@ class Profile(var id: String,
               var point: Int,
               var feeds: List<Feed>?,
               var gender: String,
-              var staus: Int)
+              var state: Int)
