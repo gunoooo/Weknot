@@ -5,6 +5,7 @@
     <color name="colorDart">#AD3B35</color>
     <color name="colorAccent">#FD3E35</color>
     <color name="colorBackground">#F5F5F5</color>
+    <color name="colorLoginBackground">#FDFDFD</color>
     <color name="colorLine">#A5A5A5</color>
     <color name="colorMainDark">#424242</color>
 

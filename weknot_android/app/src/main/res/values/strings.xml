@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">weknot_android</string>
+    <string name="app_name">Weknot</string>
 
     <string name="main_title">Weknot</string>
     <string name="feed_write_title">글쓰기</string>
