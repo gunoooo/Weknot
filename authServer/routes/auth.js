@@ -1,14 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
-const mariadb = require('mariadb');
-const jwt = require('jsonwebtoken');
-
-const dbcp = require('../models/dbcp');
 const users = require('../models/users');
 const authMiddle = require("../middlewares/auth");
-
-const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
 
@@ -17,12 +10,9 @@ router.get('/', (req, res, next) => {
   res.send('auth main');
 });
 
-
 router.post('/login', (req, res, next) => {//userId,userPassword
-  // const userId = req.body.userId;
-  // const password = req.body.userPassword;
-
   const { id, password } = req.body;
+  
   if (!id || !password) {
     res.status(403).json({
       message: "invalid parameter"
@@ -165,206 +155,5 @@ router.post('/checkUserId', (req, res, next) => {//userName,userPhoneNumber
       res.status(500).json({ error: err.message });
     });
 });
-
-/*router.get('/allUser',(req,res,next) => {
-  users.allUsers()
-  .then((result) => {
-    res.json(result);
-  })
-  .catch((err) => {
-    res.render('error',{error:err});
-  })
-});*/
-
-//router.post('/addLike',(req, res, next) => {//friendId
-// const friendId = req.body.friendId;
-
-
-
-//});
-
-// router.get('/chattingRooms',(req, res, next) => {//userId
-//   const userId = req.body.userId;
-
-//   users.getChattingRooms()
-//   .then((result) => {
-//     if(result !== undefined)
-//       res.json(result);
-//     else
-//       res.json({result:"fail"});
-//   })
-//   .catch((err) => {
-//     res.json({
-//       result:"error",
-//       error:err.message});
-//   });
-// });//roomNumber,roomName,masterName,roomPassword,roomType
-
-// router.get('/dm',(req, res, next) => {//userId
-// //  const userId = req.body.userId;
-//   const userId = "w";
-//   let dm;
-
-//   users.getDms(userId)
-//   .then((dmResult) => {
-//     let sender = dmResult.sender;
-//     users.getPicture(sender)
-//     .then((result) => {
-//       console.log(result);
-//       dm = Object.assign(dmResult,result);
-//       console.log(dm);
-//     })
-//     if(dm !== undefined)
-//       res.json(dm);
-//   })
-//   .catch((err) => {
-//     res.json({
-//       result:"error",
-//       error:err.message});
-//   });
-// });//friendId,friendPicture,message,date,isRead,dmId
-
-// router.get('/dm/:dmId',(req, res, next) => {
-//   const dmId = req.params.dmId;
-// });//friendId,friendPicture,message,date,dmId,files
-
-router.post('/requestFriend', (req, res, next) => {
-  const userId = "wowjddl";
-  const friendId = "Ryu";
-
-  res.json({
-    result: "success",
-    message: "ok"
-  });
-  /*
-  res.json({
-    result: "fail",
-    message: "error"
-  })
-  */
-});
-
-router.get('/myResponseList', (req, res, next) => {// 내가 리시버이고 state가 1인 애들을 가져옴
-  const userId = "wowjddl";
-
-  const requesters = [
-    {
-      friendId: "asdf1",
-      friendPicture: "google1"
-    },
-    {
-      friendId: "asdf2",
-      friendPicture: "google2"
-    },
-    {
-      friendId: "asdf3",
-      friendPicture: "google3"
-    },
-    {
-      friendId: "asdf4",
-      friendPicture: "google4"
-    }
-  ]
-
-  res.json({
-    result: requesters,
-    message: "ok"
-  })
-
-  /*
-  res.json({
-    result: "fail",
-    message: "error"
-  })
-  */
-})
-
-// router.post('./createChattingRoom',(req,res,next) => {
-//   const userId= "wowjddl1";
-//   const roomName="15세 남 친구 구해요";
-//   const roomPassword="";
-//   const roomType="free";
-
-//   const roomId = 2;
-//   /*
-//     addMember()
-//   */
-
-//   res.json({
-//     result: ["success",roomId],
-//     message: "ok"
-//   })
-
-//   /*
-//   res.json({
-//     result: "fail",
-//     message: "error"
-//   })
-//   */
-// });
-
-// router.put('./enterRoom', (req,res,next) => {
-//   const roomId = 2;
-//   const userId = "wowj";
-
-//   res.json({
-//     result: "success",
-//     message: "ok"
-//   });
-
-//   /*
-//   res.json({
-//     result: "fail",
-//     message: "error"
-//   })
-//   */
-// });
-
-// router.post('./exitChattingRoom', (req,res,next) => {// 퇴장 할 때마다 룸의 멤버 수를 체크하고 메버 수가 0명이 되었을 경우 룸 삭제해야함.
-//   const roomId = 2;
-//   const userId = "wowjd";
-
-//   res.json({
-//     result: "success",
-//     message: "ok"
-//   });
-
-//   /*
-//   res.json({
-//     result: "fail",
-//     message: "error"
-//   })
-//   */
-// });
-
-// router.post('./requestMatching', (req,res,next) => {// 매칭하기를 누르면 매칭 테이블에 넣고, 매칭 취소하면 빼기
-//   const userId = "wowjd";
-
-//   const otherUser = [
-//     {
-//       id: "fkffkffn",
-//       name: "fkffkffn",
-//       password: "fkffkffn",
-//       birth: 19566854,
-//       gender: "0",//남자
-//       phoneNumber: "010-9121-0769",
-//       picture:"dsd",
-//       intro: "나는 15세 남자다",
-//       point: 35030,
-//     }
-//   ]
-//   //createChattingRoom
-//   res.json({
-//     result: otherUser,
-//     message: "ok"
-//   })
-
-//   /*
-//   res.json({
-//     result: "fail",
-//     message: "error"
-//   })
-//   */
-// });
 
 module.exports = router;
