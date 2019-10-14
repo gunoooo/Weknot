@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const authMiddle = require("../middlewares/auth");
 const feedModel = require('../models/feeds');
 const userModel = require('../models/users');
-const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
 
@@ -39,7 +38,6 @@ router.get('/', authMiddle, function (req, res, next) {
         error: { message: err.message }
       });
     })
-  //res.render('feedTest');
 });
 
 router.get('/writer/:id', (req, res, next) => {
@@ -91,17 +89,6 @@ router.post('/', [authMiddle, upload], (req, res, next) => {
       });
     });
 });
-
-router.get('/:id/like', authMiddle,(req,res,next)=>{
-  const feedId = req.params.id;
-  feedModel.getLikeCount(feedId)
-  .then((result)=>{
-    
-  })
-  .catch((err) => {
-
-  })
-})
 
 router.post('/:id/like', authMiddle, (req, res, next) => {
   const userId = req.decodedToken.sub;
