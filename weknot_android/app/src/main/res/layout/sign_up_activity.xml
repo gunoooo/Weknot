@@ -23,7 +23,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_camera"
+            android:onClick="@{() -> viewModel.onClickPhoto()}"
+            app:srcCompat="@drawable/ic_profile"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout

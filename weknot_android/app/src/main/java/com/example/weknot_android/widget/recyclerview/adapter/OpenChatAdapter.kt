@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.example.weknot_android.R
 import com.example.weknot_android.databinding.OpenChatItemBinding
+import com.example.weknot_android.model.entity.OpenChat.ChatRoom
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.widget.recyclerview.holder.OpenChatViewHolder
 
 
 class OpenChatAdapter : Adapter<OpenChatViewHolder>() {
-    private lateinit var openChatRooms: List<OpenChatRoom>
+    private lateinit var openChatRooms: List<ChatRoom>
+    private lateinit var keys: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpenChatViewHolder {
         return OpenChatViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.open_chat_item, parent, false))
@@ -23,9 +25,13 @@ class OpenChatAdapter : Adapter<OpenChatViewHolder>() {
         holder.bind(openChatRooms[position])
     }
 
-    fun updateList(openChatRooms: List<OpenChatRoom>) {
+    fun updateList(openChatRooms: List<ChatRoom>) {
         this.openChatRooms = openChatRooms
         notifyDataSetChanged()
+    }
+
+    fun updateKey(keys: List<String>) {
+        this.keys = keys
     }
 
     override fun getItemCount(): Int {

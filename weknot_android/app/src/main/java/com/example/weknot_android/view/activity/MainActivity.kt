@@ -1,9 +1,8 @@
 package com.example.weknot_android.view.activity
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.Menu
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -12,9 +11,15 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.MainActivityBinding
+import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.viewmodel.MainViewModel
 import com.example.weknot_android.widget.viewpager.MainPagerAdapter
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
@@ -49,6 +54,17 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     private fun setUp() {
         setUpViewPager()
+        fbLogin()
+    }
+
+    private fun fbLogin() {
+        FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword("rjsdnqkr1@weknot.com", "rjsdnqkr1")
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.d("LOGIN", "Fire base login")
+                    }
+        }
     }
 
     private fun setUpViewPager() {

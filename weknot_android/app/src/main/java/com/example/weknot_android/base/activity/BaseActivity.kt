@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.weknot_android.base.viewmodel.BaseViewModel
@@ -84,5 +85,13 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
 
     protected fun simpleToast(message: Int) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        fun <T : Fragment?> newInstance(fragment: T): T {
+            val args = Bundle()
+            fragment!!.arguments = args
+            return fragment
+        }
     }
 }

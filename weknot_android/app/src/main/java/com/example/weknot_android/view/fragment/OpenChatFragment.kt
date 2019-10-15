@@ -2,16 +2,13 @@ package com.example.weknot_android.view.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
-import com.example.weknot_android.base.fragment.BaseFragment
+import com.example.weknot_android.base.BaseDialog
 import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.OpenChatFragmentBinding
+import com.example.weknot_android.view.dialog.CreateRoomDialog
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 
 class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>() {
@@ -33,6 +30,10 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
             onErrorEvent.observe(this@OpenChatFragment, Observer {
                 simpleToast(it.message)
             })
+
+            openCreateRoom.observe(this@OpenChatFragment, Observer {
+                newInstance(CreateRoomDialog()).show(fragmentManager)
+            })
         }
     }
 
@@ -51,8 +52,8 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
         setUp()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
         viewModel.getChattingRooms()
     }
 

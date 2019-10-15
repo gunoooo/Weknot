@@ -67,8 +67,9 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() ,Swi
         setUp()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
+
         viewModel.getFeeds()
     }
 

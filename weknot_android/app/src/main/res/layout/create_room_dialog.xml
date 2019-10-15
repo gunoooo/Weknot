@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.viewmodel.CreateRoomViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_close" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_room_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/room_name_text"
+            app:boxBackgroundColor="@android:color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/room_name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen|flagNoAccessoryAction"
+                android:inputType="text"
+                android:privateImeOptions="nm"
+                android:text="@={viewModel.chatRoom.roomName}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            android:entries="@array/room_type"
+            android:onItemSelected="@{(parent,view,pos,id) -> viewModel.onSelectItem(parent,view,pos,id)}"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/create_room_text"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/nanum_squareeb"
+            android:textSize="15sp"
+            android:layout_marginBottom="30dp"
+            android:textColor="@android:color/white"
+            android:onClick="@{() -> viewModel.onClickCreate()}"/>
+
+    </LinearLayout>
+
+</layout>

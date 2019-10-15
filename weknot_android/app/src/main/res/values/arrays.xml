@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="room_type">
+        <item>자유방</item>
+        <item>고민 상담방</item>
+        <item>게임방</item>
+        <item>친목방</item>
+    </string-array>
+</resources>

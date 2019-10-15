@@ -37,8 +37,8 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>() {
         setUp()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
         viewModel.setUp()
     }
 
