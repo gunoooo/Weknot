@@ -1,5 +1,6 @@
 package com.example.weknot_android.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -8,6 +9,8 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseDialog
 import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.OpenChatFragmentBinding
+import com.example.weknot_android.view.activity.ChatActivity
+import com.example.weknot_android.view.activity.ProfileActivity
 import com.example.weknot_android.view.dialog.CreateRoomDialog
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -38,6 +41,12 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
 
             createRoomDialog.dialogCloseEvent.observe(this@OpenChatFragment, Observer {
                 getChattingRooms()
+            })
+
+            openChatAdapter.openChatRoom.observe(this@OpenChatFragment, Observer {
+                val intent = Intent(context, ChatActivity::class.java)
+                intent.putExtra("key", it)
+                startActivity(intent)
             })
         }
     }

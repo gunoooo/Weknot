@@ -14,7 +14,7 @@ class ChatRoom {
                 "고민 상담방" -> "worry"
                 "게임방" -> "game"
                 "친목방" -> "friend"
-                else -> "free"
+                else -> value
             }
         }
 

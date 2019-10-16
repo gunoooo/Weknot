@@ -1,66 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
             type="com.example.weknot_android.widget.recyclerview.viewmodel.OpenChatItemViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@android:color/white"
-        android:id="@+id/root_layout"
-        android:layout_marginTop="3dp">
+        android:layout_height="100dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
-        <TextView
-            android:id="@+id/room_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/black"
-            android:fontFamily="@font/nanum_squareeb"
-            app:mutableText="@{viewModel.number}" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/root_layout">
 
-        <TextView
-            android:id="@+id/room_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:mutableText="@{viewModel.name}"
-            android:textSize="20sp"
-            android:textColor="@color/colorMainDark"
-            android:fontFamily="@font/nanum_squareeb"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/room_number"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/room_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/nanum_squareb"
+                app:mutableText="@{viewModel.number}" />
 
-        <TextView
-            android:id="@+id/room_master"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="12sp"
-            android:textColor="@color/textColor"
-            android:fontFamily="@font/nanum_squareb"
-            app:mutableText="@{viewModel.master}" />
+            <TextView
+                android:id="@+id/room_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mutableText="@{viewModel.name}"
+                android:textSize="20sp"
+                android:textColor="@color/colorMainDark"
+                android:fontFamily="@font/nanum_squareeb"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/room_number"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <ImageView
-            android:id="@+id/room_type"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="20dp"
-            app:mutableImageDrawable="@{viewModel.type}"
-            app:layout_constraintBottom_toBottomOf="@+id/room_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/room_name" />
+            <TextView
+                android:id="@+id/room_master"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/textColor"
+                android:fontFamily="@font/nanum_squareb"
+                app:mutableText="@{viewModel.master}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/room_type"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                app:mutableImageDrawable="@{viewModel.type}"
+                app:layout_constraintBottom_toBottomOf="@+id/room_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/room_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>

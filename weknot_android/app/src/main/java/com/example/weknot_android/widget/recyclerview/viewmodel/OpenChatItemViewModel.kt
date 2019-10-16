@@ -5,8 +5,9 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseItemViewModel
 import com.example.weknot_android.model.entity.OpenChat.ChatRoom
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
+import com.example.weknot_android.widget.recyclerview.navigator.openchat.OpenChatItemNavigator
 
-class OpenChatItemViewModel : BaseItemViewModel<ChatRoom, Any>() {
+class OpenChatItemViewModel : BaseItemViewModel<ChatRoom, OpenChatItemNavigator>() {
     val name = MutableLiveData<String>()
     val number = MutableLiveData<String>()
     val master = MutableLiveData<String>()
@@ -14,8 +15,8 @@ class OpenChatItemViewModel : BaseItemViewModel<ChatRoom, Any>() {
 
     override fun bind(data: ChatRoom) {
         name.value = data.roomName
-        number.value = data.roomNumber.toString()
-        master.value = data.masterName
+        number.value = data.roomNumber.toString() + "."
+        master.value = "개설자 : " + data.masterName
         type.value = getRoomTypeDrawable(data.roomType)
     }
 
@@ -27,5 +28,9 @@ class OpenChatItemViewModel : BaseItemViewModel<ChatRoom, Any>() {
             "friend" -> R.drawable.ic_room_type_friend
             else -> null
         }
+    }
+
+    fun onClickItem() {
+        getNavigator().openChatRoom()
     }
 }

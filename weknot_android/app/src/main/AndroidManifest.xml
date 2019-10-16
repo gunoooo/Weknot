@@ -38,6 +38,9 @@
             android:name=".view.activity.FeedWriteActivity"
             android:label="@string/feed_write_title"/>
         <activity
+            android:name=".view.activity.ChatActivity"
+            android:label="@string/chat_title" />
+        <activity
             android:name=".view.activity.ProfileActivity"
             android:label="@string/profile_title" />
         <activity android:name=".view.activity.VideoCallActivity" />

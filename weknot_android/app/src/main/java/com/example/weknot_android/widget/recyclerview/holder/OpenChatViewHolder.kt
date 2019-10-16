@@ -10,14 +10,23 @@ import com.example.weknot_android.databinding.OpenChatItemBinding
 import com.example.weknot_android.model.entity.OpenChat.ChatRoom
 import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.viewmodel.OpenChatViewModel
+import com.example.weknot_android.widget.recyclerview.navigator.openchat.OpenChatAdapterNavigator
+import com.example.weknot_android.widget.recyclerview.navigator.openchat.OpenChatItemNavigator
 import com.example.weknot_android.widget.recyclerview.viewmodel.OpenChatItemViewModel
 
-class OpenChatViewHolder(val binding: OpenChatItemBinding) : BaseViewHolder<Any>(binding.root) {
+class OpenChatViewHolder(val binding: OpenChatItemBinding) : BaseViewHolder<OpenChatAdapterNavigator>(binding.root), OpenChatItemNavigator {
 
     private val viewModel = OpenChatItemViewModel()
 
-    fun bind(data: ChatRoom) {
-        viewModel.bind(data)
+    private lateinit var key: String
+
+    fun bind(chatRoom: ChatRoom, key: String) {
+        viewModel.bind(chatRoom)
+        this.key = key
         binding.viewModel = viewModel
+    }
+
+    override fun openChatRoom() {
+        getNavigator().openChatRoom(key)
     }
 }

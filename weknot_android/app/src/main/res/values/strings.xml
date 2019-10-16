@@ -7,6 +7,7 @@
     <string name="feed_title">웃긴 게시판</string>
     <string name="video_call_title">랜덤 영상통화</string>
     <string name="open_chat_title">오픈 채팅방</string>
+    <string name="chat_title">채팅방</string>
     <string name="social_title">친구목록</string>
     <string name="myinfo_title">마이 페이지</string>
     <string name="profile_title">프로필</string>
