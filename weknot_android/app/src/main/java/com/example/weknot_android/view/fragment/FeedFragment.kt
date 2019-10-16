@@ -12,6 +12,7 @@ import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.view.activity.FeedWriteActivity
 import com.example.weknot_android.view.activity.ProfileActivity
 import com.example.weknot_android.viewmodel.FeedViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() ,SwipeRefreshLayout.OnRefreshListener {
 
@@ -52,14 +53,8 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() ,Swi
         }
     }
 
-    override fun btnShow() {
-        binding.writeBtn.startAnimation(animAddShow)
-        binding.writeBtn.visibility = View.VISIBLE
-    }
-
-    override fun btnHide() {
-        binding.writeBtn.startAnimation(animAddHide)
-        binding.writeBtn.visibility = View.INVISIBLE
+    override fun setBtn(): FloatingActionButton {
+        return binding.writeBtn
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

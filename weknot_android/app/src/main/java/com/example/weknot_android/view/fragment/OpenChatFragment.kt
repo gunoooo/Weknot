@@ -10,6 +10,7 @@ import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.OpenChatFragmentBinding
 import com.example.weknot_android.view.dialog.CreateRoomDialog
 import com.example.weknot_android.viewmodel.OpenChatViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>() {
 
@@ -32,19 +33,17 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
             })
 
             openCreateRoom.observe(this@OpenChatFragment, Observer {
-                newInstance(CreateRoomDialog()).show(fragmentManager)
+                newInstance(createRoomDialog).show(fragmentManager)
+            })
+
+            createRoomDialog.dialogCloseEvent.observe(this@OpenChatFragment, Observer {
+                getChattingRooms()
             })
         }
     }
 
-    override fun btnShow() {
-        binding.createBtn.startAnimation(animAddShow)
-        binding.createBtn.visibility = View.VISIBLE
-    }
-
-    override fun btnHide() {
-        binding.createBtn.startAnimation(animAddHide)
-        binding.createBtn.visibility = View.INVISIBLE
+    override fun setBtn(): FloatingActionButton {
+        return binding.createBtn
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

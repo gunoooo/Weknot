@@ -1,15 +1,17 @@
 package com.example.weknot_android.viewmodel
 
+import android.R
 import android.app.Application
-import android.view.View
-import android.widget.AdapterView
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.OpenChat.ChatRoom
 import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import io.reactivex.observers.DisposableSingleObserver
 
 
@@ -19,14 +21,17 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
     val chatRoom = ChatRoom()
     private var chatRoomUid: String? = null
 
+    var selectedPosition: Int = 0
+
     val createEvent = SingleLiveEvent<Unit>()
+    val closeEvent = SingleLiveEvent<Unit>()
 
     fun onClickCreate() {
         createEvent.call()
     }
 
-    fun onSelectItem(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-
+    fun onClickBack() {
+        closeEvent.call()
     }
 
     fun getUser() {
@@ -36,14 +41,14 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
             }
 
             override fun onError(e: Throwable) {
-                onErrorEvent.call()
+                onErrorEvent.value = e
             }
         })
     }
 
     private fun setChatRoom(user: User) {
         chatRoom.masterName = user.name
-        chatRoom.roomNumber = 10
+        setRoomCount()
     }
 
     private fun setFbUser(user: User) {
@@ -56,12 +61,29 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
 
         FirebaseDatabase.getInstance().reference.child("groupchatrooms").child(chatRoomUid!!).setValue(chatRoom)
         FirebaseDatabase.getInstance().reference.child("groupchatrooms").child(chatRoomUid!!).child("users").push().setValue(fbUser)
+
+        closeEvent.call()
+    }
+
+    private fun setRoomCount() {
+        var count = 1
+        FirebaseDatabase.getInstance().reference.child("groupchatrooms")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (item in dataSnapshot.children) {
+                            count++
+                        }
+                        chatRoom.roomNumber = count
+
+                        insertFirebase()
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {}
+                })
     }
 
     private fun onRetrieveUserSuccess(user: User) {
-        setChatRoom(user)
         setFbUser(user)
-        insertFirebase()
+        setChatRoom(user)
     }
 
     override fun onRetrieveDataSuccess(data: Any) {}

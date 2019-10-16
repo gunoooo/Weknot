@@ -24,7 +24,7 @@ class OpenChatItemViewModel : BaseItemViewModel<ChatRoom, Any>() {
             "free" -> R.drawable.ic_room_type_free
             "game" -> R.drawable.ic_room_type_game
             "worry" -> R.drawable.ic_room_type_worry
-            "secret" -> R.drawable.ic_room_type_secret
+            "friend" -> R.drawable.ic_room_type_friend
             else -> null
         }
     }

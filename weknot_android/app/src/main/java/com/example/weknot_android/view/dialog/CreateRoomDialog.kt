@@ -1,5 +1,6 @@
 package com.example.weknot_android.view.dialog
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseDialog
 import com.example.weknot_android.databinding.CreateRoomDialogBinding
 import com.example.weknot_android.viewmodel.CreateRoomViewModel
+import com.example.weknot_android.widget.SingleLiveEvent
 
 class CreateRoomDialog : BaseDialog<CreateRoomDialogBinding, CreateRoomViewModel>() {
 
@@ -32,17 +34,31 @@ class CreateRoomDialog : BaseDialog<CreateRoomDialogBinding, CreateRoomViewModel
     override fun initObserver() {
         with(viewModel) {
             createEvent.observe(this@CreateRoomDialog, Observer {
+                chatRoom.roomType = types[selectedPosition]
+
                 if (isEmpty()) {
                     simpleToast(R.string.empty_message)
                     return@Observer
                 }
                 getUser()
             })
+
+            closeEvent.observe(this@CreateRoomDialog, Observer {
+                this@CreateRoomDialog.dismiss()
+            })
         }
     }
 
     fun show(fragmentManager: FragmentManager?) {
         super.show(fragmentManager!!, TAG)
+    }
+
+    private lateinit var types: Array<String>
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        types = resources.getStringArray(R.array.room_type)
     }
 
     private fun isEmpty(): Boolean {

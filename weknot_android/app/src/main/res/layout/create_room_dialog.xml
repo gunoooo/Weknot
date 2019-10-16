@@ -19,7 +19,8 @@
             android:layout_height="25dp"
             android:layout_gravity="end"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close"
+            android:onClick="@{() -> viewModel.onClickBack()}" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_room_name"
@@ -49,7 +50,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
             android:entries="@array/room_type"
-            android:onItemSelected="@{(parent,view,pos,id) -> viewModel.onSelectItem(parent,view,pos,id)}"/>
+            android:selectedItemPosition="@={viewModel.selectedPosition}"/>
 
         <TextView
             android:layout_width="300dp"

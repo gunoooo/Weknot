@@ -52,7 +52,7 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(ap
             }
 
             override fun onError(e: Throwable) {
-                onErrorEvent.call()
+                onErrorEvent.value = e
             }
         })
     }

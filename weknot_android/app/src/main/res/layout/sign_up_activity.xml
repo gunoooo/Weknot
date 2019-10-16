@@ -182,14 +182,17 @@
 
         <Button
             android:id="@+id/sign_up_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="회원가입"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="10dp"
             android:onClick="@{() -> viewModel.onClickSignUp()}"
+            android:text="회원가입"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/input_layout_birth"
             tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

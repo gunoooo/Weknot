@@ -20,11 +20,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import com.example.weknot_android.base.viewmodel.BaseViewModel
+import com.example.weknot_android.widget.SingleLiveEvent
 
 abstract class BaseDialog<VB : ViewDataBinding, VM : BaseViewModel<*>> : DialogFragment() {
 
     protected lateinit var binding: VB
     protected lateinit var viewModel: VM
+
+    val dialogCloseEvent = SingleLiveEvent<Unit>()
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int
@@ -62,7 +65,7 @@ abstract class BaseDialog<VB : ViewDataBinding, VM : BaseViewModel<*>> : DialogF
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val root = RelativeLayout(activity)
         root.layoutParams = LayoutParams(
-                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT)
 
         val dialog = Dialog(context!!)
@@ -71,10 +74,10 @@ abstract class BaseDialog<VB : ViewDataBinding, VM : BaseViewModel<*>> : DialogF
         if (dialog.window != null) {
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window!!.setLayout(
-                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT)
         }
-        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCanceledOnTouchOutside(true)
         return dialog
     }
 
@@ -86,6 +89,11 @@ abstract class BaseDialog<VB : ViewDataBinding, VM : BaseViewModel<*>> : DialogF
         }
         transaction.addToBackStack(null)
         show(transaction, tag)
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        dialogCloseEvent.call()
     }
 
     protected fun startActivity(activity: Class<*>) {

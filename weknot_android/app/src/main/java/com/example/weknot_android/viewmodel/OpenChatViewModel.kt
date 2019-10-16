@@ -8,6 +8,7 @@ import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
 import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.request.OpenChatRequest
+import com.example.weknot_android.view.dialog.CreateRoomDialog
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.adapter.OpenChatAdapter
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,8 @@ class OpenChatViewModel(application: Application) : BaseViewModel<Any>(applicati
     var request = MutableLiveData<OpenChatRequest>()
 
     var openChatAdapter = OpenChatAdapter()
+
+    val createRoomDialog = CreateRoomDialog()
 
     val openCreateRoom = SingleLiveEvent<Unit>()
 

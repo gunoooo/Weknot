@@ -8,15 +8,20 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 abstract class BaseListFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : BaseFragment<VB, VM>() {
 
     private var isOpenWriteBtn : Boolean = true
 
-    protected lateinit var animAddShow : Animation
-    protected lateinit var animAddHide : Animation
+    private lateinit var animAddShow : Animation
+    private lateinit var animAddHide : Animation
 
     protected lateinit var scrollListener: RecyclerView.OnScrollListener
+
+    private lateinit var btn: FloatingActionButton
+
+    protected abstract fun setBtn(): FloatingActionButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,6 +29,7 @@ abstract class BaseListFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : B
     }
 
     private fun setUp() {
+        btn = setBtn()
         setUpAnim()
         setUpScrollListener()
     }
@@ -54,7 +60,13 @@ abstract class BaseListFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : B
         }
     }
 
-    protected abstract fun btnShow()
+    private fun btnShow() {
+        btn.startAnimation(animAddShow)
+        btn.visibility = View.VISIBLE
+    }
 
-    protected abstract fun btnHide()
+    private fun btnHide() {
+        btn.startAnimation(animAddHide)
+        btn.visibility = View.INVISIBLE
+    }
 }
