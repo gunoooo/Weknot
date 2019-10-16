@@ -22,6 +22,7 @@ class OpenChatViewHolder(val binding: OpenChatItemBinding) : BaseViewHolder<Open
 
     fun bind(chatRoom: ChatRoom, key: String) {
         viewModel.bind(chatRoom)
+        viewModel.setNavigator(this)
         this.key = key
         binding.viewModel = viewModel
     }

@@ -1,12 +1,14 @@
 package com.example.weknot_android.viewmodel
 
 import android.app.Application
+import android.util.Log
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.response.data.LoginData
 import com.example.weknot_android.widget.SingleLiveEvent
+import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +26,18 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
         addDisposable(signComm.login(request), dataObserver)
     }
 
+    private fun fbLogin() {
+        FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(request.id + "@weknot.com", request.password + "111111")
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.e("LOGIN Error", task.exception!!.message!!)
+                        return@addOnCompleteListener
+                    }
+                    onSuccessEvent.call()
+                }
+    }
+
     private fun insertLoginData(loginData: LoginData) {
         insertToken(loginData.token)
         insertId(loginData.user.id)
@@ -39,7 +53,7 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { onSuccessEvent.call() },
+                        { fbLogin() },
                         { error -> onErrorEvent.value = error }))
     }
 

@@ -26,6 +26,7 @@ class OpenChatAdapter : Adapter<OpenChatViewHolder>(), OpenChatAdapterNavigator 
     }
 
     override fun onBindViewHolder(holder: OpenChatViewHolder, position: Int) {
+        holder.setNavigator(this)
         holder.bind(openChatRooms[position], keys[position])
     }
 

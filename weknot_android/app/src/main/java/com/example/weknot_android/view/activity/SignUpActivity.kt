@@ -99,12 +99,25 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
 
     private fun fbSignUp() {
         FirebaseAuth.getInstance()
-                .createUserWithEmailAndPassword(viewModel.request.value!!.id + "@weknot.com", viewModel.request.value!!.toString())
+                .createUserWithEmailAndPassword("111" + "@weknot.com", "111" + "111111")
                 .addOnCompleteListener(this@SignUpActivity) { task ->
                     val uid: String = task.result!!.user!!.uid
 
-//                    val user = FbUser(uid = FirebaseAuth.getInstance().currentUser!!.uid, name = viewModel.request.value!!.name)
-//                    FirebaseDatabase.getInstance().reference.child("users").child(uid).setValue(user)
+                    val user = FbUser()
+                    user.uid = FirebaseAuth.getInstance().currentUser!!.uid
+                    user.name = viewModel.request.value!!.name
+                    FirebaseDatabase.getInstance().reference.child("users").child(uid).setValue(user)
+                }
+
+        FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword("222" + "@weknot.com", "222" + "111111")
+                .addOnCompleteListener(this@SignUpActivity) { task ->
+                    val uid: String = task.result!!.user!!.uid
+
+                    val user = FbUser()
+                    user.uid = FirebaseAuth.getInstance().currentUser!!.uid
+                    user.name = viewModel.request.value!!.name
+                    FirebaseDatabase.getInstance().reference.child("users").child(uid).setValue(user)
                 }
     }
 }

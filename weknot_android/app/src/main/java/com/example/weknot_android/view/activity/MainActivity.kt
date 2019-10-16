@@ -59,7 +59,7 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     private fun fbLogin() {
         FirebaseAuth.getInstance()
-                .signInWithEmailAndPassword("rjsdnqkr1@weknot.com", "rjsdnqkr1")
+                .signInWithEmailAndPassword("111" + "@weknot.com", "111" + "111111")
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         Log.d("LOGIN", "Fire base login")

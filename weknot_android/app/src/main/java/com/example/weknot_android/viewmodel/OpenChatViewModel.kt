@@ -22,7 +22,7 @@ class OpenChatViewModel(application: Application) : BaseViewModel<Any>(applicati
 
     var request = MutableLiveData<OpenChatRequest>()
 
-    var openChatAdapter = OpenChatAdapter()
+    val openChatAdapter = OpenChatAdapter()
 
     val createRoomDialog = CreateRoomDialog()
 

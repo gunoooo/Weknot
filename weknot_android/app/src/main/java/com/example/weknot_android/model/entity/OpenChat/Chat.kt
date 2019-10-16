@@ -1,5 +1,8 @@
 package com.example.weknot_android.model.entity.OpenChat
 
-data class Chat(var uid: String,
-                var message: String,
-                var timeStamp: Any)
+class Chat {
+    var uid: String? = null
+    var writer: String? = null
+    var message: String? = null
+    var timeStamp: String? = null
+}
