@@ -7,8 +7,11 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.LoginActivityBinding
+import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.viewmodel.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
 
@@ -35,6 +38,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
                     simpleToast(R.string.empty_message)
                     return@Observer
                 }
+
                 viewModel.login()
             })
 

@@ -54,6 +54,7 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
     private fun setFbUser(user: User) {
         fbUser.name = user.name
         fbUser.uid = FirebaseAuth.getInstance().currentUser!!.uid
+        fbUser.id = user.id
     }
 
     private fun insertFirebase() {

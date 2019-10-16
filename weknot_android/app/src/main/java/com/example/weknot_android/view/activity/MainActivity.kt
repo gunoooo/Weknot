@@ -57,16 +57,6 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
         fbLogin()
     }
 
-    private fun fbLogin() {
-        FirebaseAuth.getInstance()
-                .signInWithEmailAndPassword("111" + "@weknot.com", "111" + "111111")
-                .addOnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.d("LOGIN", "Fire base login")
-                    }
-        }
-    }
-
     private fun setUpViewPager() {
         val pagerAdapter = MainPagerAdapter(supportFragmentManager)
 

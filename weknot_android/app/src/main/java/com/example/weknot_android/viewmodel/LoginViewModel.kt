@@ -28,7 +28,7 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
 
     private fun fbLogin() {
         FirebaseAuth.getInstance()
-                .signInWithEmailAndPassword(request.id + "@weknot.com", request.password + "111111")
+                .signInWithEmailAndPassword(request.id + "@ryan.com", request.password + "111111")
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         Log.e("LOGIN Error", task.exception!!.message!!)
