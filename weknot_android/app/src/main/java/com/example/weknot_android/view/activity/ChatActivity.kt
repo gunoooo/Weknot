@@ -1,6 +1,10 @@
 package com.example.weknot_android.view.activity
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import com.example.weknot_android.BR
@@ -33,6 +37,12 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
             receivedEvent.observe(this@ChatActivity, Observer {
                 binding.messageRecyclerview.scrollToPosition(it.size - 1)
             })
+
+            chatMemberAdapter.openProfile.observe(this@ChatActivity, Observer {
+                val intent = Intent(this@ChatActivity, ProfileActivity::class.java)
+                intent.putExtra("id", it)
+                startActivity(intent)
+            })
         }
     }
 
@@ -49,11 +59,22 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
 
     private fun setUp() {
         viewModel.roomKey = intent.getStringExtra("key")
+        viewModel.insertUser()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_chat, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    @SuppressLint("RtlHardcoded")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
+            return true
+        }
+        else if (item.itemId == R.id.menu_member) {
+            binding.drawerLayout.openDrawer(Gravity.RIGHT)
             return true
         }
         return false

@@ -10,8 +10,10 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
+import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.MainActivityBinding
 import com.example.weknot_android.model.entity.user.FbUser
+import com.example.weknot_android.view.dialog.LogoutDialog
 import com.example.weknot_android.viewmodel.MainViewModel
 import com.example.weknot_android.widget.viewpager.MainPagerAdapter
 import com.google.android.gms.tasks.OnCompleteListener
@@ -54,7 +56,6 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     private fun setUp() {
         setUpViewPager()
-        fbLogin()
     }
 
     private fun setUpViewPager() {
@@ -103,20 +104,9 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            alert()
+            newInstance(LogoutDialog()).show(supportFragmentManager)
             return true
         }
         return false
-    }
-
-    private fun alert() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("정말로 로그아웃 하시겠습니까?")
-        builder.setPositiveButton("예 ") { dialog, which ->
-            viewModel.logout()
-            startActivityWithFinish(LoginActivity::class.java)
-        }
-        builder.setNegativeButton(" 아니오") { dialog, which -> return@setNegativeButton}
-        builder.show()
     }
 }

@@ -131,7 +131,7 @@
             android:elevation="10dp"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="@id/image"
-            app:layout_constraintBottom_toBottomOf="@+id/image">
+            app:layout_constraintBottom_toBottomOf="@+id/image" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

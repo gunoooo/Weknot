@@ -13,45 +13,89 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/message_item_linearlayout_main"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
-        <TextView
-            android:id="@+id/writer"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:mutableText="@{viewModel.writer}"
-            android:textSize="13sp"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/colorMainDark"
-            android:fontFamily="@font/nanum_squareeb"
-            tools:text="writer" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom">
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="200dp"
-            app:mutableText="@{viewModel.message}"
-            android:textSize="17sp"
-            android:textColor="@android:color/black"
-            android:padding="13dp"
-            android:fontFamily="@font/nanum_squareeb"
-            android:layout_marginTop="5dp"
-            tools:text="message" />
+            <TextView
+                android:id="@+id/send_time"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mutableText="@{viewModel.time}"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/colorMainDark"
+                android:fontFamily="@font/nanum_squareb"
+                tools:text="time" />
 
-        <TextView
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/photo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="5dp"
+                app:civ_border_color="@android:color/transparent"
+                app:mutableImageUrl="@{viewModel.photo}" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:mutableText="@{viewModel.time}"
-            android:textSize="13sp"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/colorMainDark"
-            android:fontFamily="@font/nanum_squareb"
-            android:layout_marginTop="5dp"
-            tools:text="time" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/writer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mutableText="@{viewModel.writer}"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/colorMainDark"
+                android:fontFamily="@font/nanum_squareeb"
+                tools:text="writer" />
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                app:mutableText="@{viewModel.message}"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:padding="13dp"
+                android:fontFamily="@font/nanum_squareeb"
+                android:layout_marginTop="5dp"
+                tools:text="message" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/receive_time"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mutableText="@{viewModel.time}"
+                android:textSize="11sp"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/colorMainDark"
+                android:fontFamily="@font/nanum_squareb"
+                android:layout_gravity="bottom"
+                tools:text="time" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </layout>

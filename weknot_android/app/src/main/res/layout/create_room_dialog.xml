@@ -43,6 +43,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
+            android:id="@+id/room_type_spinner"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"

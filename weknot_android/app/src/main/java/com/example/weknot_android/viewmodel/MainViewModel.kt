@@ -5,11 +5,6 @@ import com.example.weknot_android.base.viewmodel.BaseViewModel
 
 class MainViewModel(application: Application) : BaseViewModel<Any>(application) {
 
-    fun logout() {
-        token = ""
-        userId = ""
-    }
-
     override fun onRetrieveDataSuccess(data: Any) { }
 
     override fun onRetrieveBaseSuccess(message: String) { }

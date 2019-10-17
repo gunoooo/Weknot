@@ -35,7 +35,7 @@ class CreateRoomDialog : BaseDialog<CreateRoomDialogBinding, CreateRoomViewModel
         with(viewModel) {
             createEvent.observe(this@CreateRoomDialog, Observer {
                 chatRoom.roomType = types[selectedPosition]
-                var fdasfdsa  = chatRoom.roomType
+
                 if (isEmpty()) {
                     simpleToast(R.string.empty_message)
                     return@Observer
@@ -63,6 +63,12 @@ class CreateRoomDialog : BaseDialog<CreateRoomDialogBinding, CreateRoomViewModel
 
     private fun isEmpty(): Boolean {
         return viewModel.chatRoom.roomName == null || viewModel.chatRoom.roomType == null
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        binding.roomNameText.setText("")
+        binding.roomTypeSpinner.setSelection(0)
     }
 
 }

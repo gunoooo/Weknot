@@ -2,10 +2,14 @@ package com.example.weknot_android.viewmodel
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.OpenChat.Chat
+import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.widget.SingleLiveEvent
+import com.example.weknot_android.widget.recyclerview.adapter.ChatMemberAdapter
 import com.example.weknot_android.widget.recyclerview.adapter.MessageAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -19,24 +23,129 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
     var roomKey: String? = null
 
     val messageAdapter: MessageAdapter = MessageAdapter()
+    val chatMemberAdapter: ChatMemberAdapter = ChatMemberAdapter()
 
     val chat = Chat()
+    private val fbUser = FbUser()
     private val chats: ArrayList<Chat> = ArrayList()
-    private lateinit var databaseReference: DatabaseReference
+    private val members: ArrayList<FbUser> = ArrayList()
+    private lateinit var databaseMessageReference: DatabaseReference
     private lateinit var singleValueEventListener: ValueEventListener
     private lateinit var valueEventListener: ValueEventListener
+
+    val roomName = MutableLiveData<String>()
+    val roomType = MutableLiveData<Int>()
 
     val sentEvent = SingleLiveEvent<Unit>()
     val receivedEvent = SingleLiveEvent<ArrayList<Chat>>()
 
+    fun insertUser() {
+        addDisposable(repository.getUser(userId), object : DisposableSingleObserver<User>() {
+            override fun onSuccess(t: User) {
+                onRetrieveUserSuccess(t)
+            }
+
+            override fun onError(e: Throwable) {
+                onErrorEvent.value = e
+            }
+        })
+    }
+
     fun getChatting() {
         setDataBase()
+        setChatRoom()
         setListener()
         addListener()
     }
 
+    private fun setChatRoom() {
+        setRoomName()
+        setRoomType()
+    }
+
+    private fun setRoomName() {
+        FirebaseDatabase.getInstance().reference
+                .child("groupchatrooms")
+                .child(roomKey!!)
+                .child("roomName").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        roomName.value = dataSnapshot.getValue(String::class.java)
+                    }
+
+                    override fun onCancelled(dataSnapshot: DatabaseError) { }
+                })
+    }
+
+    private fun setRoomType() {
+        FirebaseDatabase.getInstance().reference
+                .child("groupchatrooms")
+                .child(roomKey!!)
+                .child("roomType").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        roomType.value = getRoomTypeDrawable(dataSnapshot.getValue(String::class.java))
+                    }
+
+                    override fun onCancelled(dataSnapshot: DatabaseError) { }
+                })
+    }
+
+    private fun getRoomTypeDrawable(roomType: String?) : Int? {
+        return when (roomType) {
+            "free" -> R.drawable.ic_room_type_free
+            "game" -> R.drawable.ic_room_type_game
+            "worry" -> R.drawable.ic_room_type_worry
+            "friend" -> R.drawable.ic_room_type_friend
+            else -> null
+        }
+    }
+
+    private fun onRetrieveUserSuccess(user: User) {
+        with(fbUser) {
+            id = user.id
+            name = user.name
+            uid = FirebaseAuth.getInstance().currentUser!!.uid
+        }
+
+        FirebaseDatabase.getInstance().reference
+                .child("groupchatrooms")
+                .child(roomKey!!)
+                .child("users")
+                .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var isExistUser = false
+                    members.clear()
+
+                    for (item in dataSnapshot.children) {
+                        val member = item.getValue(FbUser::class.java)!!
+
+                        if (member.uid == fbUser.uid) {
+                            isExistUser = true
+                        }
+                        else {
+                            members.add(member)
+                        }
+                    }
+
+                    chatMemberAdapter.updateList(members)
+
+                    if (!isExistUser) {
+                        insertUserIntoFb()
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) { }
+        })
+    }
+
+    private fun insertUserIntoFb() {
+        FirebaseDatabase.getInstance().reference
+                .child("groupchatrooms")
+                .child(roomKey!!)
+                .child("users").push().setValue(fbUser)
+    }
+
     private fun setDataBase() {
-        databaseReference = FirebaseDatabase.getInstance().reference
+        databaseMessageReference = FirebaseDatabase.getInstance().reference
                 .child("groupchatrooms")
                 .child(roomKey!!)
                 .child("message")
@@ -72,22 +181,21 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
     }
 
     private fun addListener() {
-        databaseReference.addListenerForSingleValueEvent(singleValueEventListener)
-        databaseReference.addValueEventListener(valueEventListener)
+        databaseMessageReference.addListenerForSingleValueEvent(singleValueEventListener)
+        databaseMessageReference.addValueEventListener(valueEventListener)
     }
 
     private fun setChat() {
         val simpleDateFormat = SimpleDateFormat("E hh:mm", Locale.KOREA)
-
-        chat.uid = FirebaseAuth.getInstance().currentUser!!.uid
         chat.timeStamp = simpleDateFormat.format(Date())
+
         setChatWriter()
     }
 
     private fun setChatWriter() {
         addDisposable(repository.getUser(userId), object : DisposableSingleObserver<User>() {
             override fun onSuccess(user: User) {
-                chat.writer = user.name
+                chat.writer = FbUser(user, FirebaseAuth.getInstance().currentUser!!.uid)
                 sendMessage()
             }
 

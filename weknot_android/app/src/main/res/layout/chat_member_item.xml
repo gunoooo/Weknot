@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.widget.recyclerview.viewmodel.ChatMemberItemViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="horizontal"
+        android:onClick="@{() -> viewModel.onClickItem()}">
+    
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            app:civ_border_color="@android:color/transparent"
+            app:mutableImageUrl="@{viewModel.photo}" />
+        
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="@font/nanum_squareeb"
+            android:textColor="@color/colorMainDark"
+            android:layout_gravity="center"
+            app:mutableText="@{viewModel.name}"
+            tools:text="이름" />
+    </LinearLayout>
+</layout>

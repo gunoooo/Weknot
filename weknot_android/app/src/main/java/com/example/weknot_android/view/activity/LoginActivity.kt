@@ -39,7 +39,7 @@ class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
                     return@Observer
                 }
 
-                viewModel.login()
+                login()
             })
 
             onErrorEvent.observe(this@LoginActivity, Observer {

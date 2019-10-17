@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.weknot_android.viewmodel.LogoutViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:fontFamily="@font/nanum_squareeb"
+            android:textColor="@color/colorMainDark"
+            android:textSize="20sp"
+            android:text="@string/logout_text"/>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_margin="20dp"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanum_squareb"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="7dp"
+                android:textColor="@android:color/white"
+                android:background="@color/colorMainDark"
+                android:text="@string/no_text"
+                android:onClick="@{() -> viewModel.onClickBack()}" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/nanum_squareb"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="7dp"
+                android:textColor="@android:color/white"
+                android:background="@color/colorPrimary"
+                android:text="@string/yes_text"
+                android:onClick="@{() -> viewModel.onClickLogout()}"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
