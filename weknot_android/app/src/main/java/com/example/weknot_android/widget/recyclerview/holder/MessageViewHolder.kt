@@ -7,15 +7,21 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseViewHolder
 import com.example.weknot_android.databinding.MessageItemBinding
 import com.example.weknot_android.model.entity.OpenChat.Chat
+import com.example.weknot_android.widget.recyclerview.navigator.message.MessageAdapterNavigator
+import com.example.weknot_android.widget.recyclerview.navigator.message.MessageItemNavigator
 import com.example.weknot_android.widget.recyclerview.viewmodel.MessageItemViewModel
 import com.google.firebase.auth.FirebaseAuth
 
-class MessageViewHolder(val binding: MessageItemBinding) : BaseViewHolder<Any>(binding.root) {
+class MessageViewHolder(val binding: MessageItemBinding) : BaseViewHolder<MessageAdapterNavigator>(binding.root), MessageItemNavigator {
 
     private val viewModel = MessageItemViewModel()
 
+    private lateinit var id: String
+
     fun bind(chat: Chat) {
         viewModel.bind(chat)
+        viewModel.setNavigator(this)
+        this.id = chat.writer!!.id!!
         binding.viewModel = viewModel
 
         if (chat.writer!!.uid!! == FirebaseAuth.getInstance().currentUser!!.uid) {
@@ -35,5 +41,9 @@ class MessageViewHolder(val binding: MessageItemBinding) : BaseViewHolder<Any>(b
             binding.receiveTime.visibility = View.VISIBLE
             binding.sendTime.visibility = View.GONE
         }
+    }
+
+    override fun openProfile() {
+        getNavigator().openProfile(id)
     }
 }

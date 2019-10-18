@@ -38,10 +38,12 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
                 binding.messageRecyclerview.scrollToPosition(it.size - 1)
             })
 
+            messageAdapter.openProfile.observe(this@ChatActivity, Observer {
+                openProfile(it)
+            })
+
             chatMemberAdapter.openProfile.observe(this@ChatActivity, Observer {
-                val intent = Intent(this@ChatActivity, ProfileActivity::class.java)
-                intent.putExtra("id", it)
-                startActivity(intent)
+                openProfile(it)
             })
         }
     }
@@ -60,6 +62,12 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
     private fun setUp() {
         viewModel.roomKey = intent.getStringExtra("key")
         viewModel.insertUser()
+    }
+
+    private fun openProfile(id: String) {
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
