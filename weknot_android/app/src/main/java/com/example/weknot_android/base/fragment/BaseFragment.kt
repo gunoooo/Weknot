@@ -67,8 +67,12 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : Fragm
     }
 
     protected fun startActivityWithFinish(activity: Class<*>) {
-        startActivity(Intent(context, activity))
-        getActivity()!!.finish()
+        startActivityWithFinish(Intent(context, activity))
+    }
+
+    protected fun startActivityWithFinish(intent: Intent) {
+        startActivity(intent)
+        activity!!.finish()
     }
 
     protected fun simpleToast(message: String?) {

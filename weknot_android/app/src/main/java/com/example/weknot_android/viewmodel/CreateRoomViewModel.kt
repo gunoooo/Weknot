@@ -24,6 +24,7 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
     var selectedPosition: Int = 0
 
     val createEvent = SingleLiveEvent<Unit>()
+    val openChatRoom = SingleLiveEvent<String>()
     val closeEvent = SingleLiveEvent<Unit>()
 
     fun onClickCreate() {
@@ -63,17 +64,19 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
         FirebaseDatabase.getInstance().reference.child("groupchatrooms").child(chatRoomUid!!).setValue(chatRoom)
         FirebaseDatabase.getInstance().reference.child("groupchatrooms").child(chatRoomUid!!).child("users").push().setValue(fbUser)
 
-        closeEvent.call()
+        openChatRoom.value = chatRoomUid
     }
 
     private fun setRoomCount() {
-        var count = 1
         FirebaseDatabase.getInstance().reference.child("groupchatrooms")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        var count = 1
+
                         for (item in dataSnapshot.children) {
-                            count++
+                            count = item.getValue(ChatRoom::class.java)!!.roomNumber!! + 1
                         }
+
                         chatRoom.roomNumber = count
 
                         insertFirebase()

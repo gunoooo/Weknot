@@ -46,7 +46,7 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
             openChatAdapter.openChatRoom.observe(this@OpenChatFragment, Observer {
                 val intent = Intent(context, ChatActivity::class.java)
                 intent.putExtra("key", it)
-                startActivity(intent)
+                startActivityWithFinish(intent)
             })
         }
     }

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.weknot_android.viewmodel.LogoutViewModel" />
+            type="com.example.weknot_android.viewmodel.ExitRoomViewModel" />
     </data>
 
     <LinearLayout
@@ -24,11 +24,13 @@
             android:fontFamily="@font/nanum_squareeb"
             android:textColor="@color/colorMainDark"
             android:textSize="20sp"
-            android:text="@string/logout_text"/>
+            android:text="@string/exit_room_text"/>
 
         <LinearLayout
             android:layout_width="300dp"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_height="wrap_content" >
 
             <TextView
@@ -55,10 +57,25 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:textColor="@android:color/white"
-                android:background="@drawable/background_radius_primary"
+                android:background="@drawable/background_radius_dark"
                 android:text="@string/yes_text"
-                android:onClick="@{() -> viewModel.onClickLogout()}"/>
+                android:onClick="@{() -> viewModel.onClickExit()}"/>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/nanum_squareb"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/background_radius_primary"
+            android:text="@string/report_text"
+            android:onClick="@{() -> viewModel.onClickReport()}"/>
 
     </LinearLayout>
 </layout>

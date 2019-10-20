@@ -101,8 +101,12 @@ abstract class BaseDialog<VB : ViewDataBinding, VM : BaseViewModel<*>> : DialogF
     }
 
     protected fun startActivityWithFinish(activity: Class<*>) {
-        startActivity(Intent(context, activity))
-        getActivity()!!.finish()
+        startActivityWithFinish(Intent(context, activity))
+    }
+
+    protected fun startActivityWithFinish(intent: Intent) {
+        startActivity(intent)
+        activity!!.finish()
     }
 
     protected fun simpleToast(message: String?) {

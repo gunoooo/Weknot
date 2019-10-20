@@ -11,6 +11,7 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.ChatActivityBinding
+import com.example.weknot_android.view.dialog.ExitRoomDialog
 import com.example.weknot_android.viewmodel.ChatViewModel
 
 class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
@@ -78,7 +79,7 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
     @SuppressLint("RtlHardcoded")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            newInstance(ExitRoomDialog(viewModel.roomKey!!)).show(supportFragmentManager)
             return true
         }
         else if (item.itemId == R.id.menu_member) {
@@ -86,6 +87,11 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
             return true
         }
         return false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onDestroy()
     }
 
 }

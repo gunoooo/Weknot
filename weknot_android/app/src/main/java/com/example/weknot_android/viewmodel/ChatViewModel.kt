@@ -29,6 +29,7 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
     private val fbUser = FbUser()
     private val chats: ArrayList<Chat> = ArrayList()
     private val members: ArrayList<FbUser> = ArrayList()
+    private lateinit var databaseRoomReference: DatabaseReference
     private lateinit var databaseMessageReference: DatabaseReference
     private lateinit var singleValueEventListener: ValueEventListener
     private lateinit var valueEventListener: ValueEventListener
@@ -110,31 +111,47 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
                 .child("groupchatrooms")
                 .child(roomKey!!)
                 .child("users")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        var isExistUser = false
+
+                        for (item in dataSnapshot.children) {
+                            val member = item.getValue(FbUser::class.java)!!
+
+                            if (member.uid == fbUser.uid) {
+                                isExistUser = true
+                            }
+                        }
+
+                        if (!isExistUser) {
+                            insertUserIntoFb()
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) { }
+                })
+
+        FirebaseDatabase.getInstance().reference
+                .child("groupchatrooms")
+                .child(roomKey!!)
+                .child("users")
                 .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    var isExistUser = false
-                    members.clear()
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        members.clear()
 
-                    for (item in dataSnapshot.children) {
-                        val member = item.getValue(FbUser::class.java)!!
+                        for (item in dataSnapshot.children) {
+                            val member = item.getValue(FbUser::class.java)!!
 
-                        if (member.uid == fbUser.uid) {
-                            isExistUser = true
+                            if (member.uid != fbUser.uid) {
+                                members.add(member)
+                            }
                         }
-                        else {
-                            members.add(member)
-                        }
+
+                        chatMemberAdapter.updateList(members)
                     }
 
-                    chatMemberAdapter.updateList(members)
-
-                    if (!isExistUser) {
-                        insertUserIntoFb()
-                    }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) { }
-        })
+                    override fun onCancelled(databaseError: DatabaseError) { }
+                })
     }
 
     private fun insertUserIntoFb() {
@@ -145,10 +162,11 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
     }
 
     private fun setDataBase() {
-        databaseMessageReference = FirebaseDatabase.getInstance().reference
+        databaseRoomReference = FirebaseDatabase.getInstance().reference
                 .child("groupchatrooms")
                 .child(roomKey!!)
-                .child("message")
+
+        databaseMessageReference = databaseRoomReference.child("message")
     }
 
     private fun setListener() {
@@ -217,6 +235,46 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
 
     fun onClickSend() {
         setChat()
+    }
+
+    fun onDestroy() {
+        databaseMessageReference.child("users")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                        var count = 0
+
+                        for (item in dataSnapshot.children) {
+                            count++
+
+                            val user = item.getValue(FbUser::class.java)!!
+
+                            if (user.uid == FirebaseAuth.getInstance().currentUser!!.uid) {
+                                removeUser(item.key!!)
+
+                                if (count > 1) {
+                                    return
+                                }
+                            }
+                        }
+
+                        if (count <= 1) {
+                            removeRoom()
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {}
+                })
+    }
+
+    private fun removeRoom() {
+        databaseRoomReference.removeValue()
+    }
+
+    private fun removeUser(userKey: String) {
+        databaseRoomReference
+                .child("users")
+                .child(userKey).removeValue()
     }
 
     override fun onRetrieveDataSuccess(data: Any) { }

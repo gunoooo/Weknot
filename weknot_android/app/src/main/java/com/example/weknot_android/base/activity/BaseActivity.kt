@@ -75,7 +75,11 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
     }
 
     protected fun startActivityWithFinish(activity: Class<*>) {
-        startActivity(Intent(this, activity))
+        startActivityWithFinish(Intent(this, activity))
+    }
+
+    protected fun startActivityWithFinish(intent: Intent) {
+        startActivity(intent)
         finish()
     }
 

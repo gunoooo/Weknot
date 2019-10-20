@@ -30,7 +30,7 @@ class OpenChatViewModel(application: Application) : BaseViewModel<Any>(applicati
 
     fun getChattingRooms() {
         FirebaseDatabase.getInstance().reference.child("groupchatrooms")
-                .addListenerForSingleValueEvent(object : ValueEventListener {
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                         val chatRooms: ArrayList<ChatRoom> = ArrayList()
