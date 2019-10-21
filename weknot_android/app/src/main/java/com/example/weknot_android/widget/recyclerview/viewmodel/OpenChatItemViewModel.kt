@@ -20,13 +20,13 @@ class OpenChatItemViewModel : BaseItemViewModel<ChatRoom, OpenChatItemNavigator>
         type.value = getRoomTypeDrawable(data.roomType)
     }
 
-    private fun getRoomTypeDrawable(roomType: String?) : Int? {
+    private fun getRoomTypeDrawable(roomType: String?) : Int {
         return when (roomType) {
             "free" -> R.drawable.ic_room_type_free
             "game" -> R.drawable.ic_room_type_game
             "worry" -> R.drawable.ic_room_type_worry
             "friend" -> R.drawable.ic_room_type_friend
-            else -> null
+            else -> R.drawable.ic_room_type_free
         }
     }
 

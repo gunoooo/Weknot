@@ -105,6 +105,4 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
             100 -> addBtnVisibility.value = View.INVISIBLE
         }
     }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

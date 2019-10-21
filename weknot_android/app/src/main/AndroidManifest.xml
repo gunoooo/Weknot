@@ -33,7 +33,7 @@
             android:name=".view.activity.SignUpActivity"/>
         <activity
             android:name=".view.activity.MainActivity"
-            android:label="@string/main_title"/>
+            android:label="@string/feed_title"/>
         <activity
             android:name=".view.activity.FeedWriteActivity"
             android:label="@string/feed_write_title"/>

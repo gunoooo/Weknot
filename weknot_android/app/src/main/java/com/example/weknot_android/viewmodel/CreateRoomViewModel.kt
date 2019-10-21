@@ -89,8 +89,4 @@ class CreateRoomViewModel(application: Application) : BaseViewModel<Any>(applica
         setFbUser(user)
         setChatRoom(user)
     }
-
-    override fun onRetrieveDataSuccess(data: Any) {}
-
-    override fun onRetrieveBaseSuccess(message: String) {}
 }

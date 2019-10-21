@@ -12,6 +12,9 @@ import com.example.weknot_android.viewmodel.ProfileViewModel
 
 class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>() {
 
+    override val TAG: String
+        get() = this.javaClass.name
+
     override fun getLayoutId(): Int {
         return R.layout.profile_activity
     }

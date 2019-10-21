@@ -32,6 +32,4 @@ class FeedViewModel(application: Application) : BaseViewModel<List<Feed>>(applic
     override fun onRetrieveDataSuccess(data: List<Feed>) {
         feedAdapter.updateList(data)
     }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

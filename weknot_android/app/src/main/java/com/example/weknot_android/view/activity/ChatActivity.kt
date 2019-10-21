@@ -1,11 +1,14 @@
 package com.example.weknot_android.view.activity
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
@@ -14,7 +17,11 @@ import com.example.weknot_android.databinding.ChatActivityBinding
 import com.example.weknot_android.view.dialog.ExitRoomDialog
 import com.example.weknot_android.viewmodel.ChatViewModel
 
+
 class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
+
+    override val TAG: String
+        get() = this.javaClass.name
 
     override fun getLayoutId(): Int {
         return R.layout.chat_activity
@@ -39,6 +46,10 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
                 binding.messageRecyclerview.scrollToPosition(it.size - 1)
             })
 
+            terminateEvent.observe(this@ChatActivity, Observer {
+                startActivityWithFinish(MainActivity::class.java)
+            })
+
             messageAdapter.openProfile.observe(this@ChatActivity, Observer {
                 openProfile(it)
             })
@@ -60,9 +71,13 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
         viewModel.getChatting()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.insertUser()
+    }
+
     private fun setUp() {
         viewModel.roomKey = intent.getStringExtra("key")
-        viewModel.insertUser()
     }
 
     private fun openProfile(id: String) {
@@ -87,6 +102,11 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
             return true
         }
         return false
+    }
+
+    override fun onHome() {
+        super.onHome()
+        viewModel.onDestroy()
     }
 
     override fun onDestroy() {

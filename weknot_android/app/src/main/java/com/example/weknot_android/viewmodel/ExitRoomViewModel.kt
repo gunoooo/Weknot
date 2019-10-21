@@ -38,8 +38,4 @@ class ExitRoomViewModel(application: Application) : BaseViewModel<Any>(applicati
 
         exitEvent.call()
     }
-
-    override fun onRetrieveDataSuccess(data: Any) { }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

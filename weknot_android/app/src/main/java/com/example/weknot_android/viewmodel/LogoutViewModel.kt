@@ -18,8 +18,4 @@ class LogoutViewModel(application: Application) : BaseViewModel<Any>(application
     fun onClickBack() {
         backEvent.call()
     }
-
-    override fun onRetrieveDataSuccess(data: Any) { }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

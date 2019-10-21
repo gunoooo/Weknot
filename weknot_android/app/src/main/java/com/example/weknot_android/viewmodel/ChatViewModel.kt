@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseViewModel
 import com.example.weknot_android.model.entity.OpenChat.Chat
+import com.example.weknot_android.model.entity.OpenChat.ChatRoom
 import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.model.entity.user.User
 import com.example.weknot_android.widget.SingleLiveEvent
@@ -39,6 +40,7 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
 
     val sentEvent = SingleLiveEvent<Unit>()
     val receivedEvent = SingleLiveEvent<ArrayList<Chat>>()
+    val terminateEvent = SingleLiveEvent<Unit>()
 
     fun insertUser() {
         addDisposable(repository.getUser(userId), object : DisposableSingleObserver<User>() {
@@ -90,13 +92,13 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
                 })
     }
 
-    private fun getRoomTypeDrawable(roomType: String?) : Int? {
+    private fun getRoomTypeDrawable(roomType: String?) : Int {
         return when (roomType) {
             "free" -> R.drawable.ic_room_type_free
             "game" -> R.drawable.ic_room_type_game
             "worry" -> R.drawable.ic_room_type_worry
             "friend" -> R.drawable.ic_room_type_friend
-            else -> null
+            else -> R.drawable.ic_room_type_free
         }
     }
 
@@ -106,6 +108,26 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
             name = user.name
             uid = FirebaseAuth.getInstance().currentUser!!.uid
         }
+
+        FirebaseDatabase.getInstance().reference
+                .child("groupchatrooms")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        var isExistRoom = false
+
+                        for (item in dataSnapshot.children) {
+                            if (item.key == roomKey!!) {
+                                isExistRoom = true
+                            }
+                        }
+
+                        if (!isExistRoom) {
+                            terminateEvent.call()
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) { }
+                })
 
         FirebaseDatabase.getInstance().reference
                 .child("groupchatrooms")
@@ -238,7 +260,7 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
     }
 
     fun onDestroy() {
-        databaseMessageReference.child("users")
+        databaseRoomReference.child("users")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -276,8 +298,4 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
                 .child("users")
                 .child(userKey).removeValue()
     }
-
-    override fun onRetrieveDataSuccess(data: Any) { }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

@@ -122,6 +122,4 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(ap
         connectVideoCall.value = data
         channel.value = data.channel
     }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

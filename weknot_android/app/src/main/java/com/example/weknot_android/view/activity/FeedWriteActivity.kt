@@ -15,6 +15,9 @@ import com.example.weknot_android.viewmodel.FeedWriteViewModel
 
 class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWriteViewModel>() {
 
+    override val TAG: String
+        get() = this.javaClass.name
+
     override fun getLayoutId(): Int {
         return R.layout.feed_write_activity
     }

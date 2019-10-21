@@ -1,5 +1,7 @@
 package com.example.weknot_android.base.activity
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -18,6 +20,8 @@ import com.example.weknot_android.databinding.AppBarBinding
 abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCompatActivity() {
     protected lateinit var binding: VB
     protected lateinit var viewModel: VM
+
+    protected abstract val TAG: String
 
     @LayoutRes
     protected abstract fun getLayoutId(): Int
@@ -63,6 +67,24 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
         super.onDestroy()
         if(::binding.isInitialized) binding.unbind()
     }
+
+    override fun onStop() {
+        super.onStop()
+
+        val mngr = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+
+        val taskList: List<ActivityManager.RunningTaskInfo> = mngr.getRunningTasks(10)
+
+        if (taskList[0].topActivity!!.className == "com.sec.android.app.launcher.activities.LauncherActivity"
+                || taskList[0].topActivity!!.className == TAG) {
+            onHome()
+        }
+    }
+
+    /**
+     * Home 키를 눌렀을 때 실행
+     */
+    protected open fun onHome() { }
 
     override fun setRequestedOrientation(requestedOrientation: Int) {
         if (VERSION.SDK_INT != VERSION_CODES.O) {

@@ -72,6 +72,4 @@ class LoginViewModel(application: Application) : BaseViewModel<LoginData>(applic
     override fun onRetrieveDataSuccess(data: LoginData) {
         insertLoginData(data)
     }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

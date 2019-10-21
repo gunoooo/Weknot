@@ -15,6 +15,9 @@ import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : BaseActivity<LoginActivityBinding, LoginViewModel>() {
 
+    override val TAG: String
+        get() = this.javaClass.name
+
     override fun getLayoutId(): Int {
         return R.layout.login_activity
     }

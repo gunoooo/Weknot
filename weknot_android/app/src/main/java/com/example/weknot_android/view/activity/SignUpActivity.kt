@@ -21,6 +21,9 @@ import com.google.firebase.storage.StorageReference
 
 class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewModel>() {
 
+    override val TAG: String
+        get() = this.javaClass.name
+
     override fun getLayoutId(): Int {
         return R.layout.sign_up_activity
     }

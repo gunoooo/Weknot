@@ -23,6 +23,4 @@ class SplashViewModel(application: Application) : BaseViewModel<User>(applicatio
         insertUserId(data.id)
         openMain.call()
     }
-
-    override fun onRetrieveBaseSuccess(message: String) { }
 }

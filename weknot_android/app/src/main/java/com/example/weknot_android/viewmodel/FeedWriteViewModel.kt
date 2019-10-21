@@ -70,8 +70,6 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(applicat
         backMessageToast.call()
     }
 
-    override fun onRetrieveDataSuccess(data: Any) { }
-
     override fun onRetrieveBaseSuccess(message: String) {
         openMain.call()
     }

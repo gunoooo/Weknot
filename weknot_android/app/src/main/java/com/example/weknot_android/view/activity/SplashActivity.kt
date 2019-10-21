@@ -10,6 +10,9 @@ import com.example.weknot_android.viewmodel.SplashViewModel
 
 class SplashActivity : BaseActivity<SplashActivityBinding, SplashViewModel>() {
 
+    override val TAG: String
+        get() = this.javaClass.name
+
     override fun getLayoutId(): Int {
         return R.layout.splash_activity
     }

@@ -28,6 +28,9 @@ class MainActivity: BaseActivity<MainActivityBinding, MainViewModel>() {
 
     private var PAGE_COUNT: Int = 5
 
+    override val TAG: String
+        get() = this.javaClass.name
+
     override fun getLayoutId(): Int {
         return R.layout.main_activity
     }

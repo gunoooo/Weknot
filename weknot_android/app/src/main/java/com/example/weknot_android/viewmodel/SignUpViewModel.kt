@@ -88,8 +88,6 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
         signUpEvent.call()
     }
 
-    override fun onRetrieveDataSuccess(data: Any) { }
-
     override fun onRetrieveBaseSuccess(message: String) {
         onSuccessEvent.value = message
         openLogin.call()
