@@ -1,15 +1,12 @@
 package com.example.weknot_android.view.dialog
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseDialog
 import com.example.weknot_android.databinding.ExitRoomDialogBinding
-import com.example.weknot_android.model.entity.OpenChat.ChatRoom
 import com.example.weknot_android.view.activity.MainActivity
 import com.example.weknot_android.viewmodel.ExitRoomViewModel
 

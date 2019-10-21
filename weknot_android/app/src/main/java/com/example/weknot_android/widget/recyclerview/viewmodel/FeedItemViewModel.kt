@@ -2,7 +2,7 @@ package com.example.weknot_android.widget.recyclerview.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseItemViewModel
-import com.example.weknot_android.model.entity.feed.Feed
+import com.example.weknot_android.model.feed.Feed
 import com.example.weknot_android.util.Strings
 import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedItemNavigator
 

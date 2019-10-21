@@ -1,10 +1,10 @@
-package com.example.weknot_android.model.dao
+package com.example.weknot_android.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 
 import com.example.weknot_android.base.BaseDao
-import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
+import com.example.weknot_android.model.chat.OpenChatRoom
 import io.reactivex.Single
 
 @Dao

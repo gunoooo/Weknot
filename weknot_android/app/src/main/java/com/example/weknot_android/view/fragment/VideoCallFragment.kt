@@ -50,7 +50,7 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewMo
             })
 
             openProfile.observe(this@VideoCallFragment, Observer {
-                var intent = Intent(context, ProfileActivity::class.java)
+                val intent = Intent(context, ProfileActivity::class.java)
                 intent.putExtra("id", it)
                 startActivity(intent)
             })

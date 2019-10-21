@@ -1,14 +1,12 @@
 package com.example.weknot_android.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseViewModel
-import com.example.weknot_android.model.entity.OpenChat.Chat
-import com.example.weknot_android.model.entity.OpenChat.ChatRoom
-import com.example.weknot_android.model.entity.user.FbUser
-import com.example.weknot_android.model.entity.user.User
+import com.example.weknot_android.model.chat.Chat
+import com.example.weknot_android.model.user.FbUser
+import com.example.weknot_android.model.user.User
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.adapter.ChatMemberAdapter
 import com.example.weknot_android.widget.recyclerview.adapter.MessageAdapter

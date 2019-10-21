@@ -1,19 +1,12 @@
 package com.example.weknot_android.widget.recyclerview.adapter
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.bumptech.glide.Glide
 import com.example.weknot_android.R
-import com.example.weknot_android.R.layout
-import com.example.weknot_android.databinding.SocialItemBinding
-import com.example.weknot_android.model.entity.user.Friend
+import com.example.weknot_android.model.user.Friend
 import com.example.weknot_android.network.request.FriendRequest
-import com.example.weknot_android.view.fragment.SocialFragment
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.holder.SocialViewHolder
 import com.example.weknot_android.widget.recyclerview.navigator.social.SocialAdapterNavigator

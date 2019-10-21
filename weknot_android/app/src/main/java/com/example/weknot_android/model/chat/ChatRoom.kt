@@ -1,6 +1,6 @@
-package com.example.weknot_android.model.entity.OpenChat
+package com.example.weknot_android.model.chat
 
-import com.example.weknot_android.model.entity.user.FbUser
+import com.example.weknot_android.model.user.FbUser
 
 class ChatRoom {
     var roomNumber: Int? = null

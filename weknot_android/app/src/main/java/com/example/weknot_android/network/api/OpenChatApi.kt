@@ -1,7 +1,7 @@
 package com.example.weknot_android.network.api
 
-import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
-import com.example.weknot_android.model.entity.user.User
+import com.example.weknot_android.model.chat.OpenChatRoom
+import com.example.weknot_android.model.user.User
 import com.example.weknot_android.network.request.OpenChatRequest
 import com.example.weknot_android.network.response.Response
 import io.reactivex.Single

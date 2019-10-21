@@ -1,15 +1,11 @@
 package com.example.weknot_android.widget.recyclerview.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.bumptech.glide.Glide
 import com.example.weknot_android.R
-import com.example.weknot_android.databinding.OpenChatItemBinding
-import com.example.weknot_android.model.entity.OpenChat.ChatRoom
-import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
+import com.example.weknot_android.model.chat.ChatRoom
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.holder.OpenChatViewHolder
 import com.example.weknot_android.widget.recyclerview.navigator.openchat.OpenChatAdapterNavigator

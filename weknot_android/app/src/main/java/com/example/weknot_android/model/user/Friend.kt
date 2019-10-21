@@ -1,4 +1,4 @@
-package com.example.weknot_android.model.entity.user
+package com.example.weknot_android.model.user
 
 data class Friend(var friendId: String,
                   var friendName: String,

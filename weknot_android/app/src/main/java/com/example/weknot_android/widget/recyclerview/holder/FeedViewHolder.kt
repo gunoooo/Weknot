@@ -6,7 +6,7 @@ import android.view.animation.AnimationUtils
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseViewHolder
 import com.example.weknot_android.databinding.FeedItemBinding
-import com.example.weknot_android.model.entity.feed.Feed
+import com.example.weknot_android.model.feed.Feed
 import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedAdapterNavigator
 import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedItemNavigator
 import com.example.weknot_android.widget.recyclerview.viewmodel.FeedItemViewModel

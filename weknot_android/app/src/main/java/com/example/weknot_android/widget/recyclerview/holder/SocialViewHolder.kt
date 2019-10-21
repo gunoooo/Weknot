@@ -2,7 +2,7 @@ package com.example.weknot_android.widget.recyclerview.holder
 
 import com.example.weknot_android.base.BaseViewHolder
 import com.example.weknot_android.databinding.SocialItemBinding
-import com.example.weknot_android.model.entity.user.Friend
+import com.example.weknot_android.model.user.Friend
 import com.example.weknot_android.widget.recyclerview.navigator.social.SocialAdapterNavigator
 import com.example.weknot_android.widget.recyclerview.navigator.social.SocialItemNavigator
 import com.example.weknot_android.widget.recyclerview.viewmodel.SocialItemViewModel

@@ -6,16 +6,10 @@ import android.net.Uri
 import android.os.Environment
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseViewModel
-import com.example.weknot_android.model.entity.user.FbUser
 import com.example.weknot_android.network.comm.SignComm
 import com.example.weknot_android.network.request.SignUpRequest
 import com.example.weknot_android.widget.SingleLiveEvent
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,7 +28,6 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
     private val picture: MutableLiveData<MultipartBody.Part> = MutableLiveData()
 
     val onSuccessEvent: SingleLiveEvent<String> = SingleLiveEvent()
-    val fbSignUpEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
     val signUpEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
     val openLogin: SingleLiveEvent<Unit> = SingleLiveEvent()
     val goToAlbum: SingleLiveEvent<Unit> = SingleLiveEvent()
@@ -43,8 +36,13 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
 
     fun signUp() {
         setRequest()
-        fbSignUpEvent.call()
+        fbSignUp()
         addDisposable(signComm.signUp(request.value!!), baseObserver)
+    }
+
+    private fun fbSignUp() {
+        FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(request.value!!.id + "@weknot.com", request.value!!.pw + "111111")
     }
 
     fun savePickData(data: Intent) {

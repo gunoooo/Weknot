@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.R
-import com.example.weknot_android.model.entity.user.FbUser
+import com.example.weknot_android.model.user.FbUser
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.holder.ChatMemberViewHolder
 import com.example.weknot_android.widget.recyclerview.navigator.chatmember.ChatMemberAdapterNavigator

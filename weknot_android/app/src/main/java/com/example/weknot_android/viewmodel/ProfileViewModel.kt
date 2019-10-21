@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.R
 import com.example.weknot_android.base.viewmodel.BaseViewModel
-import com.example.weknot_android.model.entity.feed.Feed
-import com.example.weknot_android.model.entity.user.Profile
+import com.example.weknot_android.model.feed.Feed
+import com.example.weknot_android.model.user.Profile
 import com.example.weknot_android.network.comm.FeedComm
 import com.example.weknot_android.network.comm.SocialComm
 import com.example.weknot_android.network.comm.UserComm
@@ -14,12 +14,7 @@ import com.example.weknot_android.network.request.FriendRequest
 import com.example.weknot_android.util.Strings
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.adapter.FeedAdapter
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 
 open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(application) {
     private val userComm = UserComm()

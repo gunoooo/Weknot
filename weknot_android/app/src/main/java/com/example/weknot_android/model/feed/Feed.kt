@@ -1,4 +1,4 @@
-package com.example.weknot_android.model.entity.feed
+package com.example.weknot_android.model.feed
 
 data class Feed(var feedId: Int,
                 var name: String,

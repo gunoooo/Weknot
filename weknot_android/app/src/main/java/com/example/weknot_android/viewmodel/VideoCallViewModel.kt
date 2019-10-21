@@ -4,9 +4,9 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseViewModel
-import com.example.weknot_android.model.entity.user.Profile
-import com.example.weknot_android.model.entity.user.User
-import com.example.weknot_android.model.entity.videocall.VideoCall
+import com.example.weknot_android.model.user.Profile
+import com.example.weknot_android.model.user.User
+import com.example.weknot_android.model.videocall.VideoCall
 import com.example.weknot_android.network.comm.UserComm
 import com.example.weknot_android.network.comm.VideoCallComm
 import com.example.weknot_android.util.Strings

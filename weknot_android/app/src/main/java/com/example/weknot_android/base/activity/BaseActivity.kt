@@ -92,6 +92,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
         }
     }
 
+
     protected fun startActivity(activity: Class<*>) {
         startActivity(Intent(this, activity))
     }

@@ -1,6 +1,6 @@
-package com.example.weknot_android.model.entity.user
+package com.example.weknot_android.model.user
 
-import com.example.weknot_android.model.entity.feed.Feed
+import com.example.weknot_android.model.feed.Feed
 
 data class Profile(var id: String,
                    var name: String,

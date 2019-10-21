@@ -1,14 +1,14 @@
-package com.example.weknot_android.model.database
+package com.example.weknot_android.database.database
 
 import android.content.Context
 
 import androidx.room.Database
 import androidx.room.Room
-import com.example.weknot_android.model.dao.OpenChatDao
+import com.example.weknot_android.database.dao.OpenChatDao
 
-import com.example.weknot_android.model.dao.UserDao
-import com.example.weknot_android.model.entity.OpenChat.OpenChatRoom
-import com.example.weknot_android.model.entity.user.User
+import com.example.weknot_android.database.dao.UserDao
+import com.example.weknot_android.model.chat.OpenChatRoom
+import com.example.weknot_android.model.user.User
 
 @Database(entities = [User::class, OpenChatRoom::class], version = 2, exportSchema = false)
 abstract class RoomDatabase : androidx.room.RoomDatabase() {

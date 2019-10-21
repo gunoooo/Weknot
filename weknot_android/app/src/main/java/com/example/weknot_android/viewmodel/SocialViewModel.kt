@@ -3,7 +3,7 @@ package com.example.weknot_android.viewmodel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.weknot_android.base.viewmodel.BaseViewModel
-import com.example.weknot_android.model.entity.user.Friend
+import com.example.weknot_android.model.user.Friend
 import com.example.weknot_android.network.comm.SocialComm
 import com.example.weknot_android.network.request.FriendRequest
 import com.example.weknot_android.widget.recyclerview.adapter.SocialAdapter

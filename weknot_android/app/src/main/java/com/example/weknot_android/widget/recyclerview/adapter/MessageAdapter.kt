@@ -1,17 +1,14 @@
 package com.example.weknot_android.widget.recyclerview.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.R
-import com.example.weknot_android.model.entity.OpenChat.Chat
+import com.example.weknot_android.model.chat.Chat
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.holder.MessageViewHolder
 import com.example.weknot_android.widget.recyclerview.navigator.message.MessageAdapterNavigator
-import com.example.weknot_android.widget.recyclerview.navigator.message.MessageItemNavigator
-import com.google.firebase.database.*
 
 class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>(), MessageAdapterNavigator {
     private lateinit var chats: ArrayList<Chat>

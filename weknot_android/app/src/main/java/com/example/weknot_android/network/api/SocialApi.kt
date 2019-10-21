@@ -1,6 +1,6 @@
 package com.example.weknot_android.network.api
 
-import com.example.weknot_android.model.entity.user.Friend
+import com.example.weknot_android.model.user.Friend
 import com.example.weknot_android.network.request.FriendAddRequest
 import com.example.weknot_android.network.request.FriendRequest
 import com.example.weknot_android.network.response.Response

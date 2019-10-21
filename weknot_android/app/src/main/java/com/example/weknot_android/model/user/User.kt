@@ -1,4 +1,4 @@
-package com.example.weknot_android.model.entity.user
+package com.example.weknot_android.model.user
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

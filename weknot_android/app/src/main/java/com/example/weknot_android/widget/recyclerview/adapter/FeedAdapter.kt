@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.weknot_android.R
-import com.example.weknot_android.model.entity.feed.Feed
+import com.example.weknot_android.model.feed.Feed
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.holder.FeedViewHolder
 import com.example.weknot_android.widget.recyclerview.navigator.feed.FeedAdapterNavigator
