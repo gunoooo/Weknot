@@ -36,4 +36,5 @@
 
     <string name="empty_message">빈칸 없이 입력해 주세요</string>
     <string name="exist_message">취소 되었습니다</string>
+    <string name="download_message">이 기기에 사진을 저장했습니다</string>
 </resources>

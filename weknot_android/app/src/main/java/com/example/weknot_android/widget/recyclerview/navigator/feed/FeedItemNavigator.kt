@@ -4,4 +4,5 @@ interface FeedItemNavigator {
     fun likeOnEvent()
     fun likeOffEvent()
     fun openProfile()
+    fun openPicture()
 }

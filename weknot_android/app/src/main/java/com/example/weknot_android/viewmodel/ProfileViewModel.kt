@@ -22,6 +22,7 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
     private val socialComm = SocialComm()
 
     var id: MutableLiveData<String> = MutableLiveData()
+    val feedId: MutableLiveData<Int> = MutableLiveData()
 
     val addBtnVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -59,6 +60,10 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
         }
 
         addDisposableLoading(feedComm.getUserFeeds(token, id.value!!), observer)
+    }
+
+    fun postFeedLike() {
+        addDisposable(feedComm.postFeedLike(token, feedId.value!!), baseObserver)
     }
 
     fun onClickAddFriend() {

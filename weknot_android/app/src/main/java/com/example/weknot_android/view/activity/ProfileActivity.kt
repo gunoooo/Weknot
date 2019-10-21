@@ -1,5 +1,6 @@
 package com.example.weknot_android.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -37,6 +38,25 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
             onRefreshEvent.observe(this@ProfileActivity, Observer {
                 setUp()
             })
+
+            with(feedAdapter) {
+                likeEvent.observe(this@ProfileActivity, Observer {
+                    feedId.value = it
+                    postFeedLike()
+                })
+
+                openProfile.observe(this@ProfileActivity, Observer {
+                    val intent = Intent(this@ProfileActivity, ProfileActivity::class.java)
+                    intent.putExtra("id", it)
+                    startActivity(intent)
+                })
+
+                openPicture.observe(this@ProfileActivity, Observer {
+                    val intent = Intent(this@ProfileActivity, PictureActivity::class.java)
+                    intent.putExtra("url", it)
+                    startActivity(intent)
+                })
+            }
         }
     }
 

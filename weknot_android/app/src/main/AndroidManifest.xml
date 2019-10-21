@@ -44,6 +44,7 @@
             android:name=".view.activity.ProfileActivity"
             android:label="@string/profile_title" />
         <activity android:name=".view.activity.VideoCallActivity" />
+        <activity android:name=".view.activity.PictureActivity" />
     </application>
 
 </manifest>

@@ -38,4 +38,8 @@ class FeedItemViewModel : BaseItemViewModel<Feed, FeedItemNavigator>() {
     fun onClickProfile() {
         getNavigator().openProfile()
     }
+
+    fun onClickPicture() {
+        getNavigator().openPicture()
+    }
 }

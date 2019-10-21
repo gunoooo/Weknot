@@ -10,6 +10,7 @@ import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseListFragment
 import com.example.weknot_android.databinding.FeedFragmentBinding
 import com.example.weknot_android.view.activity.FeedWriteActivity
+import com.example.weknot_android.view.activity.PictureActivity
 import com.example.weknot_android.view.activity.ProfileActivity
 import com.example.weknot_android.viewmodel.FeedViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -47,6 +48,12 @@ class FeedFragment : BaseListFragment<FeedFragmentBinding, FeedViewModel>() ,Swi
                 openProfile.observe(this@FeedFragment, Observer {
                     val intent = Intent(context, ProfileActivity::class.java)
                     intent.putExtra("id", it)
+                    startActivity(intent)
+                })
+
+                openPicture.observe(this@FeedFragment, Observer {
+                    val intent = Intent(context, PictureActivity::class.java)
+                    intent.putExtra("url", it)
                     startActivity(intent)
                 })
             }

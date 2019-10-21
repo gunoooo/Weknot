@@ -60,8 +60,6 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
         viewModel.cropImage()
     }
 
-    override fun cropNextEvent() { }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
