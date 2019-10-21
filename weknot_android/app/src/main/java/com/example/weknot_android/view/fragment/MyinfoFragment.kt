@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.MyinfoFragmentBinding
 import com.example.weknot_android.viewmodel.MyinfoViewModel
 
-class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>() {
+class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>() , SwipeRefreshLayout.OnRefreshListener {
 
     override fun getLayoutId(): Int {
         return R.layout.myinfo_fragment
@@ -42,7 +43,15 @@ class MyinfoFragment : BaseFragment<MyinfoFragmentBinding, MyinfoViewModel>() {
         viewModel.setUp()
     }
 
+    override fun onRefresh() {
+        viewModel.setUp()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
     private fun setUp() {
         viewModel.id.value = viewModel.getMyId()
+
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
 }

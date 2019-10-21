@@ -24,6 +24,8 @@ class OpenChatViewModel(application: Application) : BaseViewModel<Any>(applicati
     val openCreateRoom = SingleLiveEvent<Unit>()
 
     fun getChattingRooms() {
+        isLoading.value = true
+
         FirebaseDatabase.getInstance().reference.child("groupchatrooms")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -38,9 +40,13 @@ class OpenChatViewModel(application: Application) : BaseViewModel<Any>(applicati
 
                         openChatAdapter.updateList(chatRooms as List<ChatRoom>)
                         openChatAdapter.updateKey(keys as List<String>)
+
+                        isLoading.value = false
                     }
 
-                    override fun onCancelled(databaseError: DatabaseError) {}
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        isLoading.value = false
+                    }
                 })
     }
 

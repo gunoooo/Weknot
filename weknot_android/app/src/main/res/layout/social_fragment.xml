@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +32,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"
                 android:id="@+id/receive_recyclerview"
+                android:overScrollMode="never"
                 tools:listitem="@layout/social_item"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:layout_width="match_parent"
@@ -51,6 +53,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"
                 android:id="@+id/friend_recyclerview"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/social_item"

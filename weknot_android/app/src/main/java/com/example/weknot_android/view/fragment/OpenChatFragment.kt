@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.BaseDialog
@@ -15,7 +16,7 @@ import com.example.weknot_android.view.dialog.CreateRoomDialog
 import com.example.weknot_android.viewmodel.OpenChatViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>() {
+class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewModel>() , SwipeRefreshLayout.OnRefreshListener  {
 
     override fun getLayoutId(): Int {
         return R.layout.open_chat_fragment
@@ -65,7 +66,15 @@ class OpenChatFragment : BaseListFragment<OpenChatFragmentBinding, OpenChatViewM
         viewModel.getChattingRooms()
     }
 
+    override fun onRefresh() {
+        viewModel.getChattingRooms()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
     private fun setUp() {
         binding.chatRoomRecyclerview.addOnScrollListener(scrollListener)
+
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
 }

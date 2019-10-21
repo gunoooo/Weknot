@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.ProfileActivityBinding
 import com.example.weknot_android.viewmodel.ProfileViewModel
 
-class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>() {
+class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>() , SwipeRefreshLayout.OnRefreshListener {
 
     override val TAG: String
         get() = this.javaClass.name
@@ -45,9 +46,17 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
         setUp()
     }
 
+    override fun onRefresh() {
+        viewModel.setUp()
+        binding.swipeRefreshLayout.isRefreshing = false
+    }
+
     private fun setUp() {
         viewModel.id.value = intent.getStringExtra("id")
         viewModel.setUp()
+
+        binding.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent)
+        binding.swipeRefreshLayout.setOnRefreshListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
