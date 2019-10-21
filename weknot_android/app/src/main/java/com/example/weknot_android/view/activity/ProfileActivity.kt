@@ -10,6 +10,7 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BaseActivity
 import com.example.weknot_android.databinding.ProfileActivityBinding
+import com.example.weknot_android.util.Strings
 import com.example.weknot_android.viewmodel.ProfileViewModel
 
 class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>() , SwipeRefreshLayout.OnRefreshListener {
@@ -39,6 +40,12 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
                 setUp()
             })
 
+            openPictureEvent.observe(this@ProfileActivity, Observer {
+                val intent = Intent(this@ProfileActivity, PictureActivity::class.java)
+                intent.putExtra("url", it)
+                startActivity(intent)
+            })
+
             with(feedAdapter) {
                 likeEvent.observe(this@ProfileActivity, Observer {
                     feedId.value = it
@@ -53,7 +60,7 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
 
                 openPicture.observe(this@ProfileActivity, Observer {
                     val intent = Intent(this@ProfileActivity, PictureActivity::class.java)
-                    intent.putExtra("url", it)
+                    intent.putExtra("url", Strings.MAIN_HOST + "/image/" + it)
                     startActivity(intent)
                 })
             }

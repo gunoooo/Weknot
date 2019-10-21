@@ -36,6 +36,7 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
     var feedAdapter = FeedAdapter()
 
     val onRefreshEvent = SingleLiveEvent<Unit>()
+    val openPictureEvent = SingleLiveEvent<String>()
 
     fun setUp() {
         getProfile()
@@ -83,6 +84,10 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
             "친구 요청" -> addDisposable(socialComm.addFriend(token, id.value!!), observer)
             "친구 수락" -> addDisposable(socialComm.putFriend(token, FriendRequest(id.value!!, null)), observer)
         }
+    }
+
+    fun onClickPhoto() {
+        openPictureEvent.value = userPicture.value
     }
 
     override fun onRetrieveDataSuccess(data: Profile) {
