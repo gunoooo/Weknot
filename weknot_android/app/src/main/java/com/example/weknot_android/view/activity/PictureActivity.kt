@@ -57,7 +57,7 @@ class PictureActivity : BasePictureActivity<PictureActivityBinding, PictureViewM
     private fun setUp() {
         tedPermission()
         setBaseColor()
-        viewModel.picture.value = Strings.MAIN_HOST + "/image/" + intent.getStringExtra("url")
+        viewModel.picture.value = intent.getStringExtra("url")
         initBitmapImage(viewModel.picture.value)
     }
 

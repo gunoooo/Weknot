@@ -17,7 +17,7 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(ap
     private val videoCallComm = VideoCallComm()
     private val userComm = UserComm()
 
-    val channel = MutableLiveData<String>()
+    private val channel = MutableLiveData<String>()
 
     val userInfo: Bundle = Bundle()
 
@@ -47,8 +47,8 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(ap
             override fun onSuccess(user: User) {
                 userInfo.putString("displayName", user.name)
                 userInfo.putString("email", user.phoneNumber)
-                userInfo.putString("avatarURL", Strings.MAIN_HOST + "/image/" + user.picture)
-                myPhoto.value = Strings.MAIN_HOST + "/image/" + user.picture;
+                userInfo.putString("avatarURL", Strings.MAIN_HOST + "/image/" + user.photo)
+                myPhoto.value = Strings.MAIN_HOST + "/image/" + user.photo
             }
 
             override fun onError(e: Throwable) {
@@ -77,7 +77,7 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(ap
         val observer = object : DisposableSingleObserver<Profile>() {
             override fun onSuccess(t: Profile) {
                 isLoading.value = false
-                otherPhoto.value = t.photo
+                otherPhoto.value = Strings.MAIN_HOST + "/image/" + t.photo
                 otherName.value = t.name
             }
 

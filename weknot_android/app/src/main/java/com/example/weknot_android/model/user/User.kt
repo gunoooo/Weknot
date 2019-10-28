@@ -10,7 +10,7 @@ data class User(@field:PrimaryKey
                 var birth: String?,
                 var gender: String?,
                 var phoneNumber: String?,
-                var picture: String?,
+                var photo: String?,
                 var intro: String?,
                 var scope: String?,
                 var point: Int)

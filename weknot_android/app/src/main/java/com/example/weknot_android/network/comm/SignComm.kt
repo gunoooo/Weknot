@@ -7,6 +7,8 @@ import com.example.weknot_android.network.request.LoginRequest
 import com.example.weknot_android.network.request.SignUpRequest
 import com.example.weknot_android.network.response.data.LoginData
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class SignComm : BaseComm<SignApi>() {
 
@@ -14,8 +16,10 @@ class SignComm : BaseComm<SignApi>() {
         return api.login(loginRequest).map(getResponseObjectsFunction())
     }
 
-    fun signUp(signUpRequest: SignUpRequest): Single<String> {
-        return api.signUp(signUpRequest).map(getResponseMessageFunction())
+    fun signUp(photo: MultipartBody.Part,
+               id: RequestBody, pw: RequestBody, name: RequestBody, birth: RequestBody,
+               gender: RequestBody, phoneNumber: RequestBody, intro: RequestBody): Single<String> {
+        return api.signUp(photo, id, pw, name, birth, gender, phoneNumber, intro).map(getResponseMessageFunction())
     }
 
     fun autoLogin(token: String): Single<User> {

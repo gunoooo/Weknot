@@ -27,7 +27,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="매듭요청" />
+                android:text="@string/friend_apply_list_text" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"
@@ -44,11 +44,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
-                android:text="친구목록"
+                android:text="@string/friend_list_text"
                 android:textColor="@android:color/black"
                 android:fontFamily="@font/nanum_squareeb"
                 android:background="@drawable/background_friend_part"
-                android:textSize="20dp"/>
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"

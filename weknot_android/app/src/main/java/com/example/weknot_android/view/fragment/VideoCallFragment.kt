@@ -44,6 +44,7 @@ class VideoCallFragment : BaseFragment<VideoCallFragmentBinding, VideoCallViewMo
                         .setRoom("channel" + it.channel)
                         .setSubject("랜덤채팅")
                         .setUserInfo(JitsiMeetUserInfo(viewModel.userInfo))
+                        .setAudioMuted(true)
                         .build()
 
                 VideoCallActivity.videoLaunch(context!!, options!!, it.channel)

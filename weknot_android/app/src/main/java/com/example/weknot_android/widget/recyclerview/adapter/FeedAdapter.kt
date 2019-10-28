@@ -29,12 +29,11 @@ class FeedAdapter : Adapter<FeedViewHolder>(), FeedAdapterNavigator {
     }
 
     override fun like(feed: Feed) {
-        var position = feeds.indexOf(feed)
+        val position = feeds.indexOf(feed)
         
         feed.like = if (feed.like == 1) 0 else 1
         feed.likeCount = if (feed.like == 1) feed.likeCount + 1 else feed.likeCount - 1
         (feeds as ArrayList<Feed>)[position] = feed
-        notifyItemChanged(position)
 
         likeEvent.value = feed.feedId
     }

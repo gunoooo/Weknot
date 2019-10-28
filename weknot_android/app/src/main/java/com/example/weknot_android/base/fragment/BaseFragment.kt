@@ -44,7 +44,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : Fragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
-        initBaseObserver()
         initObserver()
     }
 
@@ -52,14 +51,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel<*>> : Fragm
         binding.setVariable(getBindingVariable(),viewModel)
         binding.lifecycleOwner = this
         binding.executePendingBindings()
-    }
-
-    private fun initBaseObserver() {
-        with(viewModel) {
-            onErrorEvent.observe(this@BaseFragment, Observer {
-                simpleToast(it.message)
-            })
-        }
     }
 
     protected fun startActivity(activity: Class<*>) {

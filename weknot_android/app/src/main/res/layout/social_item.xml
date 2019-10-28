@@ -31,11 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/nanum_squareeb"
             app:mutableText="@{viewModel.name}"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,8 +50,8 @@
             app:layout_constraintTop_toBottomOf="@+id/name">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_point" />
 
@@ -63,7 +63,7 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/nanum_squareb"
                 android:textColor="@color/colorMainDark"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 app:mutableText="@{viewModel.point}" />
         </LinearLayout>
 
@@ -88,7 +88,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="10sp"
-                android:text="매듭 거절"
+                android:text="@string/friend_reject_text"
                 android:onClick="@{() -> viewModel.onClickRejectBtn()}"
                 android:textColor="@color/colorMainDark" />
 
@@ -102,7 +102,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="10sp"
-                android:text="매듭 수락"
+                android:text="@string/friend_accept_text"
                 android:onClick="@{() -> viewModel.onClickAcceptBtn()}"
                 android:textColor="@color/colorMainDark" />
 

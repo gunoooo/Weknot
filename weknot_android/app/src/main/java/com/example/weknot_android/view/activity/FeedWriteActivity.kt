@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BasePictureActivity
@@ -58,6 +59,11 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
     override fun pickNextEvent(data: Intent) {
         viewModel.savePickData(data)
         viewModel.cropImage()
+    }
+
+    override fun cropNextEvent() {
+        super.cropNextEvent()
+        Glide.with(this).load(viewModel.pictureUri.value).into(binding.image)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

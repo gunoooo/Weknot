@@ -56,7 +56,6 @@ fun setMutableImageUrl(view: ImageView, url: MutableLiveData<String>?) {
         RequestOptions()
                 .error(R.drawable.ic_profile)
                 .placeholder(R.drawable.loading)
-                .transforms(CenterCrop())
     }
 
     if(url != null) {
@@ -76,9 +75,27 @@ fun setMutableImageUrl(view: ImageView, url: MutableLiveData<String>?) {
 fun setMutableImageUri(view: ImageView, uri: MutableLiveData<Uri>?) {
     val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
 
-    if(uri != null) {
+    if(uri!!.value != null) {
         uri.observe(parentActivity, Observer { value -> Glide.with(view.context)
                 .load(value)
+                .into(view)})
+    }
+    else {
+        Glide.with(view.context)
+                .load(R.drawable.ic_profile)
+                .into(view)
+    }
+}
+
+@BindingAdapter("mutablePhotoUri")
+fun setMutablePhotoUri(view: ImageView, uri: MutableLiveData<Uri>?) {
+    val parentActivity: AppCompatActivity = view.getParentActivity() ?: return
+
+    if(uri!!.value != null) {
+        uri.observe(parentActivity, Observer { value -> Glide.with(view.context)
+                .load(value)
+                .apply(RequestOptions()
+                        .error(R.drawable.ic_profile))
                 .into(view)})
     }
     else {

@@ -7,6 +7,7 @@ import android.content.SharedPreferences.Editor
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 
+
 class UserId(context: Context) : ContextWrapper(context) {
     var id: String = ""
         get() {
@@ -22,5 +23,4 @@ class UserId(context: Context) : ContextWrapper(context) {
             editor.putString("id", id)
             editor.commit()
         }
-
 }

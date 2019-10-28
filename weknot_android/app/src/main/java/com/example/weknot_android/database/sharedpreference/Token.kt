@@ -25,5 +25,4 @@ class Token(context: Context) : ContextWrapper(context) {
             editor.putString("token", token)
             editor.commit()
         }
-
 }

@@ -20,12 +20,19 @@ import java.util.*
 class SignUpViewModel(application: Application) : BaseViewModel<Any>(application) {
     private val signComm = SignComm()
 
-    var request = MutableLiveData<SignUpRequest>()
+    val request = SignUpRequest()
 
     val tempPictureUri: MutableLiveData<Uri> = MutableLiveData()
     val pictureUri: MutableLiveData<Uri> = MutableLiveData()
     private val pictureFile: MutableLiveData<File> = MutableLiveData()
     private val picture: MutableLiveData<MultipartBody.Part> = MutableLiveData()
+    private val id: MutableLiveData<RequestBody> = MutableLiveData()
+    private val pw: MutableLiveData<RequestBody> = MutableLiveData()
+    private val name: MutableLiveData<RequestBody> = MutableLiveData()
+    private val birth: MutableLiveData<RequestBody> = MutableLiveData()
+    private val gender: MutableLiveData<RequestBody> = MutableLiveData()
+    private val phoneNumber: MutableLiveData<RequestBody> = MutableLiveData()
+    private val intro: MutableLiveData<RequestBody> = MutableLiveData()
 
     val onSuccessEvent: SingleLiveEvent<String> = SingleLiveEvent()
     val signUpEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
@@ -37,12 +44,13 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
     fun signUp() {
         setRequest()
         fbSignUp()
-        addDisposable(signComm.signUp(request.value!!), baseObserver)
+        addDisposable(signComm.signUp(picture.value!!, id.value!!, pw.value!!,
+                name.value!!, birth.value!!, gender.value!!, phoneNumber.value!!, intro.value!!), baseObserver)
     }
 
     private fun fbSignUp() {
         FirebaseAuth.getInstance()
-                .createUserWithEmailAndPassword(request.value!!.id + "@weknot.com", request.value!!.pw + "111111")
+                .createUserWithEmailAndPassword(request.id + "@ryan.com", request.pw + "111111")
     }
 
     fun savePickData(data: Intent) {
@@ -68,7 +76,14 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
 
     private fun setRequest() {
         val requestFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), pictureFile.value!!)
-        picture.value = MultipartBody.Part.createFormData("picture", pictureFile.value!!.name, requestFile)
+        picture.value = MultipartBody.Part.createFormData("photo", pictureFile.value!!.name, requestFile)
+        id.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.id)
+        pw.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.pw)
+        name.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.name)
+        birth.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.birth)
+        gender.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.gender)
+        phoneNumber.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.phoneNumber)
+        intro.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.intro)
     }
 
     fun deleteFile() {

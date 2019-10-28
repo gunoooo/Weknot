@@ -11,7 +11,7 @@ class FbUser {
     constructor(user: User, uid: String) {
         this.id = user.id
         this.name = user.name
-        this.photo = user.picture
+        this.photo = user.photo
         this.uid = uid
     }
 }

@@ -2,12 +2,15 @@ package com.example.weknot_android.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.activity.BasePictureActivity
 import com.example.weknot_android.databinding.SignUpActivityBinding
 import com.example.weknot_android.model.user.FbUser
+import com.example.weknot_android.view.dialog.LogoutDialog
 import com.example.weknot_android.viewmodel.SignUpViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -58,7 +61,6 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
 
             backMessageToast.observe(this@SignUpActivity, Observer {
                 simpleToast(R.string.exist_message)
-                startActivityWithFinish(MainActivity::class.java)
             })
 
             onErrorEvent.observe(this@SignUpActivity, Observer {
@@ -76,7 +78,9 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
         viewModel.cropImage()
     }
 
-    override fun cropNextEvent() { }
+    override fun cropNextEvent() {
+        Glide.with(this).load(viewModel.pictureUri.value).into(binding.inputImage)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,8 +88,17 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
     }
 
     private fun isEmpty(): Boolean {
-        return viewModel.request.value!!.id.isEmpty() || viewModel.request.value!!.pw.isEmpty() ||
-                viewModel.request.value!!.birth.isEmpty() || viewModel.request.value!!.name.isEmpty() ||
-                viewModel.request.value!!.gender.isEmpty() || viewModel.request.value!!.phoneNumber.isEmpty()
+        return viewModel.request.id.isEmpty() || viewModel.request.pw.isEmpty() ||
+                viewModel.request.birth.isEmpty() || viewModel.request.name.isEmpty() ||
+                viewModel.request.gender.isEmpty() || viewModel.request.phoneNumber.isEmpty() ||
+                viewModel.request.intro.isEmpty()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            startActivityWithFinish(LoginActivity::class.java)
+            return true
+        }
+        return false
     }
 }

@@ -10,7 +10,7 @@ import com.example.weknot_android.database.dao.UserDao
 import com.example.weknot_android.model.chat.OpenChatRoom
 import com.example.weknot_android.model.user.User
 
-@Database(entities = [User::class, OpenChatRoom::class], version = 2, exportSchema = false)
+@Database(entities = [User::class, OpenChatRoom::class], version = 3, exportSchema = false)
 abstract class RoomDatabase : androidx.room.RoomDatabase() {
 
     abstract fun userDao(): UserDao

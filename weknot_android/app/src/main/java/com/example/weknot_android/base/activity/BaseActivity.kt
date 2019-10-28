@@ -47,6 +47,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
     private fun performViewDataBinding() {
         binding = DataBindingUtil.setContentView(this, getLayoutId())
         this.viewModel = if(::viewModel.isInitialized) viewModel else ViewModelProviders.of(this).get(getViewModel())
+        binding.lifecycleOwner = this
         binding.setVariable(getBindingVariable(), viewModel)
         binding.executePendingBindings()
     }

@@ -1,5 +1,6 @@
 package com.example.weknot_android.widget.recyclerview.holder
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -38,6 +39,8 @@ class FeedViewHolder(val binding: FeedItemBinding) : BaseViewHolder<FeedAdapterN
         viewModel.setNavigator(this)
         setUp()
         binding.viewModel = viewModel
+        binding.likeOnBtn.visibility = View.INVISIBLE
+        binding.likeOffBtn.visibility = View.INVISIBLE
     }
 
     private fun setUp() {
@@ -62,8 +65,10 @@ class FeedViewHolder(val binding: FeedItemBinding) : BaseViewHolder<FeedAdapterN
         })
         animLikeOnSecond.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {}
+            @SuppressLint("SetTextI18n")
             override fun onAnimationEnd(p0: Animation?) {
                 binding.likeOnBtn.visibility = View.VISIBLE
+                binding.likeLeftCount.text = (viewModel.feed.value!!.likeCount + 1).toString() + "개"
                 getNavigator().like(viewModel.feed.value!!)
             }
             override fun onAnimationStart(p0: Animation?) {}
@@ -83,8 +88,10 @@ class FeedViewHolder(val binding: FeedItemBinding) : BaseViewHolder<FeedAdapterN
         })
         animLikeOffSecond.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {}
+            @SuppressLint("SetTextI18n")
             override fun onAnimationEnd(p0: Animation?) {
                 binding.likeOffBtn.visibility = View.VISIBLE
+                binding.likeRightCount.text = (viewModel.feed.value!!.likeCount - 1).toString() + "개"
                 getNavigator().like(viewModel.feed.value!!)
             }
 
