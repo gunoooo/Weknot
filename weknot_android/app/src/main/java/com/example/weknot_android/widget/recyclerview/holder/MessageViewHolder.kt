@@ -26,6 +26,7 @@ class MessageViewHolder(val binding: MessageItemBinding) : BaseViewHolder<Messag
 
         if (chat.writer!!.uid!! == FirebaseAuth.getInstance().currentUser!!.uid) {
             binding.message.setBackgroundResource(R.drawable.background_send_message)
+            binding.message.setTextColor(Color.BLACK)
             binding.messageItemLinearlayoutMain.gravity = Gravity.END
             binding.writer.visibility = View.GONE
             binding.photo.visibility = View.GONE

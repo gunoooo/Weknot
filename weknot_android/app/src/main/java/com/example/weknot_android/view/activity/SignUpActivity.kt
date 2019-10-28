@@ -46,6 +46,10 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
                 viewModel.signUp()
             })
 
+            nullPointEvent.observe(this@SignUpActivity, Observer {
+                simpleToast(R.string.empty_picture)
+            })
+
             openLogin.observe(this@SignUpActivity, Observer {
                 startActivityWithFinish(LoginActivity::class.java)
             })

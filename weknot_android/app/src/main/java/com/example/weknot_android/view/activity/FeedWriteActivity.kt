@@ -93,4 +93,9 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
         }
         return false
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivityWithFinish(MainActivity::class.java)
+    }
 }

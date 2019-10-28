@@ -15,6 +15,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
+import java.lang.NullPointerException
 import java.util.*
 
 class SignUpViewModel(application: Application) : BaseViewModel<Any>(application) {
@@ -34,15 +35,17 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
     private val phoneNumber: MutableLiveData<RequestBody> = MutableLiveData()
     private val intro: MutableLiveData<RequestBody> = MutableLiveData()
 
-    val onSuccessEvent: SingleLiveEvent<String> = SingleLiveEvent()
-    val signUpEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val openLogin: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val goToAlbum: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val goToCrop: SingleLiveEvent<Unit> = SingleLiveEvent()
-    val backMessageToast: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val nullPointEvent = SingleLiveEvent<Unit>()
+    val onSuccessEvent = SingleLiveEvent<String>()
+    val signUpEvent = SingleLiveEvent<Unit>()
+    val openLogin = SingleLiveEvent<Unit>()
+    val goToAlbum = SingleLiveEvent<Unit>()
+    val goToCrop = SingleLiveEvent<Unit>()
+    val backMessageToast = SingleLiveEvent<Unit>()
 
     fun signUp() {
-        setRequest()
+        if (!setRequest()) return
+
         fbSignUp()
         addDisposable(signComm.signUp(picture.value!!, id.value!!, pw.value!!,
                 name.value!!, birth.value!!, gender.value!!, phoneNumber.value!!, intro.value!!), baseObserver)
@@ -74,16 +77,23 @@ class SignUpViewModel(application: Application) : BaseViewModel<Any>(application
         pictureUri.value = Uri.fromFile(pictureFile.value)
     }
 
-    private fun setRequest() {
-        val requestFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), pictureFile.value!!)
-        picture.value = MultipartBody.Part.createFormData("photo", pictureFile.value!!.name, requestFile)
-        id.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.id)
-        pw.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.pw)
-        name.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.name)
-        birth.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.birth)
-        gender.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.gender)
-        phoneNumber.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.phoneNumber)
-        intro.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.intro)
+    private fun setRequest(): Boolean {
+        try {
+            val requestFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), pictureFile.value!!)
+            picture.value = MultipartBody.Part.createFormData("photo", pictureFile.value!!.name, requestFile)
+            id.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.id)
+            pw.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.pw)
+            name.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.name)
+            birth.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.birth)
+            gender.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.gender)
+            phoneNumber.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.phoneNumber)
+            intro.value = RequestBody.create("text/plain".toMediaTypeOrNull(), request.intro)
+        }
+        catch (e: NullPointerException) {
+            nullPointEvent.call()
+            return false
+        }
+        return true
     }
 
     fun deleteFile() {
