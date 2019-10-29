@@ -2,6 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.weknot_android.widget.recyclerview.viewmodel.SocialItemViewModel" />
@@ -68,45 +70,57 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="@{viewModel.isFriend() ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/linearLayout"
-            app:layout_constraintTop_toTopOf="@+id/profile_image"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="60dp"
-            app:mutableVisibility="@{viewModel.acceptVisibility}" >
+            app:layout_constraintTop_toTopOf="@+id/profile_image">
 
             <TextView
-                android:layout_weight="1"
                 android:layout_width="80dp"
-                android:layout_marginEnd="5dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
                 android:background="@drawable/background_accept_btn"
                 android:fontFamily="@font/nanum_squareeb"
                 android:gravity="center"
-                android:padding="10dp"
-                android:textSize="10sp"
-                android:text="@string/friend_reject_text"
                 android:onClick="@{() -> viewModel.onClickRejectBtn()}"
-                android:textColor="@color/colorMainDark" />
+                android:padding="10dp"
+                android:text="@string/friend_reject_text"
+                android:textColor="@color/colorMainDark"
+                android:textSize="10sp" />
 
             <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
                 android:background="@drawable/background_accept_btn"
                 android:fontFamily="@font/nanum_squareeb"
                 android:gravity="center"
-                android:padding="10dp"
-                android:textSize="10sp"
-                android:text="@string/friend_accept_text"
                 android:onClick="@{() -> viewModel.onClickAcceptBtn()}"
-                android:textColor="@color/colorMainDark" />
+                android:padding="10dp"
+                android:text="@string/friend_accept_text"
+                android:textColor="@color/colorMainDark"
+                android:textSize="10sp" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_message"
+            android:layout_marginEnd="30dp"
+            android:visibility="@{viewModel.isFriend() ? View.VISIBLE : View.INVISIBLE}"
+            android:onClick="@{() -> viewModel.onClickMessage()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

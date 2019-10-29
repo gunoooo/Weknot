@@ -31,7 +31,7 @@ class SocialViewModel(application: Application) : BaseViewModel<List<Friend>>(ap
     }
 
     fun putFriend() {
-        addDisposable(socialComm.putFriend(token, friendRequest.value!!), baseObserver)
+        addDisposable(socialComm.putFriend(token, userId, friendRequest.value!!), baseObserver)
     }
 
     override fun onRetrieveDataSuccess(data: List<Friend>) {

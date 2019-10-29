@@ -15,6 +15,7 @@ class SocialAdapter : Adapter<SocialViewHolder>(), SocialAdapterNavigator {
     private lateinit var friends: List<Friend>
 
     val checkFriendEvent = SingleLiveEvent<FriendRequest>()
+    val openChatRoom = SingleLiveEvent<String>()
     val openProfile = SingleLiveEvent<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SocialViewHolder {
@@ -28,6 +29,10 @@ class SocialAdapter : Adapter<SocialViewHolder>(), SocialAdapterNavigator {
 
     override fun checkFriend(message: String, friend: Friend) {
         checkFriendEvent.value = FriendRequest(friend.friendId, message)
+    }
+
+    override fun openChatRoom(id: String) {
+        openChatRoom.value = id
     }
 
     override fun openProfile(id: String) {

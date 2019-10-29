@@ -1,10 +1,12 @@
 package com.example.weknot_android.network.comm
 
 import com.example.weknot_android.base.BaseComm
+import com.example.weknot_android.model.chat.PrivateChatRoom
 import com.example.weknot_android.model.user.Friend
 import com.example.weknot_android.network.api.SocialApi
 import com.example.weknot_android.network.request.FriendAddRequest
 import com.example.weknot_android.network.request.FriendRequest
+import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.Single
 
 class SocialComm : BaseComm<SocialApi>() {
@@ -13,7 +15,11 @@ class SocialComm : BaseComm<SocialApi>() {
         return api.getFriends(token).map(getResponseObjectsFunction())
     }
 
-    fun putFriend(token: String, friendRequest: FriendRequest): Single<String> {
+    fun putFriend(token: String, userId: String, friendRequest: FriendRequest): Single<String> {
+
+        val chatRoomUid = FirebaseDatabase.getInstance().reference.child("privatechatrooms").push().key!!
+        FirebaseDatabase.getInstance().reference.child("privatechatrooms").child(chatRoomUid).setValue(PrivateChatRoom(userId, friendRequest.friend))
+
         return api.putFriend(token, friendRequest).map(getResponseMessageFunction())
     }
 

@@ -14,8 +14,10 @@ class MessageItemViewModel : BaseItemViewModel<Chat, MessageItemNavigator>() {
     val time = MutableLiveData<String>()
 
     override fun bind(data: Chat) {
-        writer.value = data.writer!!.name
-        photo.value =  Strings.MAIN_HOST + "/image/" + data.writer!!.photo
+        if (data.writer != null) {
+            writer.value = data.writer!!.name
+            photo.value =  Strings.MAIN_HOST + "/image/" + data.writer!!.photo
+        }
         message.value = data.message
         time.value = data.timeStamp
     }

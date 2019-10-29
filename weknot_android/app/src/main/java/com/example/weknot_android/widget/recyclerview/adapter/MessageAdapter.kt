@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weknot_android.R
+import com.example.weknot_android.database.sharedpreference.UserId
 import com.example.weknot_android.model.chat.Chat
 import com.example.weknot_android.widget.SingleLiveEvent
 import com.example.weknot_android.widget.recyclerview.holder.MessageViewHolder
@@ -13,6 +14,8 @@ import com.example.weknot_android.widget.recyclerview.navigator.message.MessageA
 class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>(), MessageAdapterNavigator {
     private lateinit var chats: ArrayList<Chat>
 
+    private var userId: String? = null
+
     val openProfile = SingleLiveEvent<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
@@ -20,7 +23,7 @@ class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>(), MessageAdapter
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        holder.bind(chats[position])
+        holder.bind(chats[position], userId)
         holder.setNavigator(this)
     }
 
@@ -30,6 +33,11 @@ class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>(), MessageAdapter
 
     fun updateList(chats: ArrayList<Chat>) {
         this.chats = chats
+        notifyDataSetChanged()
+    }
+
+    fun setUserId(userId: String) {
+        this.userId = userId
         notifyDataSetChanged()
     }
 

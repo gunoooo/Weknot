@@ -82,7 +82,7 @@ open class ProfileViewModel(application: Application) : BaseViewModel<Profile>(a
 
         when (userStatus.value) {
             "친구 요청" -> addDisposable(socialComm.addFriend(token, id.value!!), observer)
-            "친구 수락" -> addDisposable(socialComm.putFriend(token, FriendRequest(id.value!!, null)), observer)
+            "친구 수락" -> addDisposable(socialComm.putFriend(token, userId, FriendRequest(id.value!!, null)), observer)
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.weknot_android.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -73,6 +74,11 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
         setUp()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_profile, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onRefresh() {
         viewModel.setUp()
         binding.swipeRefreshLayout.isRefreshing = false
@@ -89,6 +95,12 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
+            return true
+        }
+        else if (item.itemId == R.id.menu_profile) {
+            val intent = Intent(this, PrivateChatActivity::class.java)
+            intent.putExtra("id", viewModel.id.value)
+            startActivity(intent)
             return true
         }
         return false

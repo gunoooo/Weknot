@@ -114,4 +114,8 @@ class ChatActivity : BaseActivity<ChatActivityBinding, ChatViewModel>() {
         viewModel.onDestroy()
     }
 
+    override fun onBackPressed() {
+        newInstance(ExitRoomDialog(viewModel.roomKey!!)).show(supportFragmentManager)
+    }
+
 }

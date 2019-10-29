@@ -41,6 +41,7 @@
         <activity
             android:name=".view.activity.ChatActivity"
             android:label="@string/chat_title" />
+        <activity android:name=".view.activity.PrivateChatActivity" />
         <activity
             android:name=".view.activity.ProfileActivity"
             android:label="@string/profile_title" />

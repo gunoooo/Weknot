@@ -28,6 +28,10 @@ class SocialViewHolder(val binding: SocialItemBinding) : BaseViewHolder<SocialAd
         getNavigator().checkFriend("no" , friend)
     }
 
+    override fun openChatRoom() {
+        getNavigator().openChatRoom(friend.friendId)
+    }
+
     override fun openProfile() {
         getNavigator().openProfile(friend.friendId)
     }

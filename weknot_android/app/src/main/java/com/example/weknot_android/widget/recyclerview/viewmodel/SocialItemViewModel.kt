@@ -11,13 +11,13 @@ class SocialItemViewModel : BaseItemViewModel<Friend, SocialItemNavigator>() {
     val name = MutableLiveData<String>()
     val point = MutableLiveData<String>()
     val picture = MutableLiveData<String>()
-    val acceptVisibility = MutableLiveData<Int>()
+    val isFriend = MutableLiveData<Boolean>()
 
     override fun bind(data: Friend) {
         name.value = data.friendName
         point.value = data.friendPoint.toString() + "점"
         picture.value = Strings.MAIN_HOST + "/image/" + data.friendPhoto
-        if (data.friendState == 0) acceptVisibility.value = View.VISIBLE else acceptVisibility.value = View.INVISIBLE
+        isFriend.value = data.friendState != 0
     }
 
     fun onClickAcceptBtn() {
@@ -26,6 +26,10 @@ class SocialItemViewModel : BaseItemViewModel<Friend, SocialItemNavigator>() {
 
     fun onClickRejectBtn() {
         getNavigator().rejectFriend()
+    }
+
+    fun onClickMessage() {
+        getNavigator().openChatRoom()
     }
 
     fun onClickItem() {

@@ -9,6 +9,7 @@ import com.example.weknot_android.BR
 import com.example.weknot_android.R
 import com.example.weknot_android.base.fragment.BaseFragment
 import com.example.weknot_android.databinding.SocialFragmentBinding
+import com.example.weknot_android.view.activity.PrivateChatActivity
 import com.example.weknot_android.view.activity.ProfileActivity
 import com.example.weknot_android.viewmodel.SocialViewModel
 
@@ -38,6 +39,12 @@ class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>() {
                     putFriend()
                 })
 
+                openChatRoom.observe(this@SocialFragment, Observer {
+                    val intent = Intent(context, PrivateChatActivity::class.java)
+                    intent.putExtra("id", it)
+                    startActivity(intent)
+                })
+
                 openProfile.observe(this@SocialFragment, Observer {
                     val intent = Intent(context, ProfileActivity::class.java)
                     intent.putExtra("id", it)
@@ -45,11 +52,19 @@ class SocialFragment : BaseFragment<SocialFragmentBinding, SocialViewModel>() {
                 })
             }
 
-            friendAdapter.openProfile.observe(this@SocialFragment, Observer {
-                val intent = Intent(context, ProfileActivity::class.java)
-                intent.putExtra("id", it)
-                startActivity(intent)
-            })
+            with(friendAdapter) {
+                openChatRoom.observe(this@SocialFragment, Observer {
+                    val intent = Intent(context, PrivateChatActivity::class.java)
+                    intent.putExtra("id", it)
+                    startActivity(intent)
+                })
+
+                openProfile.observe(this@SocialFragment, Observer {
+                    val intent = Intent(context, ProfileActivity::class.java)
+                    intent.putExtra("id", it)
+                    startActivity(intent)
+                })
+            }
         }
     }
 
