@@ -93,7 +93,7 @@ let stroage = multer.diskStorage({
 });
 let upload = multer({ storage: stroage }).fields([{ name: 'photo', maxCount: 1 }]);
 
-// 회원가입 테스트 해보기 photo 주면 photo사진 안주면 dgsw 로고
+// 회원가입 테스트 해보기
 router.post('/register', upload, (req, res, next) => {
   const user = {
     id: req.body.id,
@@ -102,12 +102,16 @@ router.post('/register', upload, (req, res, next) => {
     birth: req.body.birth,
     gender: req.body.gender,
     phoneNumber: req.body.phoneNumber,
-    intro: req.body.intro
+    intro: req.body.intro,
+    // photo: req.files['photo'][0].filename
   };
 
   if (req.files != null && req.files['photo'] != null && req.files['photo'][0] != null) {
     user.photo = req.files['photo'][0].filename;
   }
+
+  console.log(user);
+  
 
   users.registerUser(user)
     .then((result) => {

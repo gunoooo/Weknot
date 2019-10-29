@@ -24,7 +24,7 @@ router.get('/', authMiddle, function (req, res, next) {
 
   feedModel.getFeeds(id)
     .then((result) => {
-      console.log(result);
+      console.log(result[0]);
       if (result) {
         res.json({ message: 'ok', data: result });
       } else {
@@ -45,7 +45,7 @@ router.get('/writer/:id', (req, res, next) => {
 
   feedModel.getFeed(id)
     .then((result) => {
-      console.log(result);
+      console.log(result[0]);
       if (result) {
         res.json({ message: 'ok', data: result });
       } else {

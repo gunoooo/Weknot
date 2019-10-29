@@ -47,18 +47,21 @@ exports.getFeeds = async (id) => {
   let conn;
   // 내꺼랑 친구꺼 피드만 보내기 (현재는 모든사용자 피드)
   // 필요한거 좋아요 갯수(likeCount), 내가 좋아요했는지 or 안했는지(like)
-  const sql = '(SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS feedCount FROM feed ' +
-  'JOIN user ON feed.writer = user.id ' +
+  const sql = '(SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS likeCount, ' +
+  '(SELECT COUNT(id) from `like` WHERE sender = ? and `like`.feedId = feed.id) AS `like` ' +
+  'FROM feed JOIN user ON feed.writer = user.id ' +
   'JOIN friends ON feed.writer = friends.receiver ' +
   'WHERE friends.state = 1 AND friends.requester = ?) ' +
   'UNION ' +
-  '(SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS feedCount FROM feed ' +
-  'JOIN user ON feed.writer = user.id ' +
+  '(SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS likeCount, ' +
+  '(SELECT COUNT(id) from `like` WHERE sender = ? and `like`.feedId = feed.id) AS `like` ' +
+  'FROM feed JOIN user ON feed.writer = user.id ' +
   'JOIN friends ON feed.writer = friends.requester ' +
   'WHERE friends.state = 1 AND friends.receiver = ?) ' +
   'UNION ' +
-  '(SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS feedCount FROM feed ' +
-  'JOIN user ON feed.writer = user.id ' +
+  '(SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, (SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS likeCount, ' +
+  '(SELECT COUNT(id) from `like` WHERE sender = ? and `like`.feedId = feed.id) AS `like` ' +
+  'FROM feed JOIN user ON feed.writer = user.id ' +
   'WHERE feed.writer = ?) ' +
   'ORDER BY time DESC; ';
 
@@ -66,7 +69,7 @@ exports.getFeeds = async (id) => {
   console.log(sql);
   try {
     conn = await dbcp.getConnection();
-    result = await conn.query(sql, [id, id, id]);
+    result = await conn.query(sql, [id, id, id, id, id, id]);
   } catch (error) {
     throw error;
   } finally {
@@ -77,13 +80,14 @@ exports.getFeeds = async (id) => {
 
 exports.getFeed = async (id) => {
   let conn;
-  const sql = "SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name, " + 
-   "(SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS likeCount " + 
-   "FROM feed JOIN user ON user.id = ? WHERE writer= ?";
+  const sql = "SELECT feed.id as feedId, feed.writer, feed.time, feed.picture, feed.comment, user.photo, user.name," + 
+   "(SELECT COUNT(id) FROM `like` WHERE `like`.feedId = feed.id) AS likeCount, " +
+   "(SELECT COUNT(id) FROM `like` WHERE `like`.sender = ? and `like`.feedId = feed.id) AS `like`" +
+   "FROM feed JOIN user ON user.id = ? WHERE writer= ? ORDER BY time DESC;";
   let result;
   try {
     conn = await dbcp.getConnection();
-    result = await conn.query(sql, [id,id]);
+    result = await conn.query(sql, [id,id,id]);
   } catch (error) {
     throw error;
   } finally {
@@ -94,7 +98,7 @@ exports.getFeed = async (id) => {
 
 exports.getLike = async (userId, feedId) => {
   let conn;
-  const sql = "select `like`.id from `like` join feed on like.receiver = feed.writer where sender=? and feed.id=?";
+  const sql = "select `like`.id from `like` join feed on `like`.receiver = feed.writer where feed.id = `like`.feedId and sender=? and feed.id=?";
   let result;
   try {
     conn = await dbcp.getConnection();
