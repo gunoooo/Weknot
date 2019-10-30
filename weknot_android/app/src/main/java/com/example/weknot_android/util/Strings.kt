@@ -4,4 +4,5 @@ object Strings {
     const val MAIN_HOST = "http://10.80.162.103:8000"
 
     // 10.80.162.103:8000
+    // 192.168.43.1
 }

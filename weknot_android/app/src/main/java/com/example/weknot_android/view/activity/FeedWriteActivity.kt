@@ -46,6 +46,10 @@ class FeedWriteActivity : BasePictureActivity<FeedWriteActivityBinding, FeedWrit
                 startActivityWithFinish(MainActivity::class.java)
             })
 
+            nullPointerException.observe(this@FeedWriteActivity, Observer {
+                simpleToast(R.string.empty_message)
+            })
+
             onErrorEvent.observe(this@FeedWriteActivity, Observer {
                 simpleToast(it.message)
             })

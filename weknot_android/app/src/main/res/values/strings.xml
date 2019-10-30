@@ -41,6 +41,9 @@
 
     <string name="empty_message">빈칸 없이 입력해 주세요</string>
     <string name="exist_message">취소 되었습니다</string>
-    <string name="empty_picture">프로필 사진을 설정해 주세요</string>
+    <string name="empty_picture_message">프로필 사진을 설정해 주세요</string>
     <string name="download_message">이 기기에 사진을 저장했습니다</string>
+    <string name="check_friend_message">친구가 아닙니다</string>
+    <string name="check_my_id_message">나에게는 DM을 보낼수 없습니다</string>
+    <string name="signup_error_message">현재 회원가입은 \n 개발자 모드로 설정되어 있습니다 \n 존재하는 아이디로 로그인해주세요 </string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -98,9 +99,15 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileViewModel>()
             return true
         }
         else if (item.itemId == R.id.menu_profile) {
-            val intent = Intent(this, PrivateChatActivity::class.java)
-            intent.putExtra("id", viewModel.id.value)
-            startActivity(intent)
+            when {
+                binding.friendBtn.visibility == View.INVISIBLE -> simpleToast(R.string.check_my_id_message)
+                viewModel.userStatus.value!! == "친구" -> {
+                    val intent = Intent(this, PrivateChatActivity::class.java)
+                    intent.putExtra("id", viewModel.id.value)
+                    startActivity(intent)
+                }
+                else -> simpleToast(R.string.check_friend_message)
+            }
             return true
         }
         return false

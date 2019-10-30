@@ -47,7 +47,7 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
             })
 
             nullPointEvent.observe(this@SignUpActivity, Observer {
-                simpleToast(R.string.empty_picture)
+                simpleToast(R.string.empty_picture_message)
             })
 
             openLogin.observe(this@SignUpActivity, Observer {
@@ -89,6 +89,7 @@ class SignUpActivity : BasePictureActivity<SignUpActivityBinding, SignUpViewMode
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (supportActionBar != null) supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        longToast(R.string.signup_error_message)
     }
 
     private fun isEmpty(): Boolean {

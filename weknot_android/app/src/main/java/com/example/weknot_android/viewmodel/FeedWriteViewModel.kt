@@ -13,6 +13,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
+import java.lang.NullPointerException
 import java.util.*
 
 class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(application) {
@@ -26,13 +27,14 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(applicat
     val commentText: MutableLiveData<String> = MutableLiveData()
     private val comment: MutableLiveData<RequestBody> = MutableLiveData()
 
+    val nullPointerException = SingleLiveEvent<Unit>()
     val goToCrop: SingleLiveEvent<Unit> = SingleLiveEvent()
     val backMessageToast: SingleLiveEvent<Unit> = SingleLiveEvent()
     val openMain: SingleLiveEvent<Unit> = SingleLiveEvent()
 
 
     fun postFeed() {
-        setRequest()
+        if (!setRequest()) return
         addDisposable(feedComm.postFeed(token, picture.value!!, comment.value!!), baseObserver)
     }
 
@@ -57,10 +59,17 @@ class FeedWriteViewModel(application: Application) : BaseViewModel<Any>(applicat
         pictureUri.value = Uri.fromFile(pictureFile.value)
     }
 
-    private fun setRequest() {
-        val requestFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), pictureFile.value!!)
-        picture.value = MultipartBody.Part.createFormData("picture", pictureFile.value!!.name, requestFile)
-        comment.value = RequestBody.create("text/plain".toMediaTypeOrNull(),commentText.value!!)
+    private fun setRequest(): Boolean {
+        try {
+            val requestFile: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), pictureFile.value!!)
+            picture.value = MultipartBody.Part.createFormData("picture", pictureFile.value!!.name, requestFile)
+            comment.value = RequestBody.create("text/plain".toMediaTypeOrNull(),commentText.value!!)
+            return true
+        }
+        catch (e: NullPointerException) {
+            nullPointerException.call()
+        }
+        return false
     }
 
     fun deleteFile() {

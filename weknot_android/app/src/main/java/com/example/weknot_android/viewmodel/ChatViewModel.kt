@@ -104,6 +104,7 @@ class ChatViewModel(application: Application) : BaseViewModel<Any>(application) 
         with(fbUser) {
             id = user.id
             name = user.name
+            photo = user.photo
             uid = FirebaseAuth.getInstance().currentUser!!.uid
         }
 

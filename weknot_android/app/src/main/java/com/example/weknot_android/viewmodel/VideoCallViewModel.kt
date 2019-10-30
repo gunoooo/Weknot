@@ -26,15 +26,13 @@ class VideoCallViewModel(application: Application) : BaseViewModel<VideoCall>(ap
     val myPhoto = MutableLiveData<String>()
     val otherPhoto = MutableLiveData<String>()
     val otherName = MutableLiveData<String>()
-    val isFinish = MutableLiveData<Boolean>()
-    val isLike = MutableLiveData<Boolean>()
+    val isFinish = MutableLiveData<Boolean>(false)
+    val isLike = MutableLiveData<Boolean>(false)
 
     val connectVideoCall: SingleLiveEvent<VideoCall> = SingleLiveEvent()
     val openProfile: SingleLiveEvent<String> = SingleLiveEvent()
 
     fun setUp() {
-        isFinish.value = false
-        isLike.value = false
         getUser()
     }
 
