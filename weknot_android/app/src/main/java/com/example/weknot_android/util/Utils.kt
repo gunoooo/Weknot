@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 object Utils {
     var RETROFIT: Retrofit = Builder()
@@ -25,6 +26,10 @@ object Utils {
     private val client: OkHttpClient
         get() {
             val builder = OkHttpClient.Builder()
+                    .connectTimeout(1, TimeUnit.HOURS)
+                    .writeTimeout(1, TimeUnit.HOURS)
+                    .readTimeout(1, TimeUnit.HOURS)
+
             if (BuildConfig.DEBUG) {
                 val httpLoggingInterceptor = HttpLoggingInterceptor()
                 builder.addInterceptor(httpLoggingInterceptor.apply { httpLoggingInterceptor.level = Level.BODY })
