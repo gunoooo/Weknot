@@ -32,7 +32,6 @@ router.post('/', authMiddle, (req, res, next) => {
       if (c.users.length < 2) {
         c.users.push(id);
         c.status.push(1);
-        console.log(c)
         return res.json({
           message: "ok",
           data: {
@@ -44,6 +43,7 @@ router.post('/', authMiddle, (req, res, next) => {
     }
     newChannel(id);
   }
+  console.log(c);
 });
 
 router.post('/addPoint/:id', authMiddle, (req, res, next) => {
@@ -71,15 +71,15 @@ router.post('/addPoint/:id', authMiddle, (req, res, next) => {
 router.post('/:channel', authMiddle, (req, res, next) => {
   const cid = req.params.channel;
   const userId = req.decodedToken.sub;
-  let otherId = ''
+  let otherId = '';
   // channels 배열에서 channel 값 비교해서 (유저) 삭제
   for (let i = 0; i < channels.length; i++) {
     console.log(channels[i].channel);
     if (cid === channels[i].channel) {
-      if(channels[i].users.length<2){
-        channels[i].users=[]; 
-        channels[i].status=[];    
-      } else{
+      if (channels[i].users.length<2) {
+        channels[i].users=[];
+        channels[i].status=[];
+      } else {
         if (userId == channels[i].users[0]) {
           channels[i].status[0] = 0;
           otherId = channels[i].users[1];
@@ -90,7 +90,7 @@ router.post('/:channel', authMiddle, (req, res, next) => {
         }
         if (channels[i].status.length == 2 && 
           channels[i].status[0] == 0 && 
-          channels[i].status[1]==0){
+          channels[i].status[1]==0) {
           channels[i].users = [];
           channels[i].status = [];
         }
